@@ -2,10 +2,13 @@ import ExampleObject from 'objects/ExampleObject';
 import DayCycle from 'objects/DayCycle';
 import Weather from 'objects/Weather';
 import Player from 'objects/Player';
+import Obstacle from 'objects/Obstacle';
 
 class Main extends Phaser.State {
 
 	create() {
+        this.game.progress = 0;
+
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.stage.backgroundColor = '#000';
  
@@ -37,6 +40,17 @@ class Main extends Phaser.State {
             'background-mid'
         );
 
+        this.game.lvlObjects = [
+            new Obstacle(this.game, 'rock', 1000, 0, 0.4),
+            new Obstacle(this.game, 'rock', 3600, 0, 0.4),
+            new Obstacle(this.game, 'rock', 5000, 0, 0.6),
+            new Obstacle(this.game, 'rock', 5400, 0, 0.5)
+        ];
+
+        for (var i = 0; i < this.game.lvlObjects.length; i++) {
+            this.game.lvlObjects[i].render();
+        }
+
         this.player = new Player(this.game, 150, this.game.height);
  
         this.backgroundBottom = this.game.add.tileSprite(0, 
@@ -67,12 +81,17 @@ class Main extends Phaser.State {
 	}
 
 	update() {
-	    this.backgroundBottom.tilePosition.x -= 1;
+	    this.backgroundBottom.tilePosition.x -= 3;
+        this.physics.arcade.collide(this.player.player, this.backgroundBottom);
 
-        this.physics.arcade.collide(this.player, this.backgroundBottom);
+        //check collision for every object #TODO remove from array if out of bounds
+        for (var i = 0; i < this.game.lvlObjects.length; i++) {
+            this.player.collide(this.game.lvlObjects[i].sprite);
+            this.game.lvlObjects[i].update(this.player.getSpeed());
+        }
+
         this.player.update(this.game, this.cursors, this.backgroundMid);
 	}
-
 }
 
 export default Main;

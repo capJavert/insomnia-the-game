@@ -24,6 +24,15 @@ class Player {
         this.girl.animations.add('right', [0, 1], 10, true);
         this.girl.animations.add('left', [3, 4], 10, true);
 
+	    //  We need to enable physics on the this.player
+	    this.player.physics = game.physics.arcade;
+	    game.physics.enable(this.player);
+
+        this.player.body.setSize(91, 165);
+	    this.player.body.bounce.y = 0;
+	    this.player.body.gravity.y = 450;
+        this.player.body.collideWorldBounds = true;
+
         this.player.addChild(this.staticHair);
         this.player.addChild(this.movingHair);
         this.player.addChild(this.fallingHair);
@@ -31,22 +40,13 @@ class Player {
         this.player.jumping = false;
         this.player.peek = false;
 
-	    //  We need to enable physics on the this.player
-	    this.player.physics = game.physics.arcade;
-
-	    game.physics.enable(this.player);
-        this.player.body.setSize(155, 165);
-
-	    this.player.body.bounce.y = 0;
-	    this.player.body.gravity.y = 450;
-        this.player.body.collideWorldBounds = true;
-
         game.physics.arcade.collide(this.girl, this.hair);
 	}
 
 	update(game, cursors, background) {
 		//  Reset the players velocity (movement)
         this.player.body.velocity.x = 0;
+        this.speed = 0;
 
         // Modify movement while mid air
         if(this.isJumping()) {
@@ -74,10 +74,13 @@ class Player {
         else if (cursors.right.isDown)
         {
             //  Move to the right
+            //this.player.body.velocity.x = 400/this.modifier;
             if(this.game.width/3>this.player.position.x+98) {
                 this.player.body.velocity.x = 400/this.modifier;
             } else {
+                this.speed = 5;
                 background.tilePosition.x += 5/this.modifier;
+                this.game.progress += 5/this.modifier;
             }
 
             if(!this.isJumping()) {
@@ -149,6 +152,21 @@ class Player {
         } else {
             return false;
         }
+    }
+
+    getSpeed() {
+        if(this.speed) {
+            return this.speed/this.modifier;
+        } else {
+            return 0;
+        }
+    }
+
+    collide(sprite) {
+        this.game.physics.arcade.collide(this.player, sprite);
+        this.game.physics.arcade.collide(this.staticHair, sprite);
+        this.game.physics.arcade.collide(this.movingHair, sprite);
+        this.game.physics.arcade.collide(this.girl, sprite);
     }
 }
 
