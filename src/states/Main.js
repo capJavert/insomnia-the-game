@@ -67,11 +67,10 @@ class Main extends Phaser.State {
 	}
 
 	update() {
-	    this.backgroundMid.tilePosition.x -= 0.3;
-	    this.backgroundBottom.tilePosition.x -= 0.75;
+	    this.backgroundBottom.tilePosition.x -= 1;
 
         this.physics.arcade.collide(this.player, this.backgroundBottom);
-        this.player.update(this.cursors);
+        this.player.update(this.game, this.cursors, this.backgroundMid);
 	}
 
 }
