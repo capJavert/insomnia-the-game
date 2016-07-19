@@ -79,7 +79,7 @@ class Player {
                 this.player.body.velocity.x = 400/this.modifier;
             } else {
                 this.speed = 5;
-                background.tilePosition.x += 5/this.modifier;
+                background.tilePosition.x -= 5/this.modifier;
                 this.game.progress += 5/this.modifier;
             }
 

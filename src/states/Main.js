@@ -81,7 +81,7 @@ class Main extends Phaser.State {
 	}
 
 	update() {
-	    this.backgroundBottom.tilePosition.x -= 3;
+	    this.backgroundBottom.tilePosition.x += 3;
         this.physics.arcade.collide(this.player.player, this.backgroundBottom);
 
         //check collision for every object #TODO remove from array if out of bounds
