@@ -20,11 +20,12 @@ class Player {
 
         //enable physics on player
         this.game.physics.p2.enable(this.player, true);
-        this.player.body.collideWorldBounds = true;
+        this.player.body.clearShapes();
+        this.player.body.setCircle(90);
         this.player.body.fixedRotation = true;
         this.player.body.offset.y = 20;
         this.player.body.velocity.y = 0;
-        this.player.body.angularDamping = 1;
+        this.player.body.angularDamping = 0;
         this.player.position.y = 0;
 
         //set material

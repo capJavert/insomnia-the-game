@@ -48,8 +48,8 @@ class Obstacle {
 	    this.contactMaterial = this.game.physics.p2.createContactMaterial(this.material, material);
 
 	    this.sprite.body.angularDamping = 1;
-	    this.contactMaterial.friction = 0.3;     // Friction to use in the contact of these two materials.
-	    this.contactMaterial.restitution = 1.0;  // Restitution (i.e. how bouncy it is!) to use in the contact of these two materials.
+	    this.contactMaterial.friction = 1000;     // Friction to use in the contact of these two materials.
+	    this.contactMaterial.restitution = 0;  // Restitution (i.e. how bouncy it is!) to use in the contact of these two materials.
 	    this.contactMaterial.stiffness = 10000;    // Stiffness of the resulting ContactEquation that this ContactMaterial generate.
 	    this.contactMaterial.relaxation = 10000;     // Relaxation of the resulting ContactEquation that this ContactMaterial generate.
 	    this.contactMaterial.frictionStiffness = 1e7;    // Stiffness of the resulting FrictionEquation that this ContactMaterial generate.

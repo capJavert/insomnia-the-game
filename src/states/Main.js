@@ -13,7 +13,7 @@ class Main extends Phaser.State {
         //this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.world.setBounds(0, 0, this.game.width, this.game.height);
         this.game.physics.startSystem(Phaser.Physics.P2JS);
-        this.game.physics.p2.restitution = -1;
+        this.game.physics.p2.restitution = 0.0;
         this.game.physics.p2.setImpactEvents(true);
         this.game.physics.p2.gravity.y = 1500;
 
