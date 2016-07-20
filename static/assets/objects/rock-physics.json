@@ -1,0 +1,16 @@
+{ 
+    
+    "rock": [
+        
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   -1, 152  ,  100, 20  ,  210, 0  ,  221, 468  ,  178, 470  ,  1, 470  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   405, 416  ,  221, 468  ,  210, 0  ,  323, 32  ,  446, 140  ,  456, 321  ,  456, 378  ]
+        }
+    ]
+}

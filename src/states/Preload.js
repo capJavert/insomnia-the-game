@@ -8,7 +8,9 @@ class Preload extends Phaser.State {
 		//this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 
 		//character
-		this.game.load.spritesheet('girl', 'assets/girl.png', 98, 165);
+		this.game.load.spritesheet('girl-dummy-sprite', 'assets/girl-dummy-sprite.png', 169, 180);
+		this.game.load.atlas('girl', 'assets/girl.png', 'assets/girl.json');
+		this.game.load.physics('girl-physics', 'assets/girl-physics.json');
 		this.game.load.spritesheet('hair', 'assets/hair.png', 161, 177);
 		this.game.load.spritesheet('hair-moving', 'assets/hair-moving.png', 218, 177);
 		this.game.load.spritesheet('hair-falling', 'assets/hair-falling.png', 101, 135);
@@ -19,6 +21,7 @@ class Preload extends Phaser.State {
 
     	//game objects
     	this.game.load.spritesheet('rock', 'assets/objects/rock.png', 456, 469);
+	    this.game.load.physics('rock-physics', 'assets/objects/rock-physics.json');
 
     	// fx
     	this.game.load.image('sun', 'assets/sun.png');

@@ -1,50 +1,39 @@
 class Player {
 
+    //init player
 	constructor(game, x, y){
 		this.game = game;
-        this.player = game.add.sprite(x, y);
 
-        this.staticHair = game.make.sprite(-32, 0, 'hair');
-        this.staticHair.animations.add('idle', [0, 1, 2], 11, true);
-        this.staticHair.animations.add('jump', [3], 11, true);
-        this.staticHair.position.y = -12;
+        //load sprite
+        this.player = this.game.add.sprite(x, y, 'girl');
 
-        this.movingHair = game.make.sprite(0, 0, 'hair-moving');
-        this.movingHair.animations.add('right', [0, 1, 2], 11, true);
-        this.movingHair.animations.add('left', [3, 4, 5], 11, true);
-        this.movingHair.position.y = -23;
-        this.movingHair.visible = false;
+        //define animation frames
+        this.player.animations.add('idle', Phaser.Animation.generateFrameNames('girl-idle', 1, 3), 11, true);
+        this.player.animations.add('right', Phaser.Animation.generateFrameNames('girl-right', 1, 3), 11, true);
+        this.player.animations.add('left', Phaser.Animation.generateFrameNames('girl-left', 1, 3), 11, true);
+        this.player.animations.add('jump', Phaser.Animation.generateFrameNames('girl-jump', 1, 1), 11, true);
+        this.player.animations.add('falling', Phaser.Animation.generateFrameNames('girl-falling', 1, 2), 11, true);
 
-        this.fallingHair = game.make.sprite(-6, 0, 'hair-falling');
-        this.fallingHair.animations.add('default', [0, 1], 11, true);
-        this.fallingHair.position.y = -104;
-        this.fallingHair.visible = false;
-
-		this.girl = game.make.sprite(0, 0, 'girl', 2);
-        this.girl.animations.add('right', [0, 1], 10, true);
-        this.girl.animations.add('left', [3, 4], 10, true);
-
-	    //  We need to enable physics on the this.player
-	    this.player.physics = game.physics.arcade;
-	    game.physics.enable(this.player);
-
-        this.player.body.setSize(91, 165);
-	    this.player.body.bounce.y = 0;
-	    this.player.body.gravity.y = 450;
-        this.player.body.collideWorldBounds = true;
-
-        this.player.addChild(this.staticHair);
-        this.player.addChild(this.movingHair);
-        this.player.addChild(this.fallingHair);
-        this.player.addChild(this.girl);
+        //set default player states
         this.player.jumping = false;
         this.player.peek = false;
 
-        game.physics.arcade.collide(this.girl, this.hair);
+        //enable physics on player
+        this.game.physics.p2.enable(this.player, true);
+        this.player.body.collideWorldBounds = true;
+        this.player.body.fixedRotation = true;
+        this.player.body.offset.y = 20;
+        this.player.body.velocity.y = 0;
+        this.player.body.angularDamping = 1;
+        this.player.position.y = 0;
+
+        //set material
+        this.material = this.game.physics.p2.createMaterial('player', this.player.body);
 	}
 
 	update(game, cursors, background) {
-		//  Reset the players velocity (movement)
+        //console.log(this.player.frame);
+        //  Reset the players velocity (movement)
         this.player.body.velocity.x = 0;
         this.speed = 0;
 
@@ -58,17 +47,13 @@ class Player {
         if (cursors.left.isDown)
         {
             //  Move to the left
-            this.player.body.velocity.x = -400/this.modifier;
+            //this.player.body.velocity.x = -400/this.modifier;
+            this.player.body.moveLeft(400/this.modifier);
 
             if(!this.isJumping()) {
-                this.movingHair.visible = true;
-                this.staticHair.visible = false;
-                this.fallingHair.visible = false;
-
-                this.movingHair.position.x = -5;
-                this.movingHair.animations.play('left');
-
-                this.girl.animations.play('left');
+                //this.player.body.clearShapes();
+                //this.player.body.loadPolygon("girl-physics", "girl-left1");
+                this.player.animations.play('left');
             }
         }
         else if (cursors.right.isDown)
@@ -76,7 +61,8 @@ class Player {
             //  Move to the right
             //this.player.body.velocity.x = 400/this.modifier;
             if(this.game.width/3>this.player.position.x+98) {
-                this.player.body.velocity.x = 400/this.modifier;
+                //this.player.body.velocity.x = 400/this.modifier;
+                this.player.body.moveRight(400/this.modifier);
             } else {
                 this.speed = 5;
                 background.tilePosition.x -= 5/this.modifier;
@@ -84,59 +70,43 @@ class Player {
             }
 
             if(!this.isJumping()) {
-                this.movingHair.visible = true;
-                this.staticHair.visible = false;
-                this.fallingHair.visible = false;
-
-                this.movingHair.position.x = -115;
-                this.movingHair.animations.play('right');
-
-                this.girl.animations.play('right');
+                //this.player.body.loadPolygon("girl-physics", "girl-right1");
+                this.player.animations.play('right');
             }
         }
         else
         {
             //  Stand still
             if(!this.isJumping()) {
-                this.girl.animations.stop();
-                this.movingHair.visible = false;
-                this.staticHair.visible = true;
-                this.fallingHair.visible = false;
-                this.staticHair.animations.play('idle');
-
-                this.girl.frame = 2;
+                //this.player.body.clearShapes();
+                //this.player.body.loadPolygon("girl-physics", "girl-idle1");
+                this.player.animations.play('idle');
             }
         }
 
         //  Allow to jump if they are touching the ground.
         if (cursors.up.isDown && !this.isJumping())
         {
-            this.girl.animations.stop();
-            this.movingHair.visible = false;
-            this.staticHair.visible = true;
-            this.fallingHair.visible = false;
-
-            this.girl.frame = 5;
-            this.staticHair.animations.play('jump');
+            //this.player.body.loadPolygon("girl-physics", "girl-jump1");
+            this.player.animations.play('jump');
 
             this.player.peek = false;
             this.player.jumping = true;
 
-            this.player.body.velocity.y = -500;
+            //this.player.body.velocity.y = -500;
+            this.player.body.moveUp(900);
         }
 
         if(this.player.peek && this.isJumping() && this.player.body.velocity.y>220) {
-            this.movingHair.visible = false;
-            this.staticHair.visible = false;
-            this.fallingHair.visible = true;
-
-            this.fallingHair.animations.play('default');
+            //this.player.body.loadPolygon("girl-physics", "girl-falling1");
+            this.player.animations.play('falling');
         }
 	} 
 
+    //check if player is jumping
     isJumping() {
         if(this.player.jumping && !this.player.peek) {
-            if(this.player.body.velocity.y >= 0) {
+            if(this.player.body.velocity.y >= 1) {
                 this.player.peek = true;
 
                 return false;
@@ -144,7 +114,9 @@ class Player {
                 return true;
             }
         } else if(this.player.jumping && this.player.peek) {
-            if(this.player.body.velocity.y == 0) {
+            if(this.player.body.velocity.y > -1 && this.player.body.velocity.y < 0) {
+                this.player.jumping = false;
+
                 return false;
             } else {
                 return true;
@@ -154,6 +126,7 @@ class Player {
         }
     }
 
+    //get current movement speed of player
     getSpeed() {
         if(this.speed) {
             return this.speed/this.modifier;
@@ -162,11 +135,14 @@ class Player {
         }
     }
 
-    collide(sprite) {
-        this.game.physics.arcade.collide(this.player, sprite);
-        this.game.physics.arcade.collide(this.staticHair, sprite);
-        this.game.physics.arcade.collide(this.movingHair, sprite);
-        this.game.physics.arcade.collide(this.girl, sprite);
+    //set collision group for sprite
+    setCollisionGroup(group) {
+        this.player.body.setCollisionGroup(group);
+    }
+
+    //set collision rules for sprite
+    collides(groups) {
+        this.player.body.collides(groups);
     }
 }
 
