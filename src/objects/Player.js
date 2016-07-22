@@ -16,20 +16,23 @@ class Player {
 
         //set default player states
         this.player.jumping = false;
-        this.player.peek = false;
 
         //enable physics on player
         this.game.physics.p2.enable(this.player, true);
         this.player.body.clearShapes();
         this.player.body.setCircle(90);
         this.player.body.fixedRotation = true;
-        this.player.body.offset.y = 20;
+        this.player.body.offset.y = 10;
         this.player.body.velocity.y = 0;
-        this.player.body.angularDamping = 0;
+        this.player.body.angularDamping = 1;
         this.player.position.y = 0;
 
         //set material
         this.material = this.game.physics.p2.createMaterial('player', this.player.body);
+        this.material.relaxation = 10000; 
+        this.material.friction = 1000;    
+        this.material.restitution = 0;
+        this.material.stiffness = 10000; 
 	}
 
 	update(game, cursors, background) {
@@ -39,7 +42,7 @@ class Player {
         this.speed = 0;
 
         // Modify movement while mid air
-        if(this.isJumping()) {
+        if(!this.checkIfCanJump()) {
             this.modifier = 2;
         } else {
             this.modifier = 1;
@@ -51,7 +54,7 @@ class Player {
             //this.player.body.velocity.x = -400/this.modifier;
             this.player.body.moveLeft(400/this.modifier);
 
-            if(!this.isJumping()) {
+            if(this.checkIfCanJump()) {
                 //this.player.body.clearShapes();
                 //this.player.body.loadPolygon("girl-physics", "girl-left1");
                 this.player.animations.play('left');
@@ -70,7 +73,7 @@ class Player {
                 this.game.progress += 5/this.modifier;
             }
 
-            if(!this.isJumping()) {
+            if(this.checkIfCanJump()) {
                 //this.player.body.loadPolygon("girl-physics", "girl-right1");
                 this.player.animations.play('right');
             }
@@ -78,7 +81,7 @@ class Player {
         else
         {
             //  Stand still
-            if(!this.isJumping()) {
+            if(this.checkIfCanJump()) {
                 //this.player.body.clearShapes();
                 //this.player.body.loadPolygon("girl-physics", "girl-idle1");
                 this.player.animations.play('idle');
@@ -86,45 +89,51 @@ class Player {
         }
 
         //  Allow to jump if they are touching the ground.
-        if (cursors.up.isDown && !this.isJumping())
+        if (cursors.up.isDown && this.checkIfCanJump())
         {
             //this.player.body.loadPolygon("girl-physics", "girl-jump1");
             this.player.animations.play('jump');
 
-            this.player.peek = false;
             this.player.jumping = true;
 
             //this.player.body.velocity.y = -500;
             this.player.body.moveUp(900);
         }
 
-        if(this.player.peek && this.isJumping() && this.player.body.velocity.y>220) {
+        if(!this.checkIfCanJump() && this.player.body.velocity.y>220) {
             //this.player.body.loadPolygon("girl-physics", "girl-falling1");
+            this.player.body.offset.y = -50;
             this.player.animations.play('falling');
+        } else {
+            if(this.player.jumping && this.player.animations.currentAnim.name == 'falling') {
+                this.player.animations.stop();
+                this.player.jumping = false;
+            }
+            this.player.body.offset.y = 10;
         }
 	} 
 
     //check if player is jumping
-    isJumping() {
-        if(this.player.jumping && !this.player.peek) {
-            if(this.player.body.velocity.y >= 1) {
-                this.player.peek = true;
+    checkIfCanJump() {    
+        var yAxis = p2.vec2.fromValues(0, 1);    
+        var result = false;    
 
-                return false;
-            } else {
-                return true;
-            }
-        } else if(this.player.jumping && this.player.peek) {
-            if(this.player.body.velocity.y > -1 && this.player.body.velocity.y < 0) {
-                this.player.jumping = false;
+        for (var i = 0; i < this.game.physics.p2.world.narrowphase.contactEquations.length; i++) {        
+            var c = this.game.physics.p2.world.narrowphase.contactEquations[i];     
 
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
+            if (c.bodyA === this.player.body.data || c.bodyB === this.player.body.data) {            
+                var d = p2.vec2.dot(c.normalA, yAxis); // Normal dot Y-axis            
+                if (c.bodyA === this.player.body.data) {
+                    d *= -1;     
+                }
+
+                if (d > 0.5) {
+                    result = true;        
+                }
+            }    
+        }        
+
+        return result;
     }
 
     //get current movement speed of player
@@ -141,9 +150,14 @@ class Player {
         this.player.body.setCollisionGroup(group);
     }
 
-    //set collision rules for sprite
-    collides(groups) {
-        this.player.body.collides(groups);
+    //set collision rules for sprite and callback function
+    collides(groups, callback) {
+        this.player.body.collides(groups, callback);
+    }
+
+    //function is called on obstacle collision
+    hitObstacle(body1, body2) {
+        console.log("hit");
     }
 }
 

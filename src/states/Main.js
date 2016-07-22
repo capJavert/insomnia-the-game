@@ -75,8 +75,8 @@ class Main extends Phaser.State {
         this.player.setCollisionGroup(this.playerCollision);
  
         //set collision rules for player
-        this.player.collides([this.obstaclesCollision]);
-
+        this.player.collides([this.obstaclesCollision], this.player.hitObstacle);
+    
         //init day night cycle
         this.dayCycle = new DayCycle(this.game, 5000);
         this.dayCycle.initMoon(this.moonSprite);
