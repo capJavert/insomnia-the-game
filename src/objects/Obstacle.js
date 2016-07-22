@@ -28,6 +28,7 @@ class Obstacle {
 		this.material = this.game.physics.p2.createMaterial('rock', this.sprite.body);
 	}
 
+	//rescale obstacle TODO polygons not rescaled
 	setScale(scale) {
 		this.sprite.scale.setTo(scale, scale);
 	}
@@ -38,9 +39,9 @@ class Obstacle {
 		if(speed) {
 			this.sprite.body.velocity.x = -400;
 		}
-		//this.sprite.position.x -= speed;
 	}
 
+	//create contact rules for obstacle and other materials
 	setContact(material) {
 	    //  Here is the contact material. It's a combination of 2 materials, so whenever shapes with
 	    //  those 2 materials collide it uses the following settings.
