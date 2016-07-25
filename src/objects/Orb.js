@@ -19,7 +19,7 @@ class Orb extends Sprite {
 		this.game.physics.p2.enable(this.sprite, true);
 
 		this.sprite.body.clearShapes();
-		this.sprite.body.loadPolygon('orb-physics', 'orb');
+		this.sprite.body.setCircle(20);
 	    this.sprite.body.kinematic = true;
         this.sprite.body.collideWorldBounds = true;
         //this.sprite.body.gravityScale = 0;
@@ -31,6 +31,11 @@ class Orb extends Sprite {
 		//set material params
 		this.material = new Material(this.game, 'orb', this.sprite.body);
 	}
+
+	//function is called on player collision
+    hitPlayer(body1, body2) {
+        console.log("hit player");
+    }
 }
 
 export default Orb;

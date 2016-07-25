@@ -39,9 +39,9 @@ class Sprite {
         this.sprite.body.setCollisionGroup(group);
     }
 
-    //set collision rules for sprite
-    collides(groups) {
-        this.sprite.body.collides(groups);
+    //set collision rules for sprite and callback function
+    collides(groups, callback) {
+        this.sprite.body.collides(groups, callback);
     }
 
     //check if object is out of camera view
@@ -56,6 +56,16 @@ class Sprite {
     //destroy sprite 
     kill() {
     	this.sprite.kill();
+    }
+
+    //function is called on player collision
+    hitPlayer(body1, body2) {
+        console.log("hit player");
+    }
+
+    //function is called on sprite collision
+    hitSprite(body1, body2) {
+        console.log("hit sprite");
     }
 
     //performance issues!

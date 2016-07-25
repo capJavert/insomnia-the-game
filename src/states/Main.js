@@ -67,7 +67,7 @@ class Main extends Phaser.State {
 
         //lvl objects
         this.game.lvlObjects = [
-            new Rock(this.game, 1000, 0, 1, this.obstaclesCollision),
+            new Orb(this.game, 1000, 100, 1, this.interactionCollision),
             new Orb(this.game, 3600, 300, 1, this.interactionCollision),
             new Rock(this.game, 5000, 100, 1, this.obstaclesCollision),
             new Rock(this.game, 5400, 150, 1, this.obstaclesCollision),
@@ -88,7 +88,7 @@ class Main extends Phaser.State {
         this.player.setCollisionGroup(this.playerCollision);
  
         //set collision rules for player
-        this.player.collides([this.obstaclesCollision, this.worldCollision], this.player.hitSprite);
+        this.player.collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision], this.player.hitSprite);
     
         //init day night cycle
         this.dayCycle = new DayCycle(this.game, 5000);
@@ -124,7 +124,8 @@ class Main extends Phaser.State {
                 this.game.lvlObjects.splice(i, 1);
 
             } else {
-                this.game.lvlObjects[i].collides([this.playerCollision, this.obstaclesCollision, this.worldCollision]);
+                this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer);
+                this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision], this.game.lvlObjects[i].hitSprite);
                 this.game.lvlObjects[i].setContact(this.player.material);
                 this.game.lvlObjects[i].update(this.player.getSpeed());
             }

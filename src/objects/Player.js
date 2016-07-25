@@ -161,8 +161,8 @@ class Player {
         this.player.body.collides(groups, callback);
     }
 
-    //function is called on obstacle collision
-    hitObstacle(body1, body2) {
+    //function is called on sprite collision
+    hitSprite(body1, body2) {
         console.log("hit");
     }
 }
