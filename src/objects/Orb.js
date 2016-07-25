@@ -30,11 +30,23 @@ class Orb extends Sprite {
 
 		//set material params
 		this.material = new Material(this.game, 'orb', this.sprite.body);
+
+		//set listener for when orb is collected
+		this.sprite.body.onBeginContact.add(this.updateOrbs, this);
 	}
 
 	//function is called on player collision
     hitPlayer(body1, body2) {
-        console.log("hit player");
+    	body1.clearShapes();
+    	body1.sprite.kill();
+    	
+    	return false;
+    }
+
+    //update current orb count in game
+    updateOrbs() {
+    	this.game.orbCount++;
+    	console.log(this.game.orbCount);
     }
 }
 

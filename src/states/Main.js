@@ -12,9 +12,10 @@ import Dummy from 'objects/Dummy';
 class Main extends Phaser.State {
 
 	create() {
+        //game progression variables
         this.game.progress = 0;
+        this.game.orbCount = 0;
 
-        //this.game.physics.startSystem(Phaser.Physics.ARCADE);
         //set up world and physics
         //left 500 offset for objects swap
         this.game.world.setBounds(-500, 0, this.game.width+500, this.game.height);
@@ -124,7 +125,7 @@ class Main extends Phaser.State {
                 this.game.lvlObjects.splice(i, 1);
 
             } else {
-                this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer);
+                this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.updateOrb, this);
                 this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision], this.game.lvlObjects[i].hitSprite);
                 this.game.lvlObjects[i].setContact(this.player.material);
                 this.game.lvlObjects[i].update(this.player.getSpeed());
