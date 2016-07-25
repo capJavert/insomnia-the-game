@@ -6,6 +6,7 @@ class Sprite {
 		this.y = this.game.height-y;
 		this.scale = scale;
 		this.visible = false;
+		this.collisionGroup = collisionGroup;
 	}
 
 	render() {
