@@ -1,7 +1,7 @@
-import Obstacle from 'objects/Obstacle';
+import Sprite from 'objects/Sprite';
 import Material from 'objects/Material';
 
-class Bitmap extends Obstacle {
+class Bitmap extends Sprite {
 
 	constructor(game, name, x, y, width, height, scale, kinematic){
 		super(game, name, x, y, width, height, scale, kinematic);

@@ -1,6 +1,6 @@
 import Material from 'objects/Material';
 
-class Obstacle {
+class Sprite {
 
 	constructor(game, name, x, y, scale){
 		this.game = game;
@@ -99,4 +99,4 @@ class Obstacle {
 	}*/
 }
 
-export default Obstacle;
+export default Sprite;
