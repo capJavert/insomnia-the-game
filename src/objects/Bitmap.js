@@ -1,14 +1,14 @@
-import Obstacle from 'objects/Obstacle';
+import Sprite from 'objects/Sprite';
 import Material from 'objects/Material';
 
-class Bitmap extends Obstacle {
+class Bitmap extends Sprite {
 
 	constructor(game, name, x, y, width, height, scale, kinematic){
 		super(game, name, x, y, width, height, scale, kinematic);
 		this.game = game;
 		this.spriteType = name;
 		this.x = x;
-		this.y = this.game.height-height/2;
+		this.y = this.game.height-y-height/2;
 		this.width = width;
 		this.height = height;
 		this.scale = scale;

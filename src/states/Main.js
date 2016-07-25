@@ -2,10 +2,10 @@ import ExampleObject from 'objects/ExampleObject';
 import DayCycle from 'objects/DayCycle';
 import Weather from 'objects/Weather';
 import Player from 'objects/Player';
-import Obstacle from 'objects/Obstacle';
+import Rock from 'objects/Rock';
+import Orb from 'objects/Orb';
 import Bitmap from 'objects/Bitmap';
 import Material from 'objects/Material';
-import Seesaw from 'objects/Seesaw';
 import Dummy from 'objects/Dummy';
 
 class Main extends Phaser.State {
@@ -29,6 +29,7 @@ class Main extends Phaser.State {
         //collision groups
         this.playerCollision = this.game.physics.p2.createCollisionGroup();
         this.obstaclesCollision = this.game.physics.p2.createCollisionGroup();
+        this.interactionCollision = this.game.physics.p2.createCollisionGroup();
         this.worldCollision = this.game.physics.p2.createCollisionGroup();
 
         //collision with world bounds
@@ -65,19 +66,19 @@ class Main extends Phaser.State {
 
         //lvl objects
         this.game.lvlObjects = [
-            new Bitmap(this.game, 'box', 1000, 0, 400, 300, 1, false),
-            new Obstacle(this.game, 'rock', 3600, 300, 1),
-            new Obstacle(this.game, 'rock', 5000, 100, 1),
-            new Obstacle(this.game, 'rock', 5400, 150, 1),
-            new Obstacle(this.game, 'rock', 8000, 100, 1),
-            new Obstacle(this.game, 'rock', 10000, 250, 1),
-            new Obstacle(this.game, 'rock', 10400, 200, 1),
-            new Obstacle(this.game, 'rock', 11200, 250, 1)
+            new Rock(this.game, 1000, 0, 1, this.obstaclesCollision),
+            new Orb(this.game, 3600, 300, 1, this.interactionCollision),
+            new Rock(this.game, 5000, 100, 1, this.obstaclesCollision),
+            new Rock(this.game, 5400, 150, 1, this.obstaclesCollision),
+            new Rock(this.game, 8000, 100, 1, this.obstaclesCollision),
+            new Rock(this.game, 10000, 250, 1, this.obstaclesCollision),
+            new Rock(this.game, 10400, 200, 1, this.obstaclesCollision),
+            new Rock(this.game, 11200, 250, 1, this.obstaclesCollision)
         ];
 
         //render lvl objects
         for (var i = 0; i < this.game.lvlObjects.length; i++) {
-            this.game.lvlObjects[i].render(this.obstaclesCollision);
+            this.game.lvlObjects[i].render();
         }
 
         //create player
@@ -86,7 +87,7 @@ class Main extends Phaser.State {
         this.player.setCollisionGroup(this.playerCollision);
  
         //set collision rules for player
-        this.player.collides([this.obstaclesCollision, this.worldCollision], this.player.hitObstacle);
+        this.player.collides([this.obstaclesCollision, this.worldCollision], this.player.hitSprite);
     
         //init day night cycle
         this.dayCycle = new DayCycle(this.game, 5000);
