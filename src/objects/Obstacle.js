@@ -1,3 +1,5 @@
+import Material from 'objects/Material';
+
 class Obstacle {
 
 	constructor(game, name, x, y, scale){
@@ -9,7 +11,7 @@ class Obstacle {
 		this.visible = false;
 	}
 
-	render(collisionGroup, playerMaterial) {
+	render(collisionGroup) {
 		this.sprite = this.game.add.sprite(this.x, this.y, 'rock');
 		this.setScale(this.scale);
 		this.game.physics.p2.enable(this.sprite, true);
@@ -25,7 +27,13 @@ class Obstacle {
 		this.visible = true;
 
 		//set material params
-		this.material = this.game.physics.p2.createMaterial('rock', this.sprite.body);
+		this.material = new Material(this.game, 'rock', this.sprite.body);
+
+		this.sprite.outOfBoundsKill = true;
+	}
+
+	hide() {
+		this.sprite.visible = false;
 	}
 
 	//rescale obstacle TODO polygons not rescaled
@@ -43,20 +51,7 @@ class Obstacle {
 
 	//create contact rules for obstacle and other materials
 	setContact(material) {
-	    //  Here is the contact material. It's a combination of 2 materials, so whenever shapes with
-	    //  those 2 materials collide it uses the following settings.
-	    //  A single material can be used by as many different sprites as you like.
-	    this.contactMaterial = this.game.physics.p2.createContactMaterial(this.material, material);
-
-	    this.sprite.body.angularDamping = 1;
-	    this.contactMaterial.friction = 1000;     // Friction to use in the contact of these two materials.
-	    this.contactMaterial.restitution = 0;  // Restitution (i.e. how bouncy it is!) to use in the contact of these two materials.
-	    this.contactMaterial.stiffness = 10000;    // Stiffness of the resulting ContactEquation that this ContactMaterial generate.
-	    this.contactMaterial.relaxation = 10000;     // Relaxation of the resulting ContactEquation that this ContactMaterial generate.
-	    this.contactMaterial.frictionStiffness = 1e7;    // Stiffness of the resulting FrictionEquation that this ContactMaterial generate.
-	    this.contactMaterial.frictionRelaxation = 3;     // Relaxation of the resulting FrictionEquation that this ContactMaterial generate.
-	    this.contactMaterial.surfaceVelocity = 0;        // Will add surface velocity to this material. If bodyA rests on top if bodyB, and the surface velocity is positive, bodyA will slide to the right.
-
+		this.material.setProperties(material.properties);
 	}
 
     //set collision group for sprite

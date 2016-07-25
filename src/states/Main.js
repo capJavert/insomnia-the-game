@@ -3,6 +3,9 @@ import DayCycle from 'objects/DayCycle';
 import Weather from 'objects/Weather';
 import Player from 'objects/Player';
 import Obstacle from 'objects/Obstacle';
+import Bitmap from 'objects/Bitmap';
+import Material from 'objects/Material';
+import Seesaw from 'objects/Seesaw';
 import Dummy from 'objects/Dummy';
 
 class Main extends Phaser.State {
@@ -11,11 +14,17 @@ class Main extends Phaser.State {
         this.game.progress = 0;
 
         //this.game.physics.startSystem(Phaser.Physics.ARCADE);
-        this.game.world.setBounds(0, 0, this.game.width, this.game.height);
+        //set up world and physics
+        //left 500 offset for objects swap
+        this.game.world.setBounds(-500, 0, this.game.width+500, this.game.height);
         this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.p2.restitution = 0.0;
         this.game.physics.p2.setImpactEvents(true);
         this.game.physics.p2.gravity.y = 1500;
+
+        //set up camera and add offset
+        this.game.cameraOffset = -500;
+        this.game.camera.width = 0;
 
         //collision groups
         this.playerCollision = this.game.physics.p2.createCollisionGroup();
@@ -25,6 +34,8 @@ class Main extends Phaser.State {
         //collision with world bounds
         this.game.physics.p2.updateBoundsCollisionGroup();
  
+        //create ground bitmap
+
         //create game world bitmap and color it
         let bgBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
         bgBitMap.ctx.rect(0, 0, this.game.width, this.game.height);
@@ -54,7 +65,7 @@ class Main extends Phaser.State {
 
         //lvl objects
         this.game.lvlObjects = [
-            new Obstacle(this.game, 'rock', 1000, 0, 1),
+            new Bitmap(this.game, 'box', 1000, 0, 400, 300, 1, false),
             new Obstacle(this.game, 'rock', 3600, 300, 1),
             new Obstacle(this.game, 'rock', 5000, 100, 1),
             new Obstacle(this.game, 'rock', 5400, 150, 1),
@@ -75,7 +86,7 @@ class Main extends Phaser.State {
         this.player.setCollisionGroup(this.playerCollision);
  
         //set collision rules for player
-        this.player.collides([this.obstaclesCollision], this.player.hitObstacle);
+        this.player.collides([this.obstaclesCollision, this.worldCollision], this.player.hitObstacle);
     
         //init day night cycle
         this.dayCycle = new DayCycle(this.game, 5000);
@@ -96,19 +107,22 @@ class Main extends Phaser.State {
 
         //enable movement
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.game.camera.follow(this.backgroundMid);
 	}
 
 	update() {
+        //paralax scroll ground fog
 	    this.backgroundBottom.tilePosition.x -= 3;
-        //this.physics.p2.collide(this.player.player, this.backgroundBottom);
 
         //check collision for every object #TODO remove from array if out of bounds
         for (var i = 0; i < this.game.lvlObjects.length; i++) {
-            this.game.lvlObjects[i].collides([this.playerCollision]);
+            this.game.lvlObjects[i].collides([this.playerCollision, this.obstaclesCollision, this.worldCollision]);
             this.game.lvlObjects[i].setContact(this.player.material);
             this.game.lvlObjects[i].update(this.player.getSpeed());
         }
 
+        //update player position
         this.player.update(this.game, this.cursors, this.backgroundMid);
 	}
 }

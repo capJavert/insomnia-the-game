@@ -1,3 +1,5 @@
+import Material from 'objects/Material';
+
 class Player {
 
     //init player
@@ -28,11 +30,11 @@ class Player {
         this.player.position.y = 0;
 
         //set material
-        this.material = this.game.physics.p2.createMaterial('player', this.player.body);
-        this.material.relaxation = 10000; 
-        this.material.friction = 1000;    
-        this.material.restitution = 0;
-        this.material.stiffness = 10000; 
+        this.material = new Material(this.game, 'player', this.player.body);
+        this.material.properties.relaxation = 10000; 
+        this.material.properties.friction = 1000;    
+        this.material.properties.restitution = 0;
+        this.material.properties.stiffness = 10000; 
 	}
 
 	update(game, cursors, background) {
@@ -52,12 +54,16 @@ class Player {
         {
             //  Move to the left
             //this.player.body.velocity.x = -400/this.modifier;
-            this.player.body.moveLeft(400/this.modifier);
-
-            if(this.checkIfCanJump()) {
-                //this.player.body.clearShapes();
-                //this.player.body.loadPolygon("girl-physics", "girl-left1");
-                this.player.animations.play('left');
+            if(this.player.position.x>120) {
+                this.player.body.moveLeft(400/this.modifier);
+            
+                if(this.checkIfCanJump()) {
+                    //this.player.body.clearShapes();
+                    //this.player.body.loadPolygon("girl-physics", "girl-left1");
+                    this.player.animations.play('left');
+                }
+            } else {
+                this.player.animations.play('idle');
             }
         }
         else if (cursors.right.isDown)
