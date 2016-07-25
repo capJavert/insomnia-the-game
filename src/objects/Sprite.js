@@ -1,6 +1,6 @@
 class Sprite {
 
-	constructor(game, x, y, scale, collisionGroup){
+	constructor(game, name, x, y, scale){
 		this.game = game;
 		this.spriteType = name;
 		this.x = x;

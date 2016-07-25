@@ -2,8 +2,12 @@ import ExampleObject from 'objects/ExampleObject';
 import DayCycle from 'objects/DayCycle';
 import Weather from 'objects/Weather';
 import Player from 'objects/Player';
+<<<<<<< HEAD
 import Rock from 'objects/Rock';
 import Orb from 'objects/Orb';
+=======
+import Sprite from 'objects/Sprite';
+>>>>>>> cbb809a684eb49e0630b939a521a80cba5017a74
 import Bitmap from 'objects/Bitmap';
 import Material from 'objects/Material';
 import Dummy from 'objects/Dummy';
@@ -66,6 +70,7 @@ class Main extends Phaser.State {
 
         //lvl objects
         this.game.lvlObjects = [
+<<<<<<< HEAD
             new Rock(this.game, 1000, 0, 1, this.obstaclesCollision),
             new Orb(this.game, 3600, 300, 1, this.interactionCollision),
             new Rock(this.game, 5000, 100, 1, this.obstaclesCollision),
@@ -74,6 +79,16 @@ class Main extends Phaser.State {
             new Rock(this.game, 10000, 250, 1, this.obstaclesCollision),
             new Rock(this.game, 10400, 200, 1, this.obstaclesCollision),
             new Rock(this.game, 11200, 250, 1, this.obstaclesCollision)
+=======
+            new Bitmap(this.game, 'box', 1000, 0, 400, 300, 1, false),
+            new Sprite(this.game, 'rock', 3600, 300, 1),
+            new Sprite(this.game, 'rock', 5000, 100, 1),
+            new Sprite(this.game, 'rock', 5400, 150, 1),
+            new Sprite(this.game, 'rock', 8000, 100, 1),
+            new Sprite(this.game, 'rock', 10000, 250, 1),
+            new Sprite(this.game, 'rock', 10400, 200, 1),
+            new Sprite(this.game, 'rock', 11200, 250, 1)
+>>>>>>> cbb809a684eb49e0630b939a521a80cba5017a74
         ];
 
         //render lvl objects
