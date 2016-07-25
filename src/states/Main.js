@@ -115,11 +115,17 @@ class Main extends Phaser.State {
         //paralax scroll ground fog
 	    this.backgroundBottom.tilePosition.x -= 3;
 
-        //check collision for every object #TODO remove from array if out of bounds
+        //check collision for every object
         for (var i = 0; i < this.game.lvlObjects.length; i++) {
-            this.game.lvlObjects[i].collides([this.playerCollision, this.obstaclesCollision, this.worldCollision]);
-            this.game.lvlObjects[i].setContact(this.player.material);
-            this.game.lvlObjects[i].update(this.player.getSpeed());
+            if(this.game.lvlObjects[i].isOut()) {
+                this.game.lvlObjects[i].kill();
+                this.game.lvlObjects.splice(i, 1);
+
+            } else {
+                this.game.lvlObjects[i].collides([this.playerCollision, this.obstaclesCollision, this.worldCollision]);
+                this.game.lvlObjects[i].setContact(this.player.material);
+                this.game.lvlObjects[i].update(this.player.getSpeed());
+            }
         }
 
         //update player position

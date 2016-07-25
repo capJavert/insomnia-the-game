@@ -42,7 +42,8 @@ class Bitmap extends Obstacle {
 	}
 
 	update(speed) {
-		this.sprite.body.velocity.x = 0;
+		this.sprite.body.setZeroVelocity();
+		this.sprite.body.velocity.y = 10000;
 
 		if(speed) {
 			this.sprite.body.velocity.x = -400;

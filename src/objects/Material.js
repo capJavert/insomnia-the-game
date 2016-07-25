@@ -19,16 +19,6 @@ class Material {
 		this.contactMaterial = this.game.physics.p2.createContactMaterial(this.properties, material);
 
 		switch(this.name) {
-			case 'ground':
-				this.body.angularDamping = 1;
-	    		this.contactMaterial.friction = 10000;    
-	    		this.contactMaterial.restitution = 0;  
-	    		this.contactMaterial.stiffness = 10000;    
-	    		this.contactMaterial.relaxation = 10000;     
-	    		this.contactMaterial.frictionStiffness = 0;    
-	    		this.contactMaterial.frictionRelaxation = 0;     
-	    		this.contactMaterial.surfaceVelocity = 0;        
-				break;
 			case 'rock':
 				this.body.angularDamping = 1;
 	    		this.contactMaterial.friction = 1000;    

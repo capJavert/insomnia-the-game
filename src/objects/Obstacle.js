@@ -12,12 +12,12 @@ class Obstacle {
 	}
 
 	render(collisionGroup) {
-		this.sprite = this.game.add.sprite(this.x, this.y, 'rock');
+		this.sprite = this.game.add.sprite(this.x, this.y, this.spriteType);
 		this.setScale(this.scale);
 		this.game.physics.p2.enable(this.sprite, true);
 
 		this.sprite.body.clearShapes();
-		this.sprite.body.loadPolygon("rock-physics", "rock");
+		this.sprite.body.loadPolygon(this.spriteType+'-physics', this.spriteType);
 	    this.sprite.body.kinematic = true;
         this.sprite.body.collideWorldBounds = true;
         //this.sprite.body.gravityScale = 0;
@@ -27,9 +27,7 @@ class Obstacle {
 		this.visible = true;
 
 		//set material params
-		this.material = new Material(this.game, 'rock', this.sprite.body);
-
-		this.sprite.outOfBoundsKill = true;
+		this.material = new Material(this.game, this.spriteType, this.sprite.body);
 	}
 
 	hide() {
@@ -62,6 +60,20 @@ class Obstacle {
     //set collision rules for sprite
     collides(groups) {
         this.sprite.body.collides(groups);
+    }
+
+    //check if object is out of camera view
+    isOut() {
+    	if(this.sprite.position.x+this.width/2<=0) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+
+    //destroy sprite 
+    kill() {
+    	this.sprite.kill();
     }
 
     //performance issues!
