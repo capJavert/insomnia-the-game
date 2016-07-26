@@ -48,6 +48,7 @@ class Player {
             this.modifier = 2;
         } else {
             this.modifier = 1;
+            this.player.jumping = false;
         }
 
         if (cursors.left.isDown)

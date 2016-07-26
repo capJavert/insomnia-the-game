@@ -24,6 +24,9 @@ class Preload extends Phaser.State {
 	    this.game.load.physics('rock-physics', 'assets/objects/rock-physics.json');
     	this.game.load.spritesheet('orb', 'assets/objects/orb.png', 90, 90);;
 
+    	//fiends
+		this.game.load.atlas('shadow-hand', 'assets/shadow-hand.png', 'assets/shadow-hand.json');
+
     	// fx
     	this.game.load.image('sun', 'assets/sun.png');
         this.game.load.image('moon', 'assets/moon.png');

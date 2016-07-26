@@ -1,10 +1,10 @@
-import ExampleObject from 'objects/ExampleObject';
+//import ExampleObject from 'objects/ExampleObject';
 import DayCycle from 'objects/DayCycle';
 import Weather from 'objects/Weather';
 import Player from 'objects/Player';
 import Rock from 'objects/Rock';
 import Orb from 'objects/Orb';
-import Sprite from 'objects/Sprite';
+import Fiend from 'objects/Fiend';
 import Bitmap from 'objects/Bitmap';
 import Material from 'objects/Material';
 import Dummy from 'objects/Dummy';
@@ -69,7 +69,7 @@ class Main extends Phaser.State {
 
         //lvl objects
         this.game.lvlObjects = [
-            new Orb(this.game, 1000, 100, 1, this.interactionCollision),
+            new Fiend(this.game, 1000, 100, 1, this.interactionCollision),
             new Orb(this.game, 3600, 300, 1, this.interactionCollision),
             new Rock(this.game, 5000, 100, 1, this.obstaclesCollision),
             new Rock(this.game, 5400, 150, 1, this.obstaclesCollision),
@@ -129,7 +129,7 @@ class Main extends Phaser.State {
                 this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.updateOrb, this);
                 this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision], this.game.lvlObjects[i].hitSprite);
                 this.game.lvlObjects[i].setContact(this.player.material);
-                this.game.lvlObjects[i].update(this.player.getSpeed());
+                this.game.lvlObjects[i].update(this.player);
             }
         }
 
