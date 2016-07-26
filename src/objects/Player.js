@@ -19,6 +19,7 @@ class Player {
 
         //set default player states
         this.player.jumping = false;
+        this.player.damageBounce = false;
 
         //enable physics on player
         this.game.physics.p2.enable(this.player, this.game.debugMode);
@@ -45,7 +46,7 @@ class Player {
 	update(game, cursors, background) {
         //console.log(this.player.frame);
         //  Reset the players velocity (movement)
-        this.player.body.velocity.x = 0;
+        this.player.body.velocity.x = 0; 
         this.speed = 0;
 
         // Modify movement while mid air
@@ -56,8 +57,13 @@ class Player {
             this.player.jumping = false;
         }
 
-        if (cursors.left.isDown)
-        {
+        if(this.player.damageBounce) {
+            this.game.health--;
+            this.player.alpha = this.game.health*0.25;
+            console.log(this.game.health);
+            this.player.body.moveLeft(2000);
+            this.player.damageBounce = false;
+        } else if (cursors.left.isDown) {
             //  Move to the left
             //this.player.body.velocity.x = -400/this.modifier;
             if(this.player.position.x>120) {
@@ -71,9 +77,7 @@ class Player {
             } else {
                 this.player.animations.play('idle');
             }
-        }
-        else if (cursors.right.isDown)
-        {
+        } else if (cursors.right.isDown) {
             //  Move to the right
             //this.player.body.velocity.x = 400/this.modifier;
             if(this.game.width/3>this.player.position.x+98) {
@@ -89,9 +93,7 @@ class Player {
                 //this.player.body.loadPolygon("girl-physics", "girl-right1");
                 this.player.animations.play('right');
             }
-        }
-        else
-        {
+        } else {
             //  Stand still
             if(this.checkIfCanJump()) {
                 //this.player.body.clearShapes();

@@ -13,6 +13,7 @@ class Main extends Phaser.State {
 
 	create() {
         //game progression variables
+        this.game.health = 4;
         this.game.progress = 0;
         this.game.orbCount = 0;
         this.game.debugMode = true;
@@ -71,7 +72,7 @@ class Main extends Phaser.State {
 
         //lvl objects
         this.game.lvlObjects = [
-            new Orb(this.game, 1000, 100, 1, this.interactionCollision),
+            new Fiend(this.game, 1000, 100, 1, this.fiendCollision),
             new Orb(this.game, 3600, 300, 1, this.interactionCollision),
             new Rock(this.game, 5000, 100, 1, this.obstaclesCollision),
             new Rock(this.game, 5400, 150, 1, this.obstaclesCollision),
@@ -143,8 +144,10 @@ class Main extends Phaser.State {
     handleContact(body1, body2) {
         if(body1.sprite.oType == 'Player') {
             var sprite = body2.sprite;
+            var player = body1.sprite;
         } else {
-            sprite = body1.sprite;
+            var sprite = body1.sprite;
+            var player = body2.sprite;
         }
 
         switch(sprite.oType) {
@@ -152,7 +155,11 @@ class Main extends Phaser.State {
                 sprite.collect = true;
                 return false; 
                 break;
-            case 'Fiend': return false; break;
+            case 'Fiend': 
+                player.damageBounce = true;
+
+                return false; 
+                break;
             default:
                 return true;
         }
