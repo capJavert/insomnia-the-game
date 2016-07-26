@@ -21,10 +21,10 @@ class Sprite {
 		this.sprite.scale.setTo(scale, scale);
 	}
 
-	update(player) {
+	update(playerObject) {
 		this.sprite.body.velocity.x = 0;
 
-		if(player.getSpeed()) {
+		if(playerObject.getSpeed()) {
 			this.sprite.body.velocity.x = -400;
 		}
 	}
