@@ -126,7 +126,18 @@ class Main extends Phaser.State {
                 this.game.lvlObjects.splice(i, 1);
 
             } else {
-                this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.updateOrb, this);
+                switch(this.game.lvlObjects[i].oType) {
+                    case 'Orb': 
+                        this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.updateOrb, this);
+                        break;
+                    case 'Rock':
+                        this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.onHit, this);
+                        break;
+                    case 'Fiend':
+                        this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.onHit, this);
+                        break;
+                }
+                
                 this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision], this.game.lvlObjects[i].hitSprite);
                 this.game.lvlObjects[i].setContact(this.player.material);
                 this.game.lvlObjects[i].update(this.player);

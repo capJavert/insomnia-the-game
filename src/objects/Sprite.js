@@ -60,12 +60,17 @@ class Sprite {
 
     //function is called on player collision
     hitPlayer(body1, body2) {
-        console.log("hit player");
+        //console.log("hit player");
     }
 
     //function is called on sprite collision
     hitSprite(body1, body2) {
-        console.log("hit sprite");
+        //console.log("hit sprite");
+    }
+
+    //function called after collision callback
+    onHit() {
+
     }
 
     //performance issues!

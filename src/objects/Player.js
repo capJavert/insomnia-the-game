@@ -5,6 +5,7 @@ class Player {
     //init player
 	constructor(game, x, y){
 		this.game = game;
+        this.oType = 'Player';
 
         //load sprite
         this.player = this.game.add.sprite(x, y, 'girl');
@@ -164,7 +165,11 @@ class Player {
 
     //function is called on sprite collision
     hitSprite(body1, body2) {
-        console.log("hit");
+        //console.log("hit");
+    }
+
+    damageHit() {
+
     }
 }
 

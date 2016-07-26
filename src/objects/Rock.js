@@ -6,6 +6,7 @@ class Rock extends Sprite {
 	constructor(game, x, y, scale, collisionGroup){
 		super(game, x, y, scale, collisionGroup);
 		this.game = game;
+		this.oType = 'Rock';
 		this.x = x;
 		this.y = this.game.height-y;
 		this.scale = scale;

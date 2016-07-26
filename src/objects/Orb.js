@@ -6,6 +6,7 @@ class Orb extends Sprite {
 	constructor(game, x, y, scale, collisionGroup){
 		super(game, x, y, scale, collisionGroup);
 		this.game = game;
+		this.oType = 'Orb';
 		this.x = x;
 		this.y = this.game.height-y;
 		this.scale = scale;
@@ -46,7 +47,6 @@ class Orb extends Sprite {
     //update current orb count in game
     updateOrbs() {
     	this.game.orbCount++;
-    	console.log(this.game.orbCount);
     }
 }
 
