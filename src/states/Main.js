@@ -24,6 +24,7 @@ class Main extends Phaser.State {
         this.game.physics.p2.restitution = 0.0;
         this.game.physics.p2.setImpactEvents(true);
         this.game.physics.p2.gravity.y = 1500;
+        this.game.physics.p2.setPostBroadphaseCallback(this.handleContact, this);
 
         //set up camera and add offset
         this.game.cameraOffset = -500;
@@ -33,6 +34,7 @@ class Main extends Phaser.State {
         this.playerCollision = this.game.physics.p2.createCollisionGroup();
         this.obstaclesCollision = this.game.physics.p2.createCollisionGroup();
         this.interactionCollision = this.game.physics.p2.createCollisionGroup();
+        this.fiendCollision = this.game.physics.p2.createCollisionGroup();
         this.worldCollision = this.game.physics.p2.createCollisionGroup();
 
         //collision with world bounds
@@ -69,7 +71,7 @@ class Main extends Phaser.State {
 
         //lvl objects
         this.game.lvlObjects = [
-            new Fiend(this.game, 1000, 100, 1, this.interactionCollision),
+            new Orb(this.game, 1000, 100, 1, this.interactionCollision),
             new Orb(this.game, 3600, 300, 1, this.interactionCollision),
             new Rock(this.game, 5000, 100, 1, this.obstaclesCollision),
             new Rock(this.game, 5400, 150, 1, this.obstaclesCollision),
@@ -90,7 +92,8 @@ class Main extends Phaser.State {
         this.player.setCollisionGroup(this.playerCollision);
  
         //set collision rules for player
-        this.player.collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision], this.player.hitSprite);
+        this.player.collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision, this.fiendCollision], this.player.hitSprite);
+        //this.player.collides([this.fiendCollision], this.player.hitFiend, this);
     
         //init day night cycle
         this.dayCycle = new DayCycle(this.game, 5000);
@@ -126,18 +129,7 @@ class Main extends Phaser.State {
                 this.game.lvlObjects.splice(i, 1);
 
             } else {
-                switch(this.game.lvlObjects[i].oType) {
-                    case 'Orb': 
-                        this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.updateOrb, this);
-                        break;
-                    case 'Rock':
-                        this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.onHit, this);
-                        break;
-                    case 'Fiend':
-                        this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.onHit, this);
-                        break;
-                }
-                
+                this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.onHit, this);
                 this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision], this.game.lvlObjects[i].hitSprite);
                 this.game.lvlObjects[i].setContact(this.player.material);
                 this.game.lvlObjects[i].update(this.player);
@@ -147,6 +139,24 @@ class Main extends Phaser.State {
         //update player position
         this.player.update(this.game, this.cursors, this.backgroundMid);
 	}
+
+    handleContact(body1, body2) {
+        if(body1.sprite.oType == 'Player') {
+            var sprite = body2.sprite;
+        } else {
+            sprite = body1.sprite;
+        }
+
+        switch(sprite.oType) {
+            case 'Orb': 
+                sprite.collect = true;
+                return false; 
+                break;
+            case 'Fiend': return false; break;
+            default:
+                return true;
+        }
+    }
 }
 
 export default Main;

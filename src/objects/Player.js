@@ -22,6 +22,7 @@ class Player {
 
         //enable physics on player
         this.game.physics.p2.enable(this.player, this.game.debugMode);
+        this.player.oType = this.oType;
         this.player.body.clearShapes();
         this.player.body.setCircle(90);
         this.player.body.fixedRotation = true;
@@ -36,6 +37,9 @@ class Player {
         this.material.properties.friction = 1000;    
         this.material.properties.restitution = 0;
         this.material.properties.stiffness = 10000; 
+
+        //set listener for when player interacts with lvl objects
+        this.player.body.onBeginContact.add(this.handleContact, this);
 	}
 
 	update(game, cursors, background) {
@@ -168,8 +172,13 @@ class Player {
         //console.log("hit");
     }
 
-    damageHit() {
+    hitFiend(body1, body2) {
+        //return true;
+    }
 
+    handleContact(body1, body2, shape1, shape2, equation) {
+        //console.log(body2.sprite);
+        //this.player.body.moveLeft(400);
     }
 }
 

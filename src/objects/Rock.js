@@ -18,7 +18,7 @@ class Rock extends Sprite {
 		this.sprite = this.game.add.sprite(this.x, this.y, 'rock');
 		this.setScale(this.scale);
 		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
-
+		this.sprite.oType = this.oType; //for check inside collision callback
 		this.sprite.body.clearShapes();
 		this.sprite.body.loadPolygon('rock-physics', 'rock');
 	    this.sprite.body.kinematic = true;

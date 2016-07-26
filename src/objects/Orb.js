@@ -18,7 +18,9 @@ class Orb extends Sprite {
 		this.sprite = this.game.add.sprite(this.x, this.y, 'orb');
 		this.setScale(this.scale);
 		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
-
+		this.sprite.oType = this.oType; //for check inside collision callback
+		this.sprite.collect = false;
+		this.collected = false;
 		this.sprite.body.clearShapes();
 		this.sprite.body.setCircle(20);
 	    this.sprite.body.kinematic = true;
@@ -36,17 +38,35 @@ class Orb extends Sprite {
 		this.sprite.body.onBeginContact.add(this.updateOrbs, this);
 	}
 
-	//function is called on player collision
-    hitPlayer(body1, body2) {
-    	body1.clearShapes();
-    	body1.sprite.kill();
-    	
-    	return false;
+	update(playerObject) {
+		this.sprite.body.velocity.x = 0;
+
+		if(playerObject.getSpeed()) {
+			this.sprite.body.velocity.x = -400;
+		}
+
+		if(this.sprite.collect) {
+			this.sprite.body.clearShapes();
+			this.kill();
+
+	    	this.updateOrbs();	
+		}
+	}
+
+    //check if object is out of camera view
+    isOut() {
+    	if(this.sprite.position.x+this.width/2<=0 || this.collected) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
 
     //update current orb count in game
     updateOrbs() {
+    	this.collected = true;
     	this.game.orbCount++;
+    	console.log(this.game.orbCount);
     }
 }
 

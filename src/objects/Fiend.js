@@ -28,6 +28,7 @@ class Fiend extends Sprite {
 
         //enable physics on fiend
         this.game.physics.p2.enable(this.sprite, this.game.debugMode);
+        this.sprite.oType = this.oType; //for check inside collision callback
 		this.sprite.body.clearShapes();
 		this.sprite.body.setCircle(150);
 	    this.sprite.body.kinematic = true;
