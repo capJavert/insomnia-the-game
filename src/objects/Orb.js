@@ -16,7 +16,7 @@ class Orb extends Sprite {
 	render() {
 		this.sprite = this.game.add.sprite(this.x, this.y, 'orb');
 		this.setScale(this.scale);
-		this.game.physics.p2.enable(this.sprite, true);
+		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
 
 		this.sprite.body.clearShapes();
 		this.sprite.body.setCircle(20);

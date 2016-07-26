@@ -27,7 +27,7 @@ class Bitmap extends Sprite {
 		this.sprite = this.game.add.sprite(this.x, this.y, sprite);
 
 		this.setScale(this.scale);
-		this.game.physics.p2.enable(this.sprite, true);
+		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
 
 	    this.sprite.body.kinematic = this.kinematic;
 	    this.sprite.body.collideWorldBounds = true;

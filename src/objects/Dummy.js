@@ -7,7 +7,7 @@ class Dummy {
         this.player = this.game.add.sprite(x, y, 'girl-dummy-sprite');
 
         //enable physics on player
-        this.game.physics.p2.enable(this.player, true);
+        this.game.physics.p2.enable(this.player, debugMode);
         this.player.body.collideWorldBounds = true;
 		this.spawned = false;
 	}

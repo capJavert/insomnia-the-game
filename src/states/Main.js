@@ -15,6 +15,7 @@ class Main extends Phaser.State {
         //game progression variables
         this.game.progress = 0;
         this.game.orbCount = 0;
+        this.game.debugMode = true;
 
         //set up world and physics
         //left 500 offset for objects swap

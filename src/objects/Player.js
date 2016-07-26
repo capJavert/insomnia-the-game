@@ -20,7 +20,7 @@ class Player {
         this.player.jumping = false;
 
         //enable physics on player
-        this.game.physics.p2.enable(this.player, true);
+        this.game.physics.p2.enable(this.player, this.game.debugMode);
         this.player.body.clearShapes();
         this.player.body.setCircle(90);
         this.player.body.fixedRotation = true;

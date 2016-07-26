@@ -16,7 +16,7 @@ class Rock extends Sprite {
 	render() {
 		this.sprite = this.game.add.sprite(this.x, this.y, 'rock');
 		this.setScale(this.scale);
-		this.game.physics.p2.enable(this.sprite, true);
+		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
 
 		this.sprite.body.clearShapes();
 		this.sprite.body.loadPolygon('rock-physics', 'rock');
