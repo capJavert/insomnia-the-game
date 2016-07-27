@@ -22,6 +22,7 @@ class FlyingFiend extends Fiend {
 		//set defeault fiend states
 		this.isForceHit = false;
 		this.sprite.playerHit = false;
+		this.tween = null;
 
         //define animation frames
         this.sprite.animations.add('idle', Phaser.Animation.generateFrameNames('flying-shadow-idle', 1, 3), 9, true);
@@ -50,6 +51,10 @@ class FlyingFiend extends Fiend {
 
 		//set listener for when player interacts with this fiend
 		this.sprite.body.onBeginContact.add(this.forceHit, this);
+
+		//start levitation
+		this.levitationMove = 50;
+		this.moveUp();
 	}
 
 	update(playerObject) {
@@ -67,6 +72,18 @@ class FlyingFiend extends Fiend {
 		} else {
 			this.forceHit();
 		}
+	}
+
+	moveUp() {
+		this.sprite.body.moveUp(this.levitationMove);
+
+		this.game.time.events.add(Phaser.Timer.SECOND, this.moveDown, this);
+	}
+
+	moveDown() {
+		this.sprite.body.moveDown(this.levitationMove);
+
+		this.game.time.events.add(Phaser.Timer.SECOND, this.moveUp, this);
 	}
 }
 
