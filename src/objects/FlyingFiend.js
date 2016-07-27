@@ -1,4 +1,5 @@
 import Fiend from 'objects/Fiend';
+import Material from 'objects/Material';
 
 class FlyingFiend extends Fiend {
 
@@ -7,7 +8,7 @@ class FlyingFiend extends Fiend {
 		this.game = game;
 		this.oType = 'FlyingFiend';
 		this.x = x;
-		this.y = this.game.height-y;
+		this.y = y;
 		this.scale = scale;
 		this.visible = false;
 		this.collisionGroup = collisionGroup;
@@ -23,7 +24,7 @@ class FlyingFiend extends Fiend {
 		this.sprite.playerHit = false;
 
         //define animation frames
-        this.sprite.animations.add('idle', Phaser.Animation.generateFrameNames('flying-shadow-idle', 1, 3), 11, true);
+        this.sprite.animations.add('idle', Phaser.Animation.generateFrameNames('flying-shadow-idle', 1, 3), 9, true);
         this.sprite.animations.add('left-atk', Phaser.Animation.generateFrameNames('flying-shadow-left-atk', 1, 1), 11, true);
         this.sprite.animations.add('right-atk', Phaser.Animation.generateFrameNames('flying-shadow-right-atk', 1, 1), 11, true);
 
