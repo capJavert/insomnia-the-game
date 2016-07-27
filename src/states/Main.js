@@ -16,7 +16,7 @@ class Main extends Phaser.State {
         this.game.health = 4;
         this.game.progress = 0;
         this.game.orbCount = 0;
-        this.game.debugMode = true;
+        this.game.debugMode = false;
 
         //set up world and physics
         //left 500 offset for objects swap
@@ -120,6 +120,10 @@ class Main extends Phaser.State {
 	}
 
 	update() {
+        if(!this.game.health) {
+            this.game.state.start("GameOver");
+        }
+
         //paralax scroll ground fog
 	    this.backgroundBottom.tilePosition.x -= 3;
 
@@ -153,10 +157,15 @@ class Main extends Phaser.State {
         switch(sprite.oType) {
             case 'Orb': 
                 sprite.collect = true;
+
                 return false; 
                 break;
             case 'Fiend': 
-                player.damageBounce = true;
+                if(!player.damageBounce) {
+                    console.log('collision');
+                    player.damageBounce = true;
+                    sprite.playerHit = true;
+                }
 
                 return false; 
                 break;

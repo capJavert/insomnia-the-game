@@ -15,11 +15,12 @@ class Fiend extends Sprite {
 	}
 
 	render() {
-		//set defeault fiend states
-		this.isForceHit = false;
-
       	//load fiend
         this.sprite = this.game.add.sprite(this.x, this.y, 'shadow-hand');
+
+		//set defeault fiend states
+		this.isForceHit = false;
+		this.sprite.playerHit = false;
 
         //define animation frames
         this.sprite.animations.add('idle', Phaser.Animation.generateFrameNames('shadow-hand-idle', 1, 3), 2, true);
@@ -30,7 +31,7 @@ class Fiend extends Sprite {
         this.game.physics.p2.enable(this.sprite, this.game.debugMode);
         this.sprite.oType = this.oType; //for check inside collision callback
 		this.sprite.body.clearShapes();
-		this.sprite.body.setCircle(150);
+		this.sprite.body.setCircle(120);
 	    this.sprite.body.kinematic = true;
         this.sprite.body.collideWorldBounds = true;
         this.sprite.body.setCollisionGroup(this.collisionGroup);
@@ -60,7 +61,7 @@ class Fiend extends Sprite {
 			this.sprite.body.velocity.x = -400;
 		}
 
-		if(!this.isForceHit) {
+		if(!this.sprite.playerHit) {
 			if(playerObject.player.jumping) {
 				this.sprite.animations.play('high-atk');
 			} else if(playerObject.player.position.x+350>this.sprite.position.x) {
@@ -68,6 +69,8 @@ class Fiend extends Sprite {
 			} else {
 				this.sprite.animations.play('idle');
 			}
+		} else {
+			this.forceHit();
 		}
 	}
 
@@ -93,6 +96,7 @@ class Fiend extends Sprite {
     }
 
     resetForceHit() {
+    	this.sprite.playerHit = false;
     	this.isForceHit = false;
     }
 }

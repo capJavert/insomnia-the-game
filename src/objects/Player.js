@@ -20,6 +20,8 @@ class Player {
         //set default player states
         this.player.jumping = false;
         this.player.damageBounce = false;
+        this.stunned = false;
+        this.tween = null;
 
         //enable physics on player
         this.game.physics.p2.enable(this.player, this.game.debugMode);
@@ -57,13 +59,18 @@ class Player {
             this.player.jumping = false;
         }
 
-        if(this.player.damageBounce) {
+        if(this.player.damageBounce && !this.stunned) {
             this.game.health--;
             this.player.alpha = this.game.health*0.25;
             console.log(this.game.health);
-            this.player.body.moveLeft(2000);
-            this.player.damageBounce = false;
-        } else if (cursors.left.isDown) {
+            this.player.body.moveLeft(20000);
+
+            this.stunned = true;
+            this.game.time.events.add(Phaser.Timer.SECOND, this.resetStunned, this);
+
+            this.tween = this.game.add.tween(this.player)
+            .to( { alpha: 0 }, 150, Phaser.Easing.Linear.None, true, 0, -1, true);
+        } else if (cursors.left.isDown && !this.stunned) {
             //  Move to the left
             //this.player.body.velocity.x = -400/this.modifier;
             if(this.player.position.x>120) {
@@ -77,7 +84,7 @@ class Player {
             } else {
                 this.player.animations.play('idle');
             }
-        } else if (cursors.right.isDown) {
+        } else if (cursors.right.isDown && !this.stunned) {
             //  Move to the right
             //this.player.body.velocity.x = 400/this.modifier;
             if(this.game.width/3>this.player.position.x+98) {
@@ -103,7 +110,7 @@ class Player {
         }
 
         //  Allow to jump if they are touching the ground.
-        if (cursors.up.isDown && this.checkIfCanJump())
+        if (cursors.up.isDown && this.checkIfCanJump() && !this.stunned)
         {
             //this.player.body.loadPolygon("girl-physics", "girl-jump1");
             this.player.animations.play('jump');
@@ -181,6 +188,12 @@ class Player {
     handleContact(body1, body2, shape1, shape2, equation) {
         //console.log(body2.sprite);
         //this.player.body.moveLeft(400);
+    }
+
+    resetStunned() {
+        this.player.damageBounce = false;
+        this.stunned = false;
+        this.tween.stop(true);
     }
 }
 
