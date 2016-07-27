@@ -26,6 +26,7 @@ class Preload extends Phaser.State {
 
     	//fiends
 		this.game.load.atlas('shadow-hand', 'assets/shadow-hand.png', 'assets/shadow-hand.json');
+		this.game.load.atlas('flying-shadow', 'assets/flying-shadow.png', 'assets/flying-shadow.json');
 
     	// fx
     	this.game.load.image('sun', 'assets/sun.png');

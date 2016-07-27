@@ -5,6 +5,7 @@ import Player from 'objects/Player';
 import Rock from 'objects/Rock';
 import Orb from 'objects/Orb';
 import Fiend from 'objects/Fiend';
+import FlyingFiend from 'objects/FlyingFiend';
 import Bitmap from 'objects/Bitmap';
 import Material from 'objects/Material';
 import Dummy from 'objects/Dummy';
