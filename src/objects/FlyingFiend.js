@@ -23,6 +23,9 @@ class FlyingFiend extends Fiend {
 		this.isForceHit = false;
 		this.sprite.playerHit = false;
 		this.tween = null;
+		this.attackDirection = null;
+		this.speed = 570;
+		this.attacking = false;
 
         //define animation frames
         this.sprite.animations.add('idle', Phaser.Animation.generateFrameNames('flying-shadow-idle', 1, 3), 9, true);
@@ -33,7 +36,7 @@ class FlyingFiend extends Fiend {
         this.game.physics.p2.enable(this.sprite, this.game.debugMode);
         this.sprite.oType = this.oType; //for check inside collision callback
 		this.sprite.body.clearShapes();
-		this.sprite.body.setCircle(240*this.scale);
+		this.sprite.body.setCircle(100*this.scale);
 	    this.sprite.body.kinematic = true;
         this.sprite.body.collideWorldBounds = true;
         this.sprite.body.setCollisionGroup(this.collisionGroup);
@@ -58,32 +61,70 @@ class FlyingFiend extends Fiend {
 	}
 
 	update(playerObject) {
-		//console.log(this.sprite.animations.frameName);
-
 		this.player = playerObject.player;
-		this.sprite.body.velocity.x = 0;
+
+		if(!this.attacking) {
+			this.sprite.body.velocity.x = 0;
+		}
 
 		if(playerObject.getSpeed()) {
 			this.sprite.body.velocity.x = -400;
 		}
 
-		if(!this.sprite.playerHit) {
-			this.sprite.animations.play('idle');
+		//console.log(this.sprite.position.y);
+
+		if(this.isFlyUp()) {
+			if(this.attackDirection == 'left') {
+				this.sprite.body.moveLeft(this.speed*2.5);
+			} else {
+				this.sprite.body.moveRight(this.speed*2.5);
+			}
+			this.sprite.body.moveUp(this.speed*0.2);
+		} else if(playerObject.player.position.x<this.sprite.position.x && (this.sprite.position.x-playerObject.player.position.x<500)) {
+			if(!this.attacking) {
+				this.sprite.animations.play('left-atk');
+				this.attackDirection = 'left';
+				this.attacking = true;
+				this.sprite.body.velocity.y = 0;
+				this.sprite.body.moveLeft(this.speed);
+				this.sprite.body.moveDown(this.speed);
+			}
+		} else if(playerObject.player.position.x>this.sprite.position.x) {
+			if(!this.attacking) {
+				this.sprite.animations.play('right-atk');
+				this.attackDirection = 'right';
+				this.attacking = true;
+				this.sprite.body.velocity.y = 0;
+				this.sprite.body.moveLeft(this.speed);
+				this.sprite.body.moveDown(this.speed);
+			}
 		} else {
-			this.forceHit();
+			this.sprite.animations.play('idle');
 		}
 	}
 
 	moveUp() {
-		this.sprite.body.moveUp(this.levitationMove);
+		if(!this.attacking) {
+			this.sprite.body.moveUp(this.levitationMove);
+		}
 
 		this.game.time.events.add(Phaser.Timer.SECOND, this.moveDown, this);
 	}
 
 	moveDown() {
-		this.sprite.body.moveDown(this.levitationMove);
-
+		if(!this.attacking) {
+			this.sprite.body.moveDown(this.levitationMove);
+		}
+		
 		this.game.time.events.add(Phaser.Timer.SECOND, this.moveUp, this);
+	}
+
+	isFlyUp() {
+		if(this.sprite.position.y-this.game.height>-this.sprite.height) {
+			return true;
+		} else {
+			return false;
+		}	
 	}
 }
 

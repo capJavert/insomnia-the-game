@@ -53,7 +53,7 @@ class Player {
 
         // Modify movement while mid air
         if(!this.checkIfCanJump()) {
-            this.modifier = 2;
+            this.modifier = 1.3;
         } else {
             this.modifier = 1;
             this.player.jumping = false;
