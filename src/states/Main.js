@@ -72,7 +72,7 @@ class Main extends Phaser.State {
 
         //lvl objects
         this.game.lvlObjects = [
-            new Fiend(this.game, 1000, 100, 1, this.fiendCollision),
+            new Fiend(this.game, 1000, 100, 0.7, this.fiendCollision),
             new Orb(this.game, 3600, 300, 1, this.interactionCollision),
             new Rock(this.game, 5000, 100, 1, this.obstaclesCollision),
             new Rock(this.game, 5400, 150, 1, this.obstaclesCollision),
