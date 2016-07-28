@@ -9,6 +9,7 @@ import FlyingFiend from 'objects/FlyingFiend';
 import Bitmap from 'objects/Bitmap';
 import Material from 'objects/Material';
 import Dummy from 'objects/Dummy';
+import Helpers from 'includes/Helpers';
 
 class Main extends Phaser.State {
 
@@ -72,16 +73,17 @@ class Main extends Phaser.State {
         );
 
         //lvl objects
+        //new Fiend(this.game, 0, 0, 0.4, this.fiendCollision),
+        //new FlyingFiend(this.game, 0, 0, 0.4, this.fiendCollision),
+        //new Orb(this.game, 0, 0, 1, this.interactionCollision),
+        //new Rock(this.game, , , 1, this.obstaclesCollision),
         this.game.lvlObjects = [
-            new FlyingFiend(this.game, 1000, 200, 0.4, this.fiendCollision),
-            new Orb(this.game, 1920, 300, 1, this.interactionCollision),
-            new Rock(this.game, 5000, 100, 1, this.obstaclesCollision),
-            new Rock(this.game, 5400, 150, 1, this.obstaclesCollision),
-            new Rock(this.game, 8000, 100, 1, this.obstaclesCollision),
-            new Rock(this.game, 10000, 250, 1, this.obstaclesCollision),
-            new Rock(this.game, 10400, 200, 1, this.obstaclesCollision),
-            new Rock(this.game, 11200, 250, 1, this.obstaclesCollision)
-        ];
+           new Orb(this.game, 400, 120, 1, this.interactionCollision), 
+        ]
+
+        //apply generators
+        this.helpers = new Helpers();
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 960, 120, 240);
 
         //render lvl objects
         for (var i = 0; i < this.game.lvlObjects.length; i++) {
