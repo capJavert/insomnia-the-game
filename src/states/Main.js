@@ -17,7 +17,7 @@ class Main extends Phaser.State {
         this.game.health = 4;
         this.game.progress = 0;
         this.game.orbCount = 0;
-        this.game.debugMode = true;
+        this.game.debugMode = false;
 
         //set up world and physics
         //left 500 offset for objects swap
@@ -74,7 +74,7 @@ class Main extends Phaser.State {
         //lvl objects
         this.game.lvlObjects = [
             new FlyingFiend(this.game, 1000, 200, 0.4, this.fiendCollision),
-            new Orb(this.game, 3600, 300, 1, this.interactionCollision),
+            new Orb(this.game, 1500, 300, 1, this.interactionCollision),
             new Rock(this.game, 5000, 100, 1, this.obstaclesCollision),
             new Rock(this.game, 5400, 150, 1, this.obstaclesCollision),
             new Rock(this.game, 8000, 100, 1, this.obstaclesCollision),

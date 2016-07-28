@@ -36,10 +36,16 @@ class Orb extends Sprite {
 
 		//set listener for when orb is collected
 		this.sprite.body.onBeginContact.add(this.updateOrbs, this);
+
+		//start levitation
+		this.levitationMove = 10;
+		this.moveUp();
 	}
 
 	update(playerObject) {
+		this.sprite.angle += 1;
 		this.sprite.body.velocity.x = 0;
+		this.player = playerObject;
 
 		if(playerObject.getSpeed()) {
 			this.sprite.body.velocity.x = -400;
@@ -63,11 +69,25 @@ class Orb extends Sprite {
     }
 
     //update current orb count in game
+    //orbs restores health
     updateOrbs() {
     	this.collected = true;
     	this.game.orbCount++;
-    	console.log(this.game.orbCount);
+    	this.player.heal();
+    	console.log("Orbs", this.game.orbCount);
     }
+
+	moveUp() {
+		this.sprite.body.moveUp(this.levitationMove);
+
+		this.game.time.events.add(Phaser.Timer.SECOND*0.5, this.moveDown, this);
+	}
+
+	moveDown() {
+		this.sprite.body.moveDown(this.levitationMove);
+		
+		this.game.time.events.add(Phaser.Timer.SECOND*0.5, this.moveUp, this);
+	}
 }
 
 export default Orb;

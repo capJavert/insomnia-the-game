@@ -60,9 +60,7 @@ class Player {
         }
 
         if(this.player.damageBounce && !this.stunned) {
-            this.game.health--;
-            this.player.alpha = this.game.health*0.25;
-            console.log(this.game.health);
+            this.damage();
             this.player.body.moveLeft(20000);
 
             this.stunned = true;
@@ -194,6 +192,22 @@ class Player {
         this.player.damageBounce = false;
         this.stunned = false;
         this.tween.stop(true);
+    }
+
+    //heal player
+    heal() {
+        if(this.game.health<4) {
+            this.game.health++;
+            this.player.alpha = this.game.health*0.25;
+        }
+        console.log("Health", this.game.health);
+    }
+
+    //damage player
+    damage() {
+        this.game.health--;
+        this.player.alpha = this.game.health*0.25;
+        console.log("Health", this.game.health);
     }
 }
 
