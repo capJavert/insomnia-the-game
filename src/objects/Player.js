@@ -200,14 +200,14 @@ class Player {
             this.game.health++;
             this.player.alpha = this.game.health*0.25;
         }
-        console.log("Health", this.game.health);
+        //console.log("Health", this.game.health);
     }
 
     //damage player
     damage() {
         this.game.health--;
         this.player.alpha = this.game.health*0.25;
-        console.log("Health", this.game.health);
+        //console.log("Health", this.game.health);
     }
 }
 

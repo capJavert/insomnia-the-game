@@ -46,7 +46,7 @@ class Sprite {
 
     //check if object is out of camera view
     isOut() {
-    	if(this.sprite.position.x+this.width/2<=0) {
+    	if(this.sprite.position.x+this.sprite.width/2<=0) {
     		return true;
     	} else {
     		return false;
@@ -55,6 +55,7 @@ class Sprite {
 
     //destroy sprite 
     kill() {
+    	this.sprite.body.clearShapes();
     	this.sprite.kill();
     }
 

@@ -42,8 +42,6 @@ class Main extends Phaser.State {
 
         //collision with world bounds
         this.game.physics.p2.updateBoundsCollisionGroup();
- 
-        //create ground bitmap
 
         //create game world bitmap and color it
         let bgBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
@@ -78,12 +76,63 @@ class Main extends Phaser.State {
         //new Orb(this.game, 0, 0, 1, this.interactionCollision),
         //new Rock(this.game, , , 1, this.obstaclesCollision),
         this.game.lvlObjects = [
-           new Orb(this.game, 400, 120, 1, this.interactionCollision), 
-        ]
+            new Rock(this.game, 2500, -50, 1, this.obstaclesCollision),
+            new Rock(this.game, 2700, 100, 1, this.obstaclesCollision),
+            new Rock(this.game, 5900, 0, 1, this.obstaclesCollision),
+            new Rock(this.game, 6100, -40, 1, this.obstaclesCollision),
+
+            new Rock(this.game, 6100, -40, 1, this.obstaclesCollision),
+            new Rock(this.game, 6100, -40, 1, this.obstaclesCollision),
+
+            new Rock(this.game, 8300, 20, 1, this.obstaclesCollision),
+            new Rock(this.game, 8700, 120, 1, this.obstaclesCollision),
+            new Rock(this.game, 9800, -50, 1, this.obstaclesCollision),
+            new Rock(this.game, 10000, -70, 1, this.obstaclesCollision),
+
+            new Rock(this.game, 12800, 0, 1, this.obstaclesCollision),
+            new Orb(this.game, 12800, 320, 1, this.interactionCollision),
+            new Rock(this.game, 13600, 0, 1, this.obstaclesCollision),
+            new Orb(this.game, 13600, 320, 1, this.interactionCollision),
+            new Rock(this.game, 14400, 0, 1, this.obstaclesCollision),
+            new Orb(this.game, 14400, 320, 1, this.interactionCollision),
+
+            new Rock(this.game, 15700, 100, 1, this.obstaclesCollision),
+            new Rock(this.game, 16000, 300, 1, this.obstaclesCollision),
+            new Rock(this.game, 16000, 100, 1, this.obstaclesCollision),
+            new Fiend(this.game, 16500, 110, 0.8, this.fiendCollision),
+
+            new Rock(this.game, 18000, -100, 1, this.obstaclesCollision),
+            new Rock(this.game, 18400, -50, 1, this.obstaclesCollision),
+            new Orb(this.game, 18400, 350, 1, this.interactionCollision),
+            new Rock(this.game, 18700, -110, 1, this.obstaclesCollision),
+
+            new Rock(this.game, 20500, 100, 1, this.obstaclesCollision),
+            new Rock(this.game, 20700, 220, 1, this.obstaclesCollision),
+            new FlyingFiend(this.game, 21300, 100, 0.4, this.fiendCollision),
+
+            new FlyingFiend(this.game, 25000, 100, 0.4, this.fiendCollision),
+            new FlyingFiend(this.game, 26000, 100, 0.4, this.fiendCollision),
+
+            new Rock(this.game, 26200, -110, 1, this.obstaclesCollision),
+            new Rock(this.game, 26500, -60, 1, this.obstaclesCollision),
+            new Rock(this.game, 26700, -10, 1, this.obstaclesCollision),
+            new Rock(this.game, 27000, 50, 1, this.obstaclesCollision),
+            new Rock(this.game, 27300, 110, 1, this.obstaclesCollision),
+            new Rock(this.game, 27600, 100, 1, this.obstaclesCollision),
+            new Rock(this.game, 27600, 250, 1, this.obstaclesCollision),
+            new Rock(this.game, 28000, 110, 1, this.obstaclesCollision),
+            new Rock(this.game, 28000, 350, 1, this.obstaclesCollision),
+            new Orb(this.game, 28500, 800, 1, this.interactionCollision),
+        ];
 
         //apply generators
         this.helpers = new Helpers();
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 960, 120, 240);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 960, 120, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 7, 3160, 120, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 6560, 120, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 6, 10300, 120, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 10, 21400, 120, 360);
+
 
         //render lvl objects
         for (var i = 0; i < this.game.lvlObjects.length; i++) {
@@ -124,7 +173,8 @@ class Main extends Phaser.State {
 
 	update() {
         if(!this.game.health) {
-            this.game.state.start("GameOver");
+            //this.game.state.start("GameOver");
+            console.log('WASTED');
         }
 
         //paralax scroll ground fog
@@ -135,7 +185,6 @@ class Main extends Phaser.State {
             if(this.game.lvlObjects[i].isOut()) {
                 this.game.lvlObjects[i].kill();
                 this.game.lvlObjects.splice(i, 1);
-
             } else {
                 this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.onHit, this);
                 this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision], this.game.lvlObjects[i].hitSprite);

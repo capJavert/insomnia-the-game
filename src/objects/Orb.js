@@ -61,7 +61,7 @@ class Orb extends Sprite {
 
     //check if object is out of camera view
     isOut() {
-    	if(this.sprite.position.x+this.width/2<=0 || this.collected) {
+    	if(this.sprite.position.x+this.sprite.width/2<=0 || this.collected) {
     		return true;
     	} else {
     		return false;
