@@ -29,6 +29,11 @@ class Main extends Phaser.State {
         this.game.physics.p2.gravity.y = 1500;
         this.game.physics.p2.setPostBroadphaseCallback(this.handleContact, this);
 
+        //fullscreen if supported in browser and not in debug mode
+        if(!this.game.debugMode) {
+            this.game.scale.startFullScreen();
+        }
+
         //set up camera and add offset
         this.game.cameraOffset = -500;
         this.game.camera.width = 0;
