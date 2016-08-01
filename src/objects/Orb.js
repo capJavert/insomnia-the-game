@@ -16,6 +16,7 @@ class Orb extends Sprite {
 
 	render() {
 		this.sprite = this.game.add.sprite(this.x, this.y, 'orb');
+		this.sprite.position.y -= (this.sprite.height/2);
 		this.setScale(this.scale);
 		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
 		this.sprite.oType = this.oType; //for check inside collision callback
@@ -28,7 +29,6 @@ class Orb extends Sprite {
         //this.sprite.body.gravityScale = 0;
         this.sprite.body.setCollisionGroup(this.collisionGroup);
 
-		this.sprite.position.y -= (this.sprite.height/2);
 		this.visible = true;
 
 		//set material params

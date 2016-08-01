@@ -17,6 +17,7 @@ class Fiend extends Sprite {
 	render() {
       	//load fiend
         this.sprite = this.game.add.sprite(this.x, this.y, 'shadow-hand');
+        this.sprite.position.y -= (this.sprite.height/2);
         this.setScale(this.scale);
 
 		//set defeault fiend states
@@ -40,7 +41,6 @@ class Fiend extends Sprite {
         this.sprite.body.setCollisionGroup(this.collisionGroup);
         this.sprite.position.y = 0;
 
-		this.sprite.position.y -= (this.sprite.height/2);
 		this.visible = true;
 
         //set material

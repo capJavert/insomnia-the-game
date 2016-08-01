@@ -6,6 +6,7 @@ import Rock from 'objects/Rock';
 import Orb from 'objects/Orb';
 import Fiend from 'objects/Fiend';
 import FlyingFiend from 'objects/FlyingFiend';
+import Trap from 'objects/Trap';
 import Bitmap from 'objects/Bitmap';
 import Material from 'objects/Material';
 import Dummy from 'objects/Dummy';
@@ -80,7 +81,9 @@ class Main extends Phaser.State {
         //new FlyingFiend(this.game, 0, 0, 0.4, this.fiendCollision),
         //new Orb(this.game, 0, 0, 1, this.interactionCollision),
         //new Rock(this.game, , , 1, this.obstaclesCollision),
+        //new Trap(this.game, , , 1, this.interactionCollision),
         this.game.lvlObjects = [
+            new Trap(this.game, 300, 0, 1, this.interactionCollision),
             new Rock(this.game, 2500, -50, 1, this.obstaclesCollision),
             new Rock(this.game, 2700, 100, 1, this.obstaclesCollision),
             new Rock(this.game, 5900, 0, 1, this.obstaclesCollision),
