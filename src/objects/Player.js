@@ -70,39 +70,37 @@ class Player {
             .to( { alpha: 0 }, 150, Phaser.Easing.Linear.None, true, 0, -1, true);
         } else if (cursors.left.isDown && !this.stunned) {
             //  Move to the left
-            //this.player.body.velocity.x = -400/this.modifier;
-            if(this.player.position.x>120) {
+            if(this.player.position.x>200) {
                 this.player.body.moveLeft(400/this.modifier);
-            
-                if(this.checkIfCanJump()) {
-                    //this.player.body.clearShapes();
-                    //this.player.body.loadPolygon("girl-physics", "girl-left1");
-                    this.player.animations.play('left');
+            } else {
+                if(this.game.progress>0) {
+                    this.speed = -5;
+                    background.tilePosition.x += 5/this.modifier;
+                    this.game.progress -= 1;
                 }
+            }
+
+            if(this.checkIfCanJump() && this.game.progress>0) {
+                this.player.animations.play('left');
             } else {
                 this.player.animations.play('idle');
             }
         } else if (cursors.right.isDown && !this.stunned) {
             //  Move to the right
-            //this.player.body.velocity.x = 400/this.modifier;
             if(this.game.width/3>this.player.position.x+98) {
-                //this.player.body.velocity.x = 400/this.modifier;
                 this.player.body.moveRight(400/this.modifier);
             } else {
                 this.speed = 5;
                 background.tilePosition.x -= 5/this.modifier;
-                this.game.progress += 5/this.modifier;
+                this.game.progress += 1;
             }
 
             if(this.checkIfCanJump()) {
-                //this.player.body.loadPolygon("girl-physics", "girl-right1");
                 this.player.animations.play('right');
             }
         } else {
             //  Stand still
             if(this.checkIfCanJump()) {
-                //this.player.body.clearShapes();
-                //this.player.body.loadPolygon("girl-physics", "girl-idle1");
                 this.player.animations.play('idle');
             }
         }
@@ -110,17 +108,14 @@ class Player {
         //  Allow to jump if they are touching the ground.
         if (cursors.up.isDown && this.checkIfCanJump() && !this.stunned)
         {
-            //this.player.body.loadPolygon("girl-physics", "girl-jump1");
             this.player.animations.play('jump');
 
             this.player.jumping = true;
 
-            //this.player.body.velocity.y = -500;
             this.player.body.moveUp(900);
         }
 
         if(!this.checkIfCanJump() && this.player.body.velocity.y>220) {
-            //this.player.body.loadPolygon("girl-physics", "girl-falling1");
             this.player.body.offset.y = -50;
             this.player.animations.play('falling');
         } else {

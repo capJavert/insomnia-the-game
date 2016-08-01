@@ -19,7 +19,7 @@ class Main extends Phaser.State {
         this.game.health = 4;
         this.game.progress = 0;
         this.game.orbCount = 0;
-        this.game.debugMode = false;
+        this.game.debugMode = true;
 
         //set up world and physics
         //left 500 offset for objects swap
@@ -190,15 +190,10 @@ class Main extends Phaser.State {
 
         //check collision for every object
         for (var i = 0; i < this.game.lvlObjects.length; i++) {
-            if(this.game.lvlObjects[i].isOut()) {
-                this.game.lvlObjects[i].kill();
-                this.game.lvlObjects.splice(i, 1);
-            } else {
-                this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.onHit, this);
-                this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision], this.game.lvlObjects[i].hitSprite);
-                this.game.lvlObjects[i].setContact(this.player.material);
-                this.game.lvlObjects[i].update(this.player);
-            }
+            this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.onHit, this);
+            this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision], this.game.lvlObjects[i].hitSprite);
+            this.game.lvlObjects[i].setContact(this.player.material);
+            this.game.lvlObjects[i].update(this.player);
         }
 
         //update player position

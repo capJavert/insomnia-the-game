@@ -47,14 +47,17 @@ class Orb extends Sprite {
 		this.sprite.body.velocity.x = 0;
 		this.player = playerObject;
 
-		if(playerObject.getSpeed()) {
+		if(playerObject.getSpeed()>0) {
 			this.sprite.body.velocity.x = -400;
+		} else if(playerObject.getSpeed()<0) {
+			this.sprite.body.velocity.x = 400;
+		} else {
+			//player is not moving
 		}
 
-		if(this.sprite.collect) {
+		if(this.sprite.collect && !this.collected) {
 			this.sprite.body.clearShapes();
 			this.kill();
-
 	    	this.updateOrbs();	
 		}
 	}

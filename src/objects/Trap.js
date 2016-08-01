@@ -20,7 +20,7 @@ class Trap extends Sprite {
 		this.setScale(this.scale);
 		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
 		this.sprite.oType = this.oType; //for check inside collision callback
-	    this.sprite.body.kinematic = true;
+	    this.sprite.body.kinematic = false;
         this.sprite.body.collideWorldBounds = true;
         //this.sprite.body.gravityScale = 0;
         this.sprite.body.setCollisionGroup(this.collisionGroup);

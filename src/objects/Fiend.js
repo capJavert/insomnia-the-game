@@ -60,8 +60,12 @@ class Fiend extends Sprite {
 		this.player = playerObject.player;
 		this.sprite.body.velocity.x = 0;
 
-		if(playerObject.getSpeed()) {
+		if(playerObject.getSpeed()>0) {
 			this.sprite.body.velocity.x = -400;
+		} else if(playerObject.getSpeed()<0) {
+			this.sprite.body.velocity.x = 400;
+		} else {
+			//player is not moving
 		}
 
 		if(!this.sprite.playerHit) {
