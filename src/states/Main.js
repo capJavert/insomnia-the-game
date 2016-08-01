@@ -83,7 +83,7 @@ class Main extends Phaser.State {
         //new Rock(this.game, , , 1, this.obstaclesCollision),
         //new Trap(this.game, , , 1, this.interactionCollision),
         this.game.lvlObjects = [
-            new Trap(this.game, 300, 0, 1, this.interactionCollision),
+            new Trap(this.game, 500, 0, 1, this.interactionCollision),
             new Rock(this.game, 2500, -50, 1, this.obstaclesCollision),
             new Rock(this.game, 2700, 100, 1, this.obstaclesCollision),
             new Rock(this.game, 5900, 0, 1, this.obstaclesCollision),
@@ -107,7 +107,7 @@ class Main extends Phaser.State {
             new Rock(this.game, 15700, 100, 1, this.obstaclesCollision),
             new Rock(this.game, 16000, 300, 1, this.obstaclesCollision),
             new Rock(this.game, 16000, 100, 1, this.obstaclesCollision),
-            new Fiend(this.game, 16500, 110, 0.8, this.fiendCollision),
+            new Fiend(this.game, 16500, 0, 0.8, this.fiendCollision),
 
             new Rock(this.game, 18000, -100, 1, this.obstaclesCollision),
             new Rock(this.game, 18400, -50, 1, this.obstaclesCollision),
@@ -154,7 +154,6 @@ class Main extends Phaser.State {
  
         //set collision rules for player
         this.player.collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision, this.fiendCollision], this.player.hitSprite);
-        //this.player.collides([this.fiendCollision], this.player.hitFiend, this);
     
         //init day night cycle
         this.dayCycle = new DayCycle(this.game, 5000);
@@ -173,10 +172,15 @@ class Main extends Phaser.State {
         this.weather.addRain();
 	    this.weather.addFog();
 
-        //enable movement
+        //enable movement controls
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.game.camera.follow(this.backgroundMid);
+        //interactions controls
+        this.cursors.interact = {
+                a: this.input.keyboard.addKey(Phaser.Keyboard.A),
+        };
+
+        this.game.camera.follow(this.player.sprite);
 	}
 
 	update() {
@@ -227,6 +231,13 @@ class Main extends Phaser.State {
             case 'FlyingFiend': 
                 if(!player.damageBounce) {
                     player.damageBounce = true;
+                }
+
+                return false; 
+                break;
+            case 'Trap': 
+                if(this.cursors.interact.a.isDown) {
+                    this.player.pullObject(sprite);
                 }
 
                 return false; 

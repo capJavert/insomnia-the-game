@@ -30,6 +30,28 @@ class Trap extends Sprite {
 		//set material params
 		this.material = new Material(this.game, 'ground-trap', this.sprite.body);
 	}
+
+	update(playerObject) {
+		this.sprite.body.velocity.x = 0;
+
+		if(playerObject.getSpeed()>0) {
+			this.sprite.body.velocity.x = -400;
+		} else if(playerObject.getSpeed()<0) {
+			this.sprite.body.velocity.x = 400;
+		} else {
+			//player is not moving
+		}
+
+		if(this.sprite.inCamera) {
+			this.sprite.body.kinematic = false;
+		} else {
+			this.sprite.body.kinematic = true;
+		}
+	}
+
+	attachToPlayer(playerObject) {
+
+	}
 }
 
 export default Trap;

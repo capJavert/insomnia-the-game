@@ -77,7 +77,7 @@ class Orb extends Sprite {
     	this.collected = true;
     	this.game.orbCount++;
     	this.player.heal();
-    	console.log("Orbs", this.game.orbCount);
+    	//console.log("Orbs", this.game.orbCount);
     }
 
 	moveUp() {
