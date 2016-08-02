@@ -14,6 +14,9 @@ class Preload extends Phaser.State {
 		};
 		this.game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
+		//menu images
+		this.game.load.image('logo', 'assets/menu/logo.png');
+
 		//character
 		this.game.load.spritesheet('girl-dummy-sprite', 'assets/girl-dummy-sprite.png', 169, 180);
 		this.game.load.atlas('girl', 'assets/girl.png', 'assets/girl.json');
@@ -44,7 +47,8 @@ class Preload extends Phaser.State {
 	create() {
 		//NOTE: Change to GameTitle if required
 		//this.game.state.start("Main");
-		this.game.state.start("Test");
+		//this.game.state.start("Test");
+		this.game.state.start("Menu");
 	}
 
 }
