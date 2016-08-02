@@ -23,6 +23,7 @@ class Fiend extends Sprite {
 		//set defeault fiend states
 		this.isForceHit = false;
 		this.sprite.playerHit = false;
+		this.sprite.trapHit = false;
 
         //define animation frames
         this.sprite.animations.add('idle', Phaser.Animation.generateFrameNames('shadow-hand-idle', 1, 9), 6, true);
@@ -68,7 +69,7 @@ class Fiend extends Sprite {
 			//player is not moving
 		}
 
-		if(!this.sprite.playerHit) {
+		if(!this.sprite.playerHit && !this.sprite.trapHit) {
 			if(playerObject.player.jumping) {
 				this.sprite.animations.play('high-lurk');
 			} else if(playerObject.player.position.x+450>this.sprite.position.x) {
@@ -76,6 +77,14 @@ class Fiend extends Sprite {
 			} else {
 				this.sprite.animations.play('idle');
 			}
+		} else if(this.sprite.trapHit) {
+			this.game.time.events.add(Phaser.Timer.SECOND*2, this.kill, this);
+			this.sprite.animations.stop();
+			this.sprite.animations.frameName = 'shadow-hand-low-atk2';
+			this.sprite.body.clearShapes();
+
+            this.tween = this.game.add.tween(this.sprite)
+            .to( { alpha: 0 }, 150, Phaser.Easing.Linear.None, true, 0, -1, true);
 		} else {
 			this.forceHit();
 		}
@@ -96,7 +105,6 @@ class Fiend extends Sprite {
 	    		this.sprite.animations.stop();
 	    		this.sprite.animations.frameName = 'shadow-hand-high-atk3';
 	    	} else {
-	    		console.log('low');
 	    		this.sprite.animations.play('low-atk');
 	    		this.sprite.animations.stop();
 	    		this.sprite.animations.frameName = 'shadow-hand-low-atk2';
