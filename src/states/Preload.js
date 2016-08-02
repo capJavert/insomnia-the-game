@@ -1,11 +1,18 @@
 class Preload extends Phaser.State {
-
 	preload() {
 		//sounds
 		//this.game.load.image('myImage', 'assets/my-image.png');
 		//this.game.load.audio('myAudio', 'assets/my-audio.wav');
 		//this.game.load.atlas('myAtlas', 'assets/my-atlas.png', 'assets/my-atlas.json');
 		//this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+
+		//google webfont
+		var WebFontConfig = {
+		    google: {
+		      families: ['IM Fell DW Pica']
+		    }
+		};
+		this.game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
 		//character
 		this.game.load.spritesheet('girl-dummy-sprite', 'assets/girl-dummy-sprite.png', 169, 180);

@@ -33,7 +33,6 @@ class Trap extends Sprite {
 	}
 
 	update(playerObject) {
-		console.log(this.sprite.isFollowingPlayer);
 		this.sprite.body.velocity.x = 0;
 
 		if(!this.sprite.isFollowingPlayer) {

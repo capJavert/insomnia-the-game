@@ -20,6 +20,7 @@ class Test extends Phaser.State {
         this.game.progress = 0;
         this.game.orbCount = 0;
         this.game.debugMode = true;
+        this.game.ready = true;
 
         //set up world and physics
         //left 500 offset for objects swap
@@ -126,6 +127,29 @@ class Test extends Phaser.State {
         this.weather.addRain();
 	    this.weather.addFog();
 
+        //lvl start message
+        //background
+        /*let mesageBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
+        mesageBitMap.ctx.rect(0, 0, this.game.width, this.game.height);
+        mesageBitMap.ctx.fillStyle = '#000000';
+        mesageBitMap.ctx.fill();
+        this.messageBackground = this.game.add.sprite(0, 0, mesageBitMap);
+
+        //text
+        this.text = this.game.add.text(
+            this.game.width/2, this.game.height/2, 
+            "... Beware of the Shadows swallowed by fog ..."
+        );
+        this.text.anchor.setTo(0.5);
+        this.text.font = 'IM Fell DW Pica';
+        this.text.fontWeight = 'normal';
+        this.text.fontSize = 60;
+        this.text.fill = '#FFFFFF'
+        this.text.align = 'center';
+
+        //time to hide message and start game
+        this.game.time.events.add(Phaser.Timer.SECOND*4, this.clearStartMessage, this);*/
+
         //enable movement controls
         this.game.cursors = this.input.keyboard.createCursorKeys();
 
@@ -138,6 +162,10 @@ class Test extends Phaser.State {
 	}
 
 	update() {
+        while(!this.game.ready) {
+            return;
+        }
+
         if(!this.game.health) {
             //this.game.state.start("GameOver");
             console.log('WASTED');
@@ -211,6 +239,22 @@ class Test extends Phaser.State {
             default:
                 return true;
         }
+    }
+
+    clearStartMessage() {
+        this.game.ready = true;
+
+        this.game.add.tween(this.text)
+        .to( { alpha: 0 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false);
+        this.startMessageTween = this.game.add.tween(this.messageBackground)
+        .to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+    
+        this.startMessageTween.onComplete.add(this.startGame, this);
+    }
+
+    startGame() {
+        this.messageBackground.kill();
+        this.text.kill();
     }
 }
 
