@@ -49,9 +49,18 @@ class Sprite {
     }
 
     //destroy sprite 
-    kill() {
-    	this.sprite.body.clearShapes();
-    	this.sprite.kill();
+    //if fade is set to true, fade sprite and call kill again without fade
+    kill(fade) {
+    	if(typeof fade == 'undefined') { fade = false; }
+
+    	if(fade) {
+            this.tween = this.game.add.tween(this.sprite)
+            .to( { alpha: 0 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false);	
+            this.tween.onComplete.add(this.kill, this);
+    	} else {
+	    	this.sprite.body.clearShapes();
+	    	this.sprite.kill();
+    	}
     }
 
     //function is called on player collision

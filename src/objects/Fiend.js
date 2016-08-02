@@ -72,19 +72,17 @@ class Fiend extends Sprite {
 		if(!this.sprite.playerHit && !this.sprite.trapHit) {
 			if(playerObject.player.jumping) {
 				this.sprite.animations.play('high-lurk');
-			} else if(playerObject.player.position.x+450>this.sprite.position.x) {
+			} else if(playerObject.player.position.x+600>this.sprite.position.x) {
 				this.sprite.animations.play('low-lurk');
 			} else {
 				this.sprite.animations.play('idle');
 			}
 		} else if(this.sprite.trapHit) {
-			this.game.time.events.add(Phaser.Timer.SECOND*2, this.kill, this);
 			this.sprite.animations.stop();
 			this.sprite.animations.frameName = 'shadow-hand-low-atk2';
 			this.sprite.body.clearShapes();
 
-            this.tween = this.game.add.tween(this.sprite)
-            .to( { alpha: 0 }, 150, Phaser.Easing.Linear.None, true, 0, -1, true);
+			this.kill(true);
 		} else {
 			this.forceHit();
 		}
