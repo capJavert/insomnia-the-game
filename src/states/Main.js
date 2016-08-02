@@ -173,10 +173,10 @@ class Main extends Phaser.State {
 	    this.weather.addFog();
 
         //enable movement controls
-        this.cursors = this.input.keyboard.createCursorKeys();
+        this.game.cursors = this.input.keyboard.createCursorKeys();
 
         //interactions controls
-        this.cursors.interact = {
+        this.game.cursors.interact = {
                 a: this.input.keyboard.addKey(Phaser.Keyboard.A),
         };
 
@@ -195,13 +195,13 @@ class Main extends Phaser.State {
         //check collision for every object
         for (var i = 0; i < this.game.lvlObjects.length; i++) {
             this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.onHit, this);
-            this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision], this.game.lvlObjects[i].hitSprite);
+            this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision], this.game.lvlObjects[i].hitSprite);
             this.game.lvlObjects[i].setContact(this.player.material);
             this.game.lvlObjects[i].update(this.player);
         }
 
         //update player position
-        this.player.update(this.game, this.cursors, this.backgroundMid);
+        this.player.update(this.game, this.game.cursors, this.backgroundMid);
 	}
 
     handleContact(body1, body2) {
@@ -236,8 +236,10 @@ class Main extends Phaser.State {
                 return false; 
                 break;
             case 'Trap': 
-                if(this.cursors.interact.a.isDown) {
-                    this.player.pullObject(sprite);
+                if(this.game.cursors.interact.a.isDown) {
+                    sprite.isFollowingPlayer = true;
+                } else {
+                    sprite.isFollowingPlayer = false;
                 }
 
                 return false; 

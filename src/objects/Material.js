@@ -37,7 +37,7 @@ class Material {
 	    		this.contactMaterial.relaxation = 10000;     
 	    		this.contactMaterial.frictionStiffness = 1e7;    
 	    		this.contactMaterial.frictionRelaxation = 3;     
-	    		this.contactMaterial.surfaceVelocity = 0;        
+	    		this.contactMaterial.surfaceVelocity = -1;        
 				break;
 		}   
 	}

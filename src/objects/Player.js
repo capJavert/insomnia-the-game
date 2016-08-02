@@ -22,7 +22,7 @@ class Player {
         this.player.damageBounce = false;
         this.stunned = false;
         this.tween = null;
-        this.pullingObject = false;
+        this.drag = false;
 
         //enable physics on player
         this.game.physics.p2.enable(this.player, this.game.debugMode);
@@ -205,10 +205,6 @@ class Player {
         this.game.health--;
         this.player.alpha = this.game.health*0.25;
         //console.log("Health", this.game.health);
-    }
-
-    pullObject(sprite) {
-        
     }
 }
 

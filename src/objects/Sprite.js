@@ -48,15 +48,6 @@ class Sprite {
         this.sprite.body.collides(groups, callback);
     }
 
-    //check if object is out of camera view
-    isOut() {
-    	if(this.sprite.position.x+this.sprite.width/2<=0) {
-    		return true;
-    	} else {
-    		return false;
-    	}
-    }
-
     //destroy sprite 
     kill() {
     	this.sprite.body.clearShapes();
@@ -77,6 +68,14 @@ class Sprite {
     onHit() {
 
     }
+
+	inView() {
+		if(this.sprite.position.x+this.sprite.width/2>0 && this.sprite.position.x+this.sprite.width/2<=this.game.width) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
     //performance issues!
 	/*resizePolygon(originalPhysicsKey, newPhysicsKey, shapeKey, scale) {

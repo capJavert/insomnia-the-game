@@ -26,6 +26,7 @@ class Trap extends Sprite {
         this.sprite.body.setCollisionGroup(this.collisionGroup);
 
 		this.visible = true;
+		this.sprite.isFollowingPlayer = false;
 
 		//set material params
 		this.material = new Material(this.game, 'ground-trap', this.sprite.body);
@@ -34,23 +35,33 @@ class Trap extends Sprite {
 	update(playerObject) {
 		this.sprite.body.velocity.x = 0;
 
-		if(playerObject.getSpeed()>0) {
-			this.sprite.body.velocity.x = -400;
-		} else if(playerObject.getSpeed()<0) {
-			this.sprite.body.velocity.x = 400;
-		} else {
-			//player is not moving
+		if(!this.sprite.isFollowingPlayer) {
+			if(playerObject.getSpeed()>0) {
+				this.sprite.body.velocity.x = -400;
+			} else if(playerObject.getSpeed()<0) {
+				this.sprite.body.velocity.x = 400;
+			} else {
+				//player is not moving
+			}
 		}
 
-		if(this.sprite.inCamera) {
+		if(this.inView()) {
 			this.sprite.body.kinematic = false;
 		} else {
 			this.sprite.body.kinematic = true;
 		}
+
+		if(this.sprite.isFollowingPlayer) {
+			this.followPlayer();
+		}
 	}
 
-	attachToPlayer(playerObject) {
-
+	followPlayer() {
+		if (this.game.cursors.left.isDown && this.sprite.position.x>200) {
+			this.sprite.body.moveLeft(400);
+        } else if (this.game.cursors.right.isDown && this.game.width/3>this.sprite.position.x+200) {
+            this.sprite.body.moveRight(400);
+        }
 	}
 }
 
