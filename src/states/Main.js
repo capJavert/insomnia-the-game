@@ -14,7 +14,7 @@ import Helpers from 'includes/Helpers';
 
 class Main extends Phaser.State {
 
-	create() {
+    create() {
         //game progression variables
         this.game.health = 4;
         this.game.progress = 0;
@@ -170,7 +170,7 @@ class Main extends Phaser.State {
         //weather effects
         this.weather = new Weather(this.game)
         this.weather.addRain();
-	    this.weather.addFog();
+        this.weather.addFog();
 
         //enable movement controls
         this.game.cursors = this.input.keyboard.createCursorKeys();
@@ -181,16 +181,16 @@ class Main extends Phaser.State {
         };
 
         this.game.camera.follow(this.player.sprite);
-	}
+    }
 
-	update() {
+    update() {
         if(!this.game.health) {
             //this.game.state.start("GameOver");
             console.log('WASTED');
         }
 
         //paralax scroll ground fog
-	    this.backgroundBottom.tilePosition.x -= 3;
+        this.backgroundBottom.tilePosition.x -= 3;
 
         //check collision for every object
         for (var i = 0; i < this.game.lvlObjects.length; i++) {
@@ -202,15 +202,19 @@ class Main extends Phaser.State {
 
         //update player position
         this.player.update(this.game, this.game.cursors, this.backgroundMid);
-	}
+    }
 
     handleContact(body1, body2) {
         if(body1.sprite.oType == 'Player') {
             var sprite = body2.sprite;
             var player = body1.sprite;
-        } else {
+        } else if(body2.sprite.oType == 'Player') {
             var sprite = body1.sprite;
             var player = body2.sprite;
+        } else {
+            var sprite = body1.sprite;
+            var sprite2 = body2.sprite;
+            var player = null;
         }
 
         switch(sprite.oType) {
@@ -220,17 +224,23 @@ class Main extends Phaser.State {
                 return false; 
                 break;
             case 'Fiend': 
-                if(!player.damageBounce) {
-                    console.log('collision');
-                    player.damageBounce = true;
-                    sprite.playerHit = true;
+                if(player!=null) {
+                    if(!player.damageBounce) {
+                        console.log('collision');
+                        player.damageBounce = true;
+                        sprite.playerHit = true;
+                    }
+                } else if(sprite2.oType == 'Trap') {
+                    sprite.trapHit = true;
                 }
 
                 return false; 
                 break;
             case 'FlyingFiend': 
-                if(!player.damageBounce) {
-                    player.damageBounce = true;
+                if(player!=null) {
+                    if(!player.damageBounce) {
+                        player.damageBounce = true;
+                    }
                 }
 
                 return false; 
