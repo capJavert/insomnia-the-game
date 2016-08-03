@@ -45,6 +45,7 @@ class Sprite {
 
     //set collision rules for sprite and callback function
     collides(groups, callback) {
+    	this.groups = groups;
         this.sprite.body.collides(groups, callback);
     }
 

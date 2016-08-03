@@ -117,7 +117,7 @@ class Player {
             this.player.body.moveUp(900);
         }
 
-        if(!this.checkIfCanJump() && this.player.body.velocity.y>220) {
+        if(!this.checkIfCanJump() && this.player.body.velocity.y>250) {
             this.player.body.offset.y = -50;
             this.player.animations.play('falling');
         } else {

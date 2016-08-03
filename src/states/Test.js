@@ -194,8 +194,13 @@ class Test extends Phaser.State {
             var sprite = body1.sprite;
             var player = body2.sprite;
         } else {
-            var sprite = body1.sprite;
-            var sprite2 = body2.sprite;
+            if(body1.sprite.oType == 'Trap') {
+                var sprite = body2.sprite;
+                var sprite2 = body1.sprite;
+            } else {
+                var sprite = body1.sprite;
+                var sprite2 = body2.sprite;
+            }
             var player = null;
         }
 
@@ -206,13 +211,13 @@ class Test extends Phaser.State {
                 return false; 
                 break;
             case 'Fiend': 
+            console.log('collision');
                 if(player!=null) {
                     if(!player.damageBounce) {
-                        console.log('collision');
                         player.damageBounce = true;
                         sprite.playerHit = true;
                     }
-                } else if(sprite2.oType == 'Trap') {
+                } else {
                     sprite.trapHit = true;
                 }
 
