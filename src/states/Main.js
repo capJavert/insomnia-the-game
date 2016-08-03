@@ -21,6 +21,7 @@ class Main extends Phaser.State {
         this.game.orbCount = 0;
         this.game.debugMode = false;
         this.game.ready = false;
+        this.game.end = false;
 
         //set up world and physics
         //left 500 offset for objects swap
@@ -162,14 +163,6 @@ class Main extends Phaser.State {
         this.game.lvlObjects = this.helpers.linearRockGenerator(this, this.game.lvlObjects, 8, 30000, 70, 360);
         this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 3, 48000, 70, 360);
 
-        //render lvl objects
-        for (var i = 0; i < this.game.lvlObjects.length; i++) {
-            this.game.lvlObjects[i].render();
-        }
-
-        //add endgame listener on last object in lvl array
-        this.game.lvlObjects[this.game.lvlObjects.length-1].sprite.oType = 'EndGame';
-
         //create player
         //this.player = new Dummy(this.game, 150, this.game.height-95);
         this.player = new Player(this.game, 150, this.game.height-95);
@@ -178,6 +171,18 @@ class Main extends Phaser.State {
         //set collision rules for player
         this.player.collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision, this.fiendCollision], this.player.hitSprite);
     
+        //render lvl objects
+        //set collision rules for game objects
+        for (var i = 0; i < this.game.lvlObjects.length; i++) {
+            this.game.lvlObjects[i].render();
+            this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.onHit, this);
+            this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision], this.game.lvlObjects[i].hitSprite);
+            this.game.lvlObjects[i].setContact(this.player.material);
+        }
+
+        //add endgame listener on last object in lvl array
+        this.game.lvlObjects[this.game.lvlObjects.length-1].sprite.oType = 'EndGame';
+
         //init day night cycle
         this.dayCycle = new DayCycle(this.game, 5000);
         this.dayCycle.initMoon(this.moonSprite);
@@ -230,18 +235,25 @@ class Main extends Phaser.State {
     }
 
     update() {
+        //check if game is finished
+        if(this.game.end) {
+            this.showLoadingMessage(this.gameEnd);
+
+            return;
+        }
+
+        //check if player is dead
         if(!this.game.health) {
-            this.game.state.start("GameOver");
+            this.showLoadingMessage(this.gameOver);
+
+            return;
         }
 
         //paralax scroll ground fog
         this.backgroundBottom.tilePosition.x -= 3;
 
-        //check collision for every object
+        //update every game object
         for (var i = 0; i < this.game.lvlObjects.length; i++) {
-            this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.onHit, this);
-            this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision], this.game.lvlObjects[i].hitSprite);
-            this.game.lvlObjects[i].setContact(this.player.material);
             this.game.lvlObjects[i].update(this.player);
         }
 
@@ -273,7 +285,7 @@ class Main extends Phaser.State {
 
         switch(sprite.oType) {
             case 'EndGame': 
-                this.game.state.start('Menu');
+                this.game.end = true;
 
                 return true; 
                 break;
@@ -328,9 +340,48 @@ class Main extends Phaser.State {
         this.startMessageTween.onComplete.add(this.startGame, this);
     }
 
+    showLoadingMessage(action) {
+        let endMessageBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
+        endMessageBitMap.ctx.rect(0, 0, this.game.width, this.game.height);
+        endMessageBitMap.ctx.fillStyle = '#000000';
+        endMessageBitMap.ctx.fill();
+        this.messageBackground = this.game.add.sprite(0, 0, endMessageBitMap);
+        this.messageBackground.alpha = 0;
+
+        //text
+        this.text = this.game.add.text(
+            this.game.width/2, this.game.height/2, 
+            "... Reloading, please wait ..."
+        );
+        this.text.anchor.setTo(0.5);
+        this.text.font = 'IM Fell DW Pica';
+        this.text.fontWeight = 'normal';
+        this.text.fontSize = 60;
+        this.text.fill = '#FFFFFF'
+        this.text.align = 'center';
+        this.text.alpha = 0;
+
+        this.game.add.tween(this.text)
+        .to( { alpha: 1 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false);
+        this.endMessageTween = this.game.add.tween(this.messageBackground)
+        .to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+
+        this.endMessageTween.onComplete.add(action, this);
+    }
+
     startGame() {
         this.messageBackground.kill();
         this.text.kill();
+    }
+
+    gameOver() {
+        this.game.state.clearCurrentState();
+        this.game.state.start('GameOver', true, false);
+    }
+
+    gameEnd() {
+        this.game.state.clearCurrentState();
+        this.game.state.start('Menu', true, false);
     }
 }
 

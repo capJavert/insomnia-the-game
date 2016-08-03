@@ -5,7 +5,7 @@ class GameOver extends Phaser.State {
 	}
 
 	restartGame() {
-		this.game.state.start("Menu");
+		this.game.state.start("Main");
 	}
 
 }
