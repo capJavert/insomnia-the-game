@@ -19,8 +19,8 @@ class Main extends Phaser.State {
         this.game.health = 4;
         this.game.progress = 0;
         this.game.orbCount = 0;
-        this.game.debugMode = true;
-        this.game.ready = true;
+        this.game.debugMode = false;
+        this.game.ready = false;
 
         //set up world and physics
         //left 500 offset for objects swap
@@ -167,7 +167,7 @@ class Main extends Phaser.State {
             this.game.lvlObjects[i].render();
         }
 
-        //add endgame listener on last objest in lvl array
+        //add endgame listener on last object in lvl array
         this.game.lvlObjects[this.game.lvlObjects.length-1].sprite.oType = 'EndGame';
 
         //create player
@@ -197,7 +197,7 @@ class Main extends Phaser.State {
 
         //lvl start message
         //background
-        /*let mesageBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
+        let mesageBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
         mesageBitMap.ctx.rect(0, 0, this.game.width, this.game.height);
         mesageBitMap.ctx.fillStyle = '#000000';
         mesageBitMap.ctx.fill();
@@ -216,7 +216,7 @@ class Main extends Phaser.State {
         this.text.align = 'center';
 
         //time to hide message and start game
-        this.game.time.events.add(Phaser.Timer.SECOND*4, this.clearStartMessage, this);*/
+        this.game.time.events.add(Phaser.Timer.SECOND*4, this.clearStartMessage, this);
 
         //enable movement controls
         this.game.cursors = this.input.keyboard.createCursorKeys();
@@ -230,10 +230,6 @@ class Main extends Phaser.State {
     }
 
     update() {
-        while(!this.game.ready) {
-            return;
-        }
-    
         if(!this.game.health) {
             this.game.state.start("GameOver");
         }
@@ -247,6 +243,10 @@ class Main extends Phaser.State {
             this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision], this.game.lvlObjects[i].hitSprite);
             this.game.lvlObjects[i].setContact(this.player.material);
             this.game.lvlObjects[i].update(this.player);
+        }
+
+        while(!this.game.ready) {
+            return;
         }
 
         //update player position
@@ -270,8 +270,6 @@ class Main extends Phaser.State {
             }
             var player = null;
         }
-
-        console.log(sprite.oType);
 
         switch(sprite.oType) {
             case 'EndGame': 

@@ -20,10 +20,16 @@ class MenuButton {
 
         this.text.anchor.setTo(0.5);
         this.text.inputEnabled = true;
-        this.text.input.useHandCursor = true;
-	    this.text.events.onInputOver.add(this.mouseOver, this);
-	    this.text.events.onInputOut.add(this.mouseOut, this);
-	    this.text.events.onInputDown.add(action, this);
+	    //set click action fuction if passed as argument
+	    //set hover actions and hand cursor if text is clickable
+	    //null if no click action
+	    if(action != null) {
+	        this.text.input.useHandCursor = true;
+	    	this.text.events.onInputDown.add(action, this);
+		    this.text.events.onInputOver.add(this.mouseOver, this);
+		    this.text.events.onInputOut.add(this.mouseOut, this);
+	    }
+
 	    this.position = this.text.position;
 	    this.width = this.text.width;
 	    this.height = this.text.height;
