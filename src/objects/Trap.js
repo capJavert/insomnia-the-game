@@ -46,7 +46,7 @@ class Trap extends Sprite {
 		}
 
 		if(this.inView()) {
-			this.sprite.body.kinematic = false;
+			this.sprite.body.dynamic = true;
 		} else {
 			this.sprite.body.kinematic = true;
 		}
