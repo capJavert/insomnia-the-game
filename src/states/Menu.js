@@ -3,28 +3,12 @@ import MenuButton from 'objects/MenuButton';
 class GameTitle extends Phaser.State {
 
 	create() {
+		//logo
 		this.logo = this.game.add.image(this.game.width/2, 180, 'logo');
 		this.logo.scale.setTo(0.5, 0.5);
 		this.logo.anchor.setTo(0.5, 0); 
 
-		//play
-        /*this.play = this.game.add.text(
-            this.game.width/2, this.logo.position.y+this.logo.height+100, 
-            "Play",
-            {
-            	font: 'IM Fell DW Pica',
-            	fontWeight: 'normal',
-            	fontSize: 48,
-            	fill: '#FFFFFF',
-            	align: 'center'
-            }
-        );
-        this.play.anchor.setTo(0.5);
-        this.play.inputEnabled = true;
-        this.play.input.useHandCursor = true;
-	    this.play.events.onInputOver.add(this.mouseOver, this);
-	    this.play.events.onInputOut.add(this.mouseOut, this);
-	    this.play.events.onInputDown.add(this.startGame, this);*/
+		//buttons
 	    this.play = new MenuButton(this.game, this.game.width/2, this.logo.position.y+this.logo.height+100, "Play", this.startGame);
 	    this.controls = new MenuButton(this.game, this.game.width/2, this.play.position.y+this.play.height+20, "Controls", this.Controls);
 	    this.stats = new MenuButton(this.game, this.game.width/2, this.controls.position.y+this.controls.height+20, "Achievements", this.Stats);
