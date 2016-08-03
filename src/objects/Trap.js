@@ -16,7 +16,7 @@ class Trap extends Sprite {
 
 	render() {
 		this.sprite = this.game.add.sprite(this.x, this.y, 'ground-trap');
-		this.sprite.position.y -= (this.sprite.height/2);
+		this.sprite.position.y += (this.sprite.height/2);
 		this.setScale(this.scale);
 		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
 		this.sprite.oType = this.oType; //for check inside collision callback

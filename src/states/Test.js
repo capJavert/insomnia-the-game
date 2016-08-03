@@ -19,7 +19,7 @@ class Test extends Phaser.State {
         this.game.health = 4;
         this.game.progress = 0;
         this.game.orbCount = 0;
-        this.game.debugMode = true;
+        this.game.debugMode = false;
         this.game.ready = true;
 
         //set up world and physics
