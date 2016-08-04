@@ -11,6 +11,7 @@ import Bitmap from 'objects/Bitmap';
 import Material from 'objects/Material';
 import Dummy from 'objects/Dummy';
 import Helpers from 'includes/Helpers';
+import MenuButton from 'objects/MenuButton';
 
 class Main extends Phaser.State {
 
@@ -68,14 +69,6 @@ class Main extends Phaser.State {
             this.game.width, 
             this.game.cache.getImage('background-mid').height, 
             'background-mid'
-        );
-
-        //create ground fog 
-        this.backgroundBottom = this.game.add.tileSprite(0, 
-            this.game.height - this.game.cache.getImage('background-bottom').height, 
-            this.game.width, 
-            this.game.cache.getImage('background-bottom').height, 
-            'background-bottom'
         );
 
         //lvl objects
@@ -167,10 +160,18 @@ class Main extends Phaser.State {
         //this.player = new Dummy(this.game, 150, this.game.height-95);
         this.player = new Player(this.game, 150, this.game.height-95);
         this.player.setCollisionGroup(this.playerCollision);
- 
+
         //set collision rules for player
         this.player.collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision, this.fiendCollision], this.player.hitSprite);
     
+        //create ground fog 
+        this.backgroundBottom = this.game.add.tileSprite(0, 
+            this.game.height - this.game.cache.getImage('background-bottom').height, 
+            this.game.width, 
+            this.game.cache.getImage('background-bottom').height, 
+            'background-bottom'
+        );
+
         //render lvl objects
         //set collision rules for game objects
         for (var i = 0; i < this.game.lvlObjects.length; i++) {
@@ -223,6 +224,18 @@ class Main extends Phaser.State {
         //time to hide message and start game
         this.game.time.events.add(Phaser.Timer.SECOND*4, this.clearStartMessage, this);
 
+        //orb count display
+        this.orbCountDisplay = new MenuButton(
+            this.game, this.game.width-200, 60, "Orbs collected: "+this.game.orbCount, null, 
+            {
+                font: 'Arial',
+                fontWeight: 'normal',
+                fontSize: 28,
+                fill: '#FFFFFF',
+                align: 'right'
+            }
+        );
+
         //enable movement controls
         this.game.cursors = this.input.keyboard.createCursorKeys();
 
@@ -235,6 +248,9 @@ class Main extends Phaser.State {
     }
 
     update() {
+        //update orb count display
+        this.orbCountDisplay.text.setText("Orbs collected: "+this.game.orbCount);
+
         //check if game is finished
         if(this.game.end) {
             this.showLoadingMessage(this.gameEnd);

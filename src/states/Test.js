@@ -11,16 +11,18 @@ import Bitmap from 'objects/Bitmap';
 import Material from 'objects/Material';
 import Dummy from 'objects/Dummy';
 import Helpers from 'includes/Helpers';
+import MenuButton from 'objects/MenuButton';
 
 class Test extends Phaser.State {
 
-	create() {
+    create() {
         //game progression variables
         this.game.health = 4;
         this.game.progress = 0;
         this.game.orbCount = 0;
         this.game.debugMode = false;
         this.game.ready = true;
+        this.game.end = false;
 
         //set up world and physics
         //left 500 offset for objects swap
@@ -69,14 +71,6 @@ class Test extends Phaser.State {
             'background-mid'
         );
 
-        //create ground fog 
-        this.backgroundBottom = this.game.add.tileSprite(0, 
-            this.game.height - this.game.cache.getImage('background-bottom').height, 
-            this.game.width, 
-            this.game.cache.getImage('background-bottom').height, 
-            'background-bottom'
-        );
-
         //lvl objects
         //new Fiend(this.game, 0, 0, 0.4, this.fiendCollision),
         //new FlyingFiend(this.game, 0, 0, 0.4, this.fiendCollision),
@@ -85,31 +79,47 @@ class Test extends Phaser.State {
         //new Trap(this.game, , , 1, this.interactionCollision),
         this.game.lvlObjects = [
             new Trap(this.game, 500, 0, 1, this.interactionCollision),
-            new Fiend(this.game, 1700, -30, 0.8, this.fiendCollision),
+            new Fiend(this.game, 1500, -30, 0.8, this.fiendCollision),              
         ];
 
         //apply generators
         this.helpers = new Helpers();
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 960, 120, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 7, 3160, 120, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 6560, 120, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 6, 10300, 120, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 10, 21400, 120, 360);
-
-
-        //render lvl objects
-        for (var i = 0; i < this.game.lvlObjects.length; i++) {
-            this.game.lvlObjects[i].render();
-        }
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 960, 70, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 3, 3160, 70, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 6560, 70, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 6, 10300, 70, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 10, 21400, 70, 360);
+        this.game.lvlObjects = this.helpers.linearRockGenerator(this, this.game.lvlObjects, 8, 30000, 70, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 3, 48000, 70, 360);
 
         //create player
         //this.player = new Dummy(this.game, 150, this.game.height-95);
         this.player = new Player(this.game, 150, this.game.height-95);
         this.player.setCollisionGroup(this.playerCollision);
- 
+
         //set collision rules for player
         this.player.collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision, this.fiendCollision], this.player.hitSprite);
     
+        //create ground fog 
+        this.backgroundBottom = this.game.add.tileSprite(0, 
+            this.game.height - this.game.cache.getImage('background-bottom').height, 
+            this.game.width, 
+            this.game.cache.getImage('background-bottom').height, 
+            'background-bottom'
+        );
+    
+        //render lvl objects
+        //set collision rules for game objects
+        for (var i = 0; i < this.game.lvlObjects.length; i++) {
+            this.game.lvlObjects[i].render();
+            this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.onHit, this);
+            this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision], this.game.lvlObjects[i].hitSprite);
+            this.game.lvlObjects[i].setContact(this.player.material);
+        }
+
+        //add endgame listener on last object in lvl array
+        this.game.lvlObjects[this.game.lvlObjects.length-1].sprite.oType = 'EndGame';
+
         //init day night cycle
         this.dayCycle = new DayCycle(this.game, 5000);
         this.dayCycle.initMoon(this.moonSprite);
@@ -125,7 +135,7 @@ class Test extends Phaser.State {
         //weather effects
         this.weather = new Weather(this.game)
         this.weather.addRain();
-	    this.weather.addFog();
+        this.weather.addFog();
 
         //lvl start message
         //background
@@ -150,6 +160,18 @@ class Test extends Phaser.State {
         //time to hide message and start game
         this.game.time.events.add(Phaser.Timer.SECOND*4, this.clearStartMessage, this);*/
 
+        //orb count display
+        this.orbCountDisplay = new MenuButton(
+            this.game, this.game.width-200, 60, "Orbs collected: "+this.game.orbCount, null, 
+            {
+                font: 'Arial',
+                fontWeight: 'normal',
+                fontSize: 28,
+                fill: '#FFFFFF',
+                align: 'right'
+            }
+        );
+
         //enable movement controls
         this.game.cursors = this.input.keyboard.createCursorKeys();
 
@@ -159,32 +181,41 @@ class Test extends Phaser.State {
         };
 
         this.game.camera.follow(this.player.sprite);
-	}
+    }
 
-	update() {
+    update() {
+        //update orb count display
+        this.orbCountDisplay.text.setText("Orbs collected: "+this.game.orbCount);
+
+        //check if game is finished
+        if(this.game.end) {
+            this.showLoadingMessage(this.gameEnd);
+
+            return;
+        }
+
+        //check if player is dead
+        if(!this.game.health) {
+            this.showLoadingMessage(this.gameOver);
+
+            return;
+        }
+
+        //paralax scroll ground fog
+        this.backgroundBottom.tilePosition.x -= 3;
+
+        //update every game object
+        for (var i = 0; i < this.game.lvlObjects.length; i++) {
+            this.game.lvlObjects[i].update(this.player);
+        }
+
         while(!this.game.ready) {
             return;
         }
 
-        if(!this.game.health) {
-            //this.game.state.start("GameOver");
-            console.log('WASTED');
-        }
-
-        //paralax scroll ground fog
-	    this.backgroundBottom.tilePosition.x -= 3;
-
-        //check collision for every object
-        for (var i = 0; i < this.game.lvlObjects.length; i++) {
-            this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.onHit, this);
-            this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision], this.game.lvlObjects[i].hitSprite);
-            this.game.lvlObjects[i].setContact(this.player.material);
-            this.game.lvlObjects[i].update(this.player);
-        }
-
         //update player position
         this.player.update(this.game, this.game.cursors, this.backgroundMid);
-	}
+    }
 
     handleContact(body1, body2) {
         if(body1.sprite.oType == 'Player') {
@@ -205,19 +236,23 @@ class Test extends Phaser.State {
         }
 
         switch(sprite.oType) {
+            case 'EndGame': 
+                this.game.end = true;
+
+                return true; 
+                break;
             case 'Orb': 
                 sprite.collect = true;
 
                 return false; 
                 break;
             case 'Fiend': 
-            console.log('collision');
                 if(player!=null) {
                     if(!player.damageBounce) {
                         player.damageBounce = true;
                         sprite.playerHit = true;
                     }
-                } else {
+                } else if(sprite.oType == 'Trap' || sprite2.oType == 'Trap') {
                     sprite.trapHit = true;
                 }
 
@@ -257,9 +292,48 @@ class Test extends Phaser.State {
         this.startMessageTween.onComplete.add(this.startGame, this);
     }
 
+    showLoadingMessage(action) {
+        let endMessageBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
+        endMessageBitMap.ctx.rect(0, 0, this.game.width, this.game.height);
+        endMessageBitMap.ctx.fillStyle = '#000000';
+        endMessageBitMap.ctx.fill();
+        this.messageBackground = this.game.add.sprite(0, 0, endMessageBitMap);
+        this.messageBackground.alpha = 0;
+
+        //text
+        this.text = this.game.add.text(
+            this.game.width/2, this.game.height/2, 
+            "... Reloading, please wait ..."
+        );
+        this.text.anchor.setTo(0.5);
+        this.text.font = 'IM Fell DW Pica';
+        this.text.fontWeight = 'normal';
+        this.text.fontSize = 60;
+        this.text.fill = '#FFFFFF'
+        this.text.align = 'center';
+        this.text.alpha = 0;
+
+        this.game.add.tween(this.text)
+        .to( { alpha: 1 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false);
+        this.endMessageTween = this.game.add.tween(this.messageBackground)
+        .to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+
+        this.endMessageTween.onComplete.add(action, this);
+    }
+
     startGame() {
         this.messageBackground.kill();
         this.text.kill();
+    }
+
+    gameOver() {
+        this.game.state.clearCurrentState();
+        this.game.state.start('GameOver', true, false);
+    }
+
+    gameEnd() {
+        this.game.state.clearCurrentState();
+        this.game.state.start('Menu', true, false);
     }
 }
 
