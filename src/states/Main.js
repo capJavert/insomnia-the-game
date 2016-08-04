@@ -26,8 +26,8 @@ class Main extends Phaser.State {
         this.game.end = false;
 
         //set up world and physics
-        //left 500 offset for objects swap
-        this.game.world.setBounds(-500, 0, this.game.width+500, this.game.height);
+        //left 1024 offset for objects swap
+        this.game.world.setBounds(-1024, 0, this.game.width+1024, this.game.height);
         this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.p2.restitution = 0.0;
         this.game.physics.p2.setImpactEvents(true);
@@ -40,7 +40,7 @@ class Main extends Phaser.State {
         }
 
         //set up camera and add offset
-        this.game.cameraOffset = -500;
+        this.game.cameraOffset = -1024;
         this.game.camera.width = 0;
 
         //collision groups

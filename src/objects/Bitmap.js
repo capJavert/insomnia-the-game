@@ -26,14 +26,14 @@ class Bitmap extends Sprite {
 	    sprite.ctx.fill();
 
 		this.sprite = this.game.add.sprite(this.x, this.y, sprite);
+		this.sprite.position.y -= (this.sprite.height/2);
 		this.setScale(this.scale);
 		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
 		this.sprite.oType = this.oType; //for check inside collision callback
-	    this.sprite.body.kinematic = this.kinematic;
+		if(this.kinematic) this.sprite.body.kinematic = true;
 	    this.sprite.body.collideWorldBounds = true;
         this.sprite.body.setCollisionGroup(this.collisionGroup);
 
-		this.sprite.position.y -= (this.sprite.height/2);
 		this.visible = true;
 
 		//set material params
@@ -49,6 +49,14 @@ class Bitmap extends Sprite {
 			this.sprite.body.velocity.x = 400;
 		} else {
 			//player is not moving
+		}
+
+		if(!this.kinematic) {
+			if(this.inView()) {
+				this.sprite.body.dynamic = true;
+			} else {
+				this.sprite.body.kinematic = true;
+			}
 		}
 	}
 }
