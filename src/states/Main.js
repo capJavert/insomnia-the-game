@@ -302,12 +302,16 @@ class Main extends Phaser.State {
 
         switch(sprite.oType) {
             case 'EndGame': 
-                this.game.end = true;
+                if(player!=null) {
+                    this.game.end = true;
+                }
 
                 return true; 
                 break;
             case 'Orb': 
-                sprite.collect = true;
+                if(player!=null) {
+                    sprite.collect = true;
+                }
 
                 return false; 
                 break;

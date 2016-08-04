@@ -13,6 +13,7 @@ import Dummy from 'objects/Dummy';
 import Helpers from 'includes/Helpers';
 import MenuButton from 'objects/MenuButton';
 import Spikes from 'objects/Spikes';
+import Pond from 'objects/Pond';
 
 class Test extends Phaser.State {
 
@@ -26,8 +27,8 @@ class Test extends Phaser.State {
         this.game.end = false;
 
         //set up world and physics
-        //left 500 offset for objects swap
-        this.game.world.setBounds(-500, 0, this.game.width+500, this.game.height);
+        //left 1024 offset for objects swap
+        this.game.world.setBounds(-1024, 0, this.game.width+1024, this.game.height);
         this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.p2.restitution = 0.0;
         this.game.physics.p2.setImpactEvents(true);
@@ -40,7 +41,7 @@ class Test extends Phaser.State {
         }
 
         //set up camera and add offset
-        this.game.cameraOffset = -500;
+        this.game.cameraOffset = -1024;
         this.game.camera.width = 0;
 
         //collision groups
@@ -81,9 +82,14 @@ class Test extends Phaser.State {
         this.game.lvlObjects = [
             //new Trap(this.game, 500, 0, 1, this.interactionCollision),
             //new Fiend(this.game, 1500, -30, 0.8, this.fiendCollision),
-            new Rock(this.game, 600, -20, 1, this.obstaclesCollision),  
+            /*new Bitmap(this.game, 'Platform', 600, 150, 600, 40, 1, this.obstaclesCollision, false),
+            new Bitmap(this.game, 'Platform', 400, 0, 40, 150, 1, this.obstaclesCollision, false),
+            new Bitmap(this.game, 'Platform', 800, 0, 40, 150, 1, this.obstaclesCollision, false), */
+            new Pond(this.game, 1000, 0, 1, this.interactionCollision),
+
+            /*new Rock(this.game, 600, -20, 1, this.obstaclesCollision),  
             new Spikes(this.game, 1000, 0, 1, this.obstaclesCollision),   
-            new Rock(this.game, 1400, -30, 1, this.obstaclesCollision)     
+            new Rock(this.game, 1400, -30, 1, this.obstaclesCollision)*/     
         ];
 
         //apply generators
@@ -137,9 +143,9 @@ class Test extends Phaser.State {
         ];
 
         //weather effects
-        this.weather = new Weather(this.game)
-        this.weather.addRain();
-        this.weather.addFog();
+        //this.weather = new Weather(this.game)
+        //this.weather.addRain();
+        //this.weather.addFog();
 
         //lvl start message
         //background
@@ -241,12 +247,16 @@ class Test extends Phaser.State {
 
         switch(sprite.oType) {
             case 'EndGame': 
-                this.game.end = true;
+                if(player!=null) {
+                    this.game.end = true;
+                }
 
                 return true; 
                 break;
             case 'Orb': 
-                sprite.collect = true;
+                if(player!=null) {
+                    sprite.collect = true;
+                }
 
                 return false; 
                 break;
