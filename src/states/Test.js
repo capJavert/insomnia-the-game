@@ -12,6 +12,7 @@ import Material from 'objects/Material';
 import Dummy from 'objects/Dummy';
 import Helpers from 'includes/Helpers';
 import MenuButton from 'objects/MenuButton';
+import Spikes from 'objects/Spikes';
 
 class Test extends Phaser.State {
 
@@ -20,7 +21,7 @@ class Test extends Phaser.State {
         this.game.health = 4;
         this.game.progress = 0;
         this.game.orbCount = 0;
-        this.game.debugMode = false;
+        this.game.debugMode = true;
         this.game.ready = true;
         this.game.end = false;
 
@@ -78,8 +79,11 @@ class Test extends Phaser.State {
         //new Rock(this.game, , , 1, this.obstaclesCollision),
         //new Trap(this.game, , , 1, this.interactionCollision),
         this.game.lvlObjects = [
-            new Trap(this.game, 500, 0, 1, this.interactionCollision),
-            new Fiend(this.game, 1500, -30, 0.8, this.fiendCollision),              
+            //new Trap(this.game, 500, 0, 1, this.interactionCollision),
+            //new Fiend(this.game, 1500, -30, 0.8, this.fiendCollision),
+            new Rock(this.game, 600, -20, 1, this.obstaclesCollision),  
+            new Spikes(this.game, 1000, 0, 1, this.obstaclesCollision),   
+            new Rock(this.game, 1400, -30, 1, this.obstaclesCollision)     
         ];
 
         //apply generators
@@ -272,6 +276,15 @@ class Test extends Phaser.State {
                     sprite.isFollowingPlayer = true;
                 } else {
                     sprite.isFollowingPlayer = false;
+                }
+
+                return false; 
+                break;
+            case 'Spikes': 
+                if(player!=null) {
+                    if(!player.damageBounce) {
+                        player.damageBounce = true;
+                    }
                 }
 
                 return false; 

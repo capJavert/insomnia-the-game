@@ -12,6 +12,7 @@ import Material from 'objects/Material';
 import Dummy from 'objects/Dummy';
 import Helpers from 'includes/Helpers';
 import MenuButton from 'objects/MenuButton';
+import Spikes from 'objects/Spikes';
 
 class Main extends Phaser.State {
 
@@ -336,6 +337,15 @@ class Main extends Phaser.State {
                     sprite.isFollowingPlayer = true;
                 } else {
                     sprite.isFollowingPlayer = false;
+                }
+
+                return false; 
+                break;
+            case 'Spikes': 
+                if(player!=null) {
+                    if(!player.damageBounce) {
+                        player.damageBounce = true;
+                    }
                 }
 
                 return false; 
