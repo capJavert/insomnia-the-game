@@ -37,11 +37,10 @@ class Pond extends Bitmap {
 		this.material = new Material(this.game, 'pond', this.sprite.body);
 
      	//set emitter
-        this.emitter = new ParticleEmitter(this.game, this.x, this.y, 250, 540, 500, 1500, 10, 10);
+        this.emitter = new ParticleEmitter(this.game, this.x, this.y, 250, 540, 500, 200, 10, -1, 'y');
         this.emitter.particle.color = '#9cc9de';
-        this.emitter.particle.width = 8;
-        this.emitter.particle.height = 30;
-        this.emitter.particle.speed = 1500;
+        this.emitter.particle.width = 5;
+        this.emitter.particle.height = 10;
         this.emitter.createParticles();
 
      	//start emitter

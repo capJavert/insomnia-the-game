@@ -13,6 +13,7 @@ import Dummy from 'objects/Dummy';
 import Helpers from 'includes/Helpers';
 import MenuButton from 'objects/MenuButton';
 import Spikes from 'objects/Spikes';
+import Pond from 'objects/Pond';
 
 class Main extends Phaser.State {
 
@@ -202,6 +203,18 @@ class Main extends Phaser.State {
         this.weather.addRain();
         this.weather.addFog();
 
+        //orb count display
+        this.orbCountDisplay = new MenuButton(
+            this.game, this.game.width-200, 60, "Orbs collected: "+this.game.orbCount, null, 
+            {
+                font: 'Arial',
+                fontWeight: 'normal',
+                fontSize: 28,
+                fill: '#FFFFFF',
+                align: 'right'
+            }
+        );
+
         //lvl start message
         //background
         let mesageBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
@@ -225,18 +238,6 @@ class Main extends Phaser.State {
         //time to hide message and start game
         this.game.time.events.add(Phaser.Timer.SECOND*4, this.clearStartMessage, this);
 
-        //orb count display
-        this.orbCountDisplay = new MenuButton(
-            this.game, this.game.width-200, 60, "Orbs collected: "+this.game.orbCount, null, 
-            {
-                font: 'Arial',
-                fontWeight: 'normal',
-                fontSize: 28,
-                fill: '#FFFFFF',
-                align: 'right'
-            }
-        );
-
         //enable movement controls
         this.game.cursors = this.input.keyboard.createCursorKeys();
 
@@ -254,6 +255,7 @@ class Main extends Phaser.State {
 
         //check if game is finished
         if(this.game.end) {
+            this.game.ready = false;
             this.showLoadingMessage(this.gameEnd);
 
             return;

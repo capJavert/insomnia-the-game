@@ -22,7 +22,7 @@ class Test extends Phaser.State {
         this.game.health = 4;
         this.game.progress = 0;
         this.game.orbCount = 0;
-        this.game.debugMode = true;
+        this.game.debugMode = false;
         this.game.ready = true;
         this.game.end = false;
 
@@ -117,7 +117,7 @@ class Test extends Phaser.State {
             this.game.cache.getImage('background-bottom').height, 
             'background-bottom'
         );
-    
+
         //render lvl objects
         //set collision rules for game objects
         for (var i = 0; i < this.game.lvlObjects.length; i++) {
@@ -143,9 +143,21 @@ class Test extends Phaser.State {
         ];
 
         //weather effects
-        //this.weather = new Weather(this.game)
-        //this.weather.addRain();
-        //this.weather.addFog();
+        this.weather = new Weather(this.game)
+        this.weather.addRain();
+        this.weather.addFog();
+
+        //orb count display
+        this.orbCountDisplay = new MenuButton(
+            this.game, this.game.width-200, 60, "Orbs collected: "+this.game.orbCount, null, 
+            {
+                font: 'Arial',
+                fontWeight: 'normal',
+                fontSize: 28,
+                fill: '#FFFFFF',
+                align: 'right'
+            }
+        );
 
         //lvl start message
         //background
@@ -170,18 +182,6 @@ class Test extends Phaser.State {
         //time to hide message and start game
         this.game.time.events.add(Phaser.Timer.SECOND*4, this.clearStartMessage, this);*/
 
-        //orb count display
-        this.orbCountDisplay = new MenuButton(
-            this.game, this.game.width-200, 60, "Orbs collected: "+this.game.orbCount, null, 
-            {
-                font: 'Arial',
-                fontWeight: 'normal',
-                fontSize: 28,
-                fill: '#FFFFFF',
-                align: 'right'
-            }
-        );
-
         //enable movement controls
         this.game.cursors = this.input.keyboard.createCursorKeys();
 
@@ -199,6 +199,7 @@ class Test extends Phaser.State {
 
         //check if game is finished
         if(this.game.end) {
+            this.game.ready = false;
             this.showLoadingMessage(this.gameEnd);
 
             return;
