@@ -356,6 +356,13 @@ class Main extends Phaser.State {
 
                 return false; 
                 break;
+            case 'Pond': 
+
+                return false; 
+            case 'Particle': 
+
+                return false;
+                break;
             default:
                 return true;
         }
