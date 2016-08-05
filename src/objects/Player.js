@@ -23,6 +23,7 @@ class Player {
         this.stunned = false;
         this.tween = null;
         this.drag = false;
+        this.pondBoost = false;
 
         //enable physics on player
         this.game.physics.p2.enable(this.player, this.game.debugMode);
@@ -53,12 +54,19 @@ class Player {
         this.speed = 0;
 
         // Modify movement while mid air
-        if(!this.checkIfCanJump()) {
-            this.modifier = 1.3;
+        if(this.pondBoost) {
+            this.modifier = 0.7;
+            this.pondBoost = false;
         } else {
-            this.modifier = 1;
-            this.player.jumping = false;
+            if(!this.checkIfCanJump()) {
+                this.modifier = 1.3;
+            } else {
+                this.modifier = 1;
+                this.player.jumping = false;
+            }
         }
+
+        console.log(this.modifier);
 
         //movement
         if(this.player.damageBounce && !this.stunned) {

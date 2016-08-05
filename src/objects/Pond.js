@@ -17,13 +17,7 @@ class Pond extends Bitmap {
 
 	render() {
 		//create bitmap data
-		var sprite = this.game.add.bitmapData(250, 540);
-
-		//	Fill it
-	    sprite.ctx.fillStyle = '#2a2f33';
-	    sprite.ctx.fill();
-
-		this.sprite = this.game.add.sprite(this.x, this.y, sprite);
+		this.sprite = this.game.add.sprite(this.x, this.y, 'pond');
 		this.sprite.position.y -= (this.sprite.height/2);
 		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
 		this.sprite.body.kinematic = true;
@@ -37,14 +31,20 @@ class Pond extends Bitmap {
 		this.material = new Material(this.game, 'pond', this.sprite.body);
 
      	//set emitter
-        this.emitter = new ParticleEmitter(this.game, this.x, this.y, 250, 540, 500, 200, 10, -1, 'y');
+        this.emitter = new ParticleEmitter(this.game, this, 200, 400, 500, 200, 10, -1, 'y');
         this.emitter.particle.color = '#9cc9de';
         this.emitter.particle.width = 5;
         this.emitter.particle.height = 10;
+        this.emitter.particle.speed = 2000;
         this.emitter.createParticles();
 
      	//start emitter
         this.emitter.start();
+
+        //add glowing effect
+        this.sprite.alpha = 1;
+        this.tween = this.game.add.tween(this.sprite)
+        .to( { alpha: 0.8 }, 500, Phaser.Easing.Linear.None, true, 0, -1, true);
 	}
 
 	update(playerObject) {
@@ -58,7 +58,7 @@ class Pond extends Bitmap {
 			//player is not moving
 		}
 
-		this.emitter.update();
+		this.emitter.update(playerObject, this.sprite.position.x);
 		//this.updateEmitterPosition();
 	}
 

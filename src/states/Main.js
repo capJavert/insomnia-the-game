@@ -357,7 +357,13 @@ class Main extends Phaser.State {
                 return false; 
                 break;
             case 'Pond': 
-
+                if(player!=null && player.position.y>this.game.height-300) {
+                    player.animations.play('jump');
+                    player.jumping = true;
+                    player.body.moveUp(1300);
+                    this.player.pondBoost = true;
+                }
+                
                 return false; 
             case 'Particle': 
 

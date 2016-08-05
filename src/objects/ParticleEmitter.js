@@ -2,10 +2,11 @@ import Particle from 'objects/Particle';
 
 class ParticleEmitter {
 
-	constructor(game, x, y, width, height, frequency, particleLifespan, particleQuantity, direction, orientationAxis){
+	constructor(game, sprite, width, height, frequency, particleLifespan, particleQuantity, direction, orientationAxis){
 		this.game = game;
-		this.x = x;
-		this.y = y;
+		this.sprite = sprite;
+		this.x = this.sprite.x;
+		this.y = this.sprite.y;
 		this.particleQuantity = particleQuantity;
 		this.particleLifespan = particleLifespan;
 		this.frequency = frequency;
@@ -17,6 +18,7 @@ class ParticleEmitter {
 			width: 0,
 			height: 0,
 			color: '#ffffff',
+			speed: 0
 		}
 
 		if(orientationAxis=='x') {
@@ -28,7 +30,7 @@ class ParticleEmitter {
 			}
 			this.yMargin = this.y;
 			this.moveMargin = {
-				min: this.y, 
+				min: this.y+10, 
 				max: this.y+this.height
 			}
 		}
@@ -46,12 +48,18 @@ class ParticleEmitter {
 				this.game, 
 				this.particle.width, 
 				this.particle.height, 
-				this.particle.color
+				this.particle.color,
+				this.particle.speed*this.direction
 			);
 		};   
 	}
 
-	update() {
+	update(playerObject, spritePosition) {
+		this.xMargin = {
+			min: spritePosition-this.width/2,
+			max: spritePosition-this.width/2+this.width
+		}
+
 		if(!this.pause && this.game.ready) {
 			for (var i = 0; i < this.particleQuantity; i++) {
 				if(!this.particles[i].spawned) {
@@ -59,10 +67,9 @@ class ParticleEmitter {
 						this.game.rnd.between(this.xMargin.min, this.xMargin.max),
 						this.yMargin,
 						this.particleLifespan,
-						this.game.rnd.between(this.moveMargin.min, this.moveMargin.max)*this.direction,
 					);
 				} else {
-					this.particles[i].update();
+					this.particles[i].update(playerObject);
 				}
 			}
 		}

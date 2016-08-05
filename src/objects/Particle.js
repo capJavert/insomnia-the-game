@@ -1,10 +1,11 @@
 class Particle {
 
-	constructor(game, width, height, color){
+	constructor(game, width, height, color, speed){
 		this.game = game;
 		this.width = width;
 		this.height = height;
 		this.color = color;
+		this.speed = speed;
 		this.spawned = false;
 
 		//create particle bitmap
@@ -17,14 +18,22 @@ class Particle {
         this.particleBitmap.ctx.fill();
 	}
 
-	update() {
+	update(playerObject) {
 		if(this.spawned) {
+			if(playerObject.getSpeed()>0) {
+				this.particle.body.velocity.x = -400;
+			} else if(playerObject.getSpeed()<0) {
+				this.particle.body.velocity.x = 400;
+			} else {
+				//player is not moving
+			}
+
 			this.particle.body.velocity.y = this.velocity;
 			this.particle.body.setZeroRotation();
 		}
 	}
 
-	spawn(x, y, lifespan, move) {
+	spawn(x, y, lifespan) {
 		//spawn particle on position
 		//enable physics
         this.particle =  this.game.add.sprite(0, 0, this.particleBitmap);  
@@ -34,15 +43,15 @@ class Particle {
 		this.particle.body.kinematic = true;
 		this.particle.oType = 'Particle';
 	    this.particle.body.collideWorldBounds = true;
-	    this.animate(move);
+	    this.animate();
 	
 		//start lifespan timer
 	    this.game.time.events.add(lifespan, this.kill, this);
 	    this.spawned = true;
 	}
 
-	animate(move) {
-		this.velocity = move;
+	animate() {
+		this.velocity = this.game.rnd.between(0, this.speed)
 	}
 
     //unset spawned flag
