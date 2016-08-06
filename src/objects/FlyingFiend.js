@@ -68,9 +68,9 @@ class FlyingFiend extends Fiend {
 		}
 
 		if(playerObject.getSpeed()>0) {
-			this.sprite.body.velocity.x = -400;
+			this.sprite.body.velocity.x = playerObject.getSpeed();
 		} else if(playerObject.getSpeed()<0) {
-			this.sprite.body.velocity.x = 400;
+			this.sprite.body.velocity.x = playerObject.getSpeed();
 		} else {
 			//player is not moving
 		}

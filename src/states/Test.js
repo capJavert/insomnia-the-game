@@ -86,17 +86,16 @@ class Test extends Phaser.State {
         //new Checkpoint(this.game, , , 1, this.interactionCollision), 
         this.game.lvlObjects = [
             //new Trap(this.game, 500, 0, 1, this.interactionCollision),
-            new Fiend(this.game, 1500, -30, 0.8, this.fiendCollision),
+            //new Fiend(this.game, 1500, -30, 0.8, this.fiendCollision),
             /*new Bitmap(this.game, 'Platform', 600, 150, 600, 40, 1, this.obstaclesCollision, false),
             new Bitmap(this.game, 'Platform', 400, 0, 40, 150, 1, this.obstaclesCollision, false),
             new Bitmap(this.game, 'Platform', 800, 0, 40, 150, 1, this.obstaclesCollision, false), */
-            //new Pond(this.game, 1000, 0, 1, this.interactionCollision),
+            new Pond(this.game, 1000, 0, 1, this.interactionCollision),
 
             /*new Rock(this.game, 600, -20, 1, this.obstaclesCollision),  
             new Spikes(this.game, 1000, 0, 1, this.obstaclesCollision),   
             new Rock(this.game, 1400, -30, 1, this.obstaclesCollision)   */
         ];
-
         //apply generators
         this.helpers = new Helpers(this.game);
         this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 960, 70, 360);
@@ -164,6 +163,18 @@ class Test extends Phaser.State {
             }
         );
 
+        //health display
+        this.healthDisplay = new MenuButton(
+            this.game, 200, 60, "Health: "+this.game.health*25+"%", null, 
+            {
+                font: 'Arial',
+                fontWeight: 'normal',
+                fontSize: 28,
+                fill: '#FFFFFF',
+                align: 'left'
+            }
+        );
+
         //lvl start message
         //background
         /*let mesageBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
@@ -201,6 +212,9 @@ class Test extends Phaser.State {
     update() {
         //update orb count display
         this.orbCountDisplay.text.setText("Orbs collected: "+this.game.orbCount);
+
+        //update health display
+        this.healthDisplay.text.setText("Health: "+this.game.health*25+"%");
 
         //check if game is finished
         if(this.game.end) {
@@ -332,7 +346,9 @@ class Test extends Phaser.State {
                 break;
             case 'Checkpoint': 
                 //set checkpoint to current game progress
-                this.game.checkpoint = this.game.progress;
+                if(player!=null) {
+                    this.game.checkpoint = this.game.progress;
+                }
 
                 return false;
                 break;

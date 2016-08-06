@@ -25,7 +25,7 @@ class Main extends Phaser.State {
         this.game.orbCount = 0;
         this.game.checkpoint = 0;
         this.game.debugMode = false;
-        this.game.ready = true;
+        this.game.ready = false;
         this.game.end = false;
 
         //set up world and physics
@@ -98,7 +98,7 @@ class Main extends Phaser.State {
             new Rock(this.game, 9800, -50, 1, this.obstaclesCollision),
             new Rock(this.game, 10000, -70, 1, this.obstaclesCollision),
 
-            new Checkpoint(this.game, 12700, 0, 1, this.interactionCollision),
+            new Checkpoint(this.game, 12300, 0, 1, this.interactionCollision),
             new Rock(this.game, 12800, 0, 1, this.obstaclesCollision),
             new Orb(this.game, 12800, 320, 1, this.interactionCollision),
             new Spikes(this.game, 13200, 0, 1, this.obstaclesCollision), 
@@ -108,8 +108,9 @@ class Main extends Phaser.State {
             new Rock(this.game, 14400, 0, 1, this.obstaclesCollision),
             new Orb(this.game, 14400, 320, 1, this.interactionCollision),
 
+            new Checkpoint(this.game, 15200, 0, 1, this.interactionCollision),
             new Rock(this.game, 15700, 100, 1, this.obstaclesCollision),
-            new Rock(this.game, 16000, 300, 1, this.obstaclesCollision),
+            new Rock(this.game, 16000, 320, 1, this.obstaclesCollision),
             new Rock(this.game, 16000, 100, 1, this.obstaclesCollision),
             new Fiend(this.game, 16500, -30, 0.8, this.fiendCollision),
 
@@ -118,10 +119,12 @@ class Main extends Phaser.State {
             new Orb(this.game, 18400, 350, 1, this.interactionCollision),
             new Rock(this.game, 18700, -110, 1, this.obstaclesCollision),
 
+            new Checkpoint(this.game, 20000, 0, 1, this.interactionCollision),
             new Rock(this.game, 20500, 100, 1, this.obstaclesCollision),
             new Rock(this.game, 20700, 220, 1, this.obstaclesCollision),
             new FlyingFiend(this.game, 21300, 100, 0.4, this.fiendCollision),
 
+            new Checkpoint(this.game, 24500, 0, 1, this.interactionCollision),
             new FlyingFiend(this.game, 25000, 100, 0.4, this.fiendCollision),
             new FlyingFiend(this.game, 26000, 200, 0.4, this.fiendCollision),
 
@@ -138,10 +141,12 @@ class Main extends Phaser.State {
 
             new Rock(this.game, 29900, 20, 1, this.interactionCollision),
 
+            new Checkpoint(this.game, 34000, 0, 1, this.interactionCollision),
             new Rock(this.game, 34500, 20, 1, this.interactionCollision),
             new Rock(this.game, 34800, 90, 1, this.interactionCollision),
             new FlyingFiend(this.game, 35200, 150, 0.7, this.fiendCollision),
 
+            new Checkpoint(this.game, 36700, 0, 1, this.interactionCollision),
             new Trap(this.game, 36700, 0, 1, this.interactionCollision),
             new Fiend(this.game, 39000, -30, 0.8, this.fiendCollision),
 
@@ -149,8 +154,10 @@ class Main extends Phaser.State {
             new Rock(this.game, 42200, 220, 1, this.obstaclesCollision),
             new Rock(this.game, 42800, 100, 1, this.obstaclesCollision),
             new Rock(this.game, 4300, 100, 1, this.obstaclesCollision),
+            new Checkpoint(this.game, 42500, 0, 1, this.interactionCollision),
             new FlyingFiend(this.game, 43000, 100, 0.7, this.fiendCollision),
 
+            new Checkpoint(this.game, 43700, 0, 1, this.interactionCollision),
             new Trap(this.game, 43700, 0, 1, this.interactionCollision),
             new Fiend(this.game, 45000, -30, 0.8, this.fiendCollision),    
             new Fiend(this.game, 47000, -20, 0.7, this.fiendCollision),           
@@ -223,9 +230,21 @@ class Main extends Phaser.State {
             }
         );
 
+        //health display
+        this.healthDisplay = new MenuButton(
+            this.game, 200, 60, "Health: "+this.game.health*25+"%", null, 
+            {
+                font: 'Arial',
+                fontWeight: 'normal',
+                fontSize: 28,
+                fill: '#FFFFFF',
+                align: 'left'
+            }
+        );
+
         //lvl start message
         //background
-        /*let mesageBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
+        let mesageBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
         mesageBitMap.ctx.rect(0, 0, this.game.width, this.game.height);
         mesageBitMap.ctx.fillStyle = '#000000';
         mesageBitMap.ctx.fill();
@@ -244,7 +263,7 @@ class Main extends Phaser.State {
         this.text.align = 'center';
 
         //time to hide message and start game
-        this.game.time.events.add(Phaser.Timer.SECOND*4, this.clearStartMessage, this);*/
+        this.game.time.events.add(Phaser.Timer.SECOND*4, this.clearStartMessage, this);
 
         //enable movement controls
         this.game.cursors = this.input.keyboard.createCursorKeys();
@@ -260,6 +279,9 @@ class Main extends Phaser.State {
     update() {
         //update orb count display
         this.orbCountDisplay.text.setText("Orbs collected: "+this.game.orbCount);
+
+        //update health display
+        this.healthDisplay.text.setText("Health: "+this.game.health*25+"%");
 
         //check if game is finished
         if(this.game.end) {
@@ -391,7 +413,9 @@ class Main extends Phaser.State {
                 break;
             case 'Checkpoint': 
                 //set checkpoint to current game progress
-                this.game.checkpoint = this.game.progress;
+                if(player!=null) {
+                    this.game.checkpoint = this.game.progress;
+                }
 
                 return false;
                 break;

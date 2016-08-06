@@ -36,13 +36,7 @@ class Trap extends Sprite {
 		this.sprite.body.velocity.x = 0;
 
 		if(!this.sprite.isFollowingPlayer) {
-			if(playerObject.getSpeed()>0) {
-				this.sprite.body.velocity.x = -400;
-			} else if(playerObject.getSpeed()<0) {
-				this.sprite.body.velocity.x = 400;
-			} else {
-				//player is not moving
-			}
+			this.sprite.body.velocity.x = playerObject.getSpeed();
 		}
 
 		if(this.inView()) {

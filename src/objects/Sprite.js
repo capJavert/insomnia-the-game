@@ -24,13 +24,7 @@ class Sprite {
 	update(playerObject) {
 		this.sprite.body.velocity.x = 0;
 
-		if(playerObject.getSpeed()>0) {
-			this.sprite.body.velocity.x = -400;
-		} else if(playerObject.getSpeed()<0) {
-			this.sprite.body.velocity.x = 400;
-		} else {
-			//player is not moving
-		}
+		this.sprite.body.velocity.x = playerObject.getSpeed();
 	}
 
 	//create contact rules for obstacle and other materials

@@ -21,13 +21,7 @@ class Particle {
 
 	update(playerObject) {
 		if(this.spawned) {
-			if(playerObject.getSpeed()>0) {
-				this.particle.body.velocity.x = -400;
-			} else if(playerObject.getSpeed()<0) {
-				this.particle.body.velocity.x = 400;
-			} else {
-				//player is not moving
-			}
+			this.particle.body.velocity.x = playerObject.getSpeed();
 
 			this.particle.body.velocity.y = this.velocity;
 			this.particle.body.setZeroRotation();

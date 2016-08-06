@@ -52,9 +52,9 @@ class Player {
         //if stunned then movement is automatic
         if(this.stunned) {
             if(this.game.checkpoint<this.game.progress) {
-                this.speed = -5;
-                background.tilePosition.x += 5/this.modifier;
-                this.game.progress -= 1;
+                this.speed = -1200;
+                background.tilePosition.x += 15/this.modifier;
+                this.game.progress -= 3;
             } else {
                 this.resetStunned();
             }
@@ -69,7 +69,7 @@ class Player {
             this.pondBoost = false;
         } else {
             if(!this.checkIfCanJump()) {
-                this.modifier = 1.3;
+                this.modifier = 1.1;
             } else {
                 this.modifier = 1;
                 this.player.jumping = false;
@@ -88,7 +88,7 @@ class Player {
                 this.player.body.moveLeft(400/this.modifier);
             } else {
                 if(this.game.progress>0) {
-                    this.speed = -5;
+                    this.speed = -400;
                     background.tilePosition.x += 5/this.modifier;
                     this.game.progress -= 1;
                 }
@@ -106,7 +106,7 @@ class Player {
             if(this.game.width/3>this.player.position.x+98) {
                 this.player.body.moveRight(400/this.modifier);
             } else {
-                this.speed = 5;
+                this.speed = 400;
                 background.tilePosition.x -= 5/this.modifier;
                 this.game.progress += 1;
             }
@@ -170,7 +170,7 @@ class Player {
     //get current movement speed of player
     getSpeed() {
         if(this.speed) {
-            return this.speed/this.modifier;
+            return -this.speed/this.modifier;
         } else {
             return 0;
         }
