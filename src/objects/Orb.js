@@ -34,9 +34,6 @@ class Orb extends Sprite {
 		//set material params
 		this.material = new Material(this.game, 'orb', this.sprite.body);
 
-		//set listener for when orb is collected
-		this.sprite.body.onBeginContact.add(this.updateOrbs, this);
-
 		//start levitation
 		this.levitationMove = 10;
 		this.moveUp();

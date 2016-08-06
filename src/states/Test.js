@@ -14,6 +14,7 @@ import Helpers from 'includes/Helpers';
 import MenuButton from 'objects/MenuButton';
 import Spikes from 'objects/Spikes';
 import Pond from 'objects/Pond';
+import Checkpoint from 'objects/Checkpoint';
 
 class Test extends Phaser.State {
 
@@ -22,6 +23,7 @@ class Test extends Phaser.State {
         this.game.health = 4;
         this.game.progress = 0;
         this.game.orbCount = 0;
+        this.game.checkpoint = 0;
         this.game.debugMode = false;
         this.game.ready = true;
         this.game.end = false;
@@ -41,7 +43,7 @@ class Test extends Phaser.State {
         }
 
         //set up camera and add offset
-        this.game.cameraOffset = -1024;
+        this.game.cameraOffset = 1024;
         this.game.camera.width = 0;
 
         //collision groups
@@ -79,21 +81,24 @@ class Test extends Phaser.State {
         //new Orb(this.game, 0, 0, 1, this.interactionCollision),
         //new Rock(this.game, , , 1, this.obstaclesCollision),
         //new Trap(this.game, , , 1, this.interactionCollision),
+        //new Spikes(this.game, , , 1, this.obstaclesCollision), 
+        //new Pond(this.game, , , 1, this.interactionCollision), 
+        //new Checkpoint(this.game, , , 1, this.interactionCollision), 
         this.game.lvlObjects = [
             //new Trap(this.game, 500, 0, 1, this.interactionCollision),
-            //new Fiend(this.game, 1500, -30, 0.8, this.fiendCollision),
+            new Fiend(this.game, 1500, -30, 0.8, this.fiendCollision),
             /*new Bitmap(this.game, 'Platform', 600, 150, 600, 40, 1, this.obstaclesCollision, false),
             new Bitmap(this.game, 'Platform', 400, 0, 40, 150, 1, this.obstaclesCollision, false),
             new Bitmap(this.game, 'Platform', 800, 0, 40, 150, 1, this.obstaclesCollision, false), */
-            new Pond(this.game, 1000, 0, 1, this.interactionCollision),
+            //new Pond(this.game, 1000, 0, 1, this.interactionCollision),
 
             /*new Rock(this.game, 600, -20, 1, this.obstaclesCollision),  
             new Spikes(this.game, 1000, 0, 1, this.obstaclesCollision),   
-            new Rock(this.game, 1400, -30, 1, this.obstaclesCollision)*/     
+            new Rock(this.game, 1400, -30, 1, this.obstaclesCollision)   */
         ];
 
         //apply generators
-        this.helpers = new Helpers();
+        this.helpers = new Helpers(this.game);
         this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 960, 70, 360);
         this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 3, 3160, 70, 360);
         this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 6560, 70, 360);
@@ -229,6 +234,12 @@ class Test extends Phaser.State {
     }
 
     handleContact(body1, body2) {
+        //if and of two bodies does not have oType skip that contact
+        if(body1.sprite == null || body2.sprite == null) {
+            return false;
+        }
+
+        //check if player is one of interacting bodies
         if(body1.sprite.oType == 'Player') {
             var sprite = body2.sprite;
             var player = body1.sprite;
@@ -244,6 +255,13 @@ class Test extends Phaser.State {
                 var sprite2 = body2.sprite;
             }
             var player = null;
+        }
+
+
+        //if player is stunned he does not collide with any object
+        //no interactions will be handled
+        if(player!=null && this.player.stunned) {
+            return false;
         }
 
         switch(sprite.oType) {
@@ -309,6 +327,12 @@ class Test extends Phaser.State {
                 }
                 return false; 
             case 'Particle': 
+
+                return false;
+                break;
+            case 'Checkpoint': 
+                //set checkpoint to current game progress
+                this.game.checkpoint = this.game.progress;
 
                 return false;
                 break;

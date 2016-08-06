@@ -5,6 +5,10 @@ import FlyingFiend from 'objects/FlyingFiend';
 
 class Helpers {
 
+	constructor(game){
+		this.game = game;
+	}
+
 	//generates Orb in linear interval
 	linearOrbGenerator(main, lvlArray, orbNumber, orbStartPosition, orbPositionY, interval) {
 		var orbSpawnPosition = orbStartPosition;

@@ -17,10 +17,10 @@ class Material {
 	// Will add surface velocity to this material. If bodyA rests on top if bodyB, and the surface velocity is positive, bodyA will slide to the right.
 	setProperties(material) {
 		this.contactMaterial = this.game.physics.p2.createContactMaterial(this.properties, material);
+		this.body.angularDamping = 1;
 
 		switch(this.name) {
 			case 'rock':
-				this.body.angularDamping = 1;
 	    		this.contactMaterial.friction = 1000;    
 	    		this.contactMaterial.restitution = 0;  
 	    		this.contactMaterial.stiffness = 10000;    
@@ -30,7 +30,6 @@ class Material {
 	    		this.contactMaterial.surfaceVelocity = 0;        
 				break;
 			case 'ground-trap':
-				this.body.angularDamping = 1;
 	    		this.contactMaterial.friction = 1000;    
 	    		this.contactMaterial.restitution = 0;  
 	    		this.contactMaterial.stiffness = 10000;    
@@ -40,7 +39,6 @@ class Material {
 	    		this.contactMaterial.surfaceVelocity = -1;        
 				break;
 			case 'spikes':
-				this.body.angularDamping = 1;
 	    		this.contactMaterial.friction = 1000;    
 	    		this.contactMaterial.restitution = 0;  
 	    		this.contactMaterial.stiffness = 10000;    

@@ -34,7 +34,6 @@ class Player {
         this.player.body.offset.y = 10;
         this.player.body.velocity.y = 0;
         this.player.body.angularDamping = 1;
-        this.player.position.y = 0;
 
         //set material
         this.material = new Material(this.game, 'player', this.player.body);
@@ -49,9 +48,20 @@ class Player {
 
 	update(game, cursors, background) {
         //console.log(this.player.frame);
-        //  Reset the players velocity (movement)
-        this.player.body.velocity.x = 0; 
-        this.speed = 0;
+        //reset the players velocity (movement)
+        //if stunned then movement is automatic
+        if(this.stunned) {
+            if(this.game.checkpoint<this.game.progress) {
+                this.speed = -5;
+                background.tilePosition.x += 5/this.modifier;
+                this.game.progress -= 1;
+            } else {
+                this.resetStunned();
+            }
+        } else {
+            this.player.body.velocity.x = 0; 
+            this.speed = 0;
+        }
 
         // Modify movement while mid air
         if(this.pondBoost) {
@@ -69,13 +79,9 @@ class Player {
         //movement
         if(this.player.damageBounce && !this.stunned) {
             this.damage();
-            this.player.body.moveLeft(20000);
+            this.player.kill();
 
             this.stunned = true;
-            this.game.time.events.add(Phaser.Timer.SECOND, this.resetStunned, this);
-
-            this.tween = this.game.add.tween(this.player)
-            .to( { alpha: 0 }, 150, Phaser.Easing.Linear.None, true, 0, -1, true);
         } else if (cursors.left.isDown && !this.stunned) {
             //  Move to the left
             if(this.player.position.x>200) {
@@ -152,6 +158,7 @@ class Player {
                 }
 
                 if (d > 0.5) {
+                    this.safeLocation = this.player.position.x-this.player.width/2;
                     result = true;        
                 }
             }    
@@ -196,7 +203,7 @@ class Player {
     resetStunned() {
         this.player.damageBounce = false;
         this.stunned = false;
-        this.tween.stop(true);
+        this.player.revive();
     }
 
     //heal player
