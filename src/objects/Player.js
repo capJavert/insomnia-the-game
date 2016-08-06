@@ -66,8 +66,6 @@ class Player {
             }
         }
 
-        console.log(this.modifier);
-
         //movement
         if(this.player.damageBounce && !this.stunned) {
             this.damage();
@@ -90,10 +88,12 @@ class Player {
                 }
             }
 
-            if(this.checkIfCanJump() && this.game.progress>0) {
-                this.player.animations.play('left');
-            } else {
-                this.player.animations.play('idle');
+            if(this.checkIfCanJump()) {
+                if(this.game.progress>0 || this.player.position.x>200) {
+                    this.player.animations.play('left');
+                } else {
+                    this.player.animations.play('idle');
+                } 
             }
         } else if (cursors.right.isDown && !this.stunned) {
             //  Move to the right

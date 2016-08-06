@@ -7,6 +7,7 @@ class Particle {
 		this.color = color;
 		this.speed = speed;
 		this.spawned = false;
+		this.particle = null;
 
 		//create particle bitmap
 		//used for particle sprite
@@ -36,7 +37,12 @@ class Particle {
 	spawn(x, y, lifespan) {
 		//spawn particle on position
 		//enable physics
-        this.particle =  this.game.add.sprite(0, 0, this.particleBitmap);  
+		//clear old sprite body
+		if(this.particle!=null) {
+	    	this.particle.body.clearShapes();
+	    	this.particle.kill();
+		}
+		this.particle =  this.game.add.sprite(0, 0, this.particleBitmap);
 		this.particle.position.x = x;
 		this.particle.position.y = y;
 		this.game.physics.p2.enable(this.particle, false);
