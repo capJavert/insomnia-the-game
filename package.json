@@ -27,6 +27,7 @@
     "yargs": "^3.16.1"
   },
   "dependencies": {
-    "phaser": "^2.4.1"
+    "phaser": "^2.4.1",
+    "zepto": "^1.2.0"
   }
 }
