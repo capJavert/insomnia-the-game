@@ -62,7 +62,7 @@ class Player {
             if(!this.checkIfCanJump()) {
                 this.modifier = 1.1;
             } else {
-                this.modifier = 1;
+                this.modifier = 0.9;
                 this.player.jumping = false;
             }
         }

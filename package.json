@@ -1,6 +1,6 @@
 {
   "name": "insomnia-the-game",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Insomnia game, thesis project @foivz http://ante-baric.com/insomnia",
   "main": "src/index.js",
   "scripts": {
