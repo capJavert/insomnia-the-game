@@ -25,6 +25,7 @@ class Player {
         this.tween = null;
         this.drag = false;
         this.pondBoost = false;
+        this.checkpointReached = false;
 
         //enable physics on player
         this.game.physics.p2.enable(this.player, this.game.debugMode);
@@ -52,21 +53,6 @@ class Player {
 
 	update(game, cursors, background) {
         //console.log(this.player.frame);
-        //reset the players velocity (movement)
-        //if stunned then movement is automatic
-        if(this.stunned) {
-            if(this.game.checkpoint<this.game.progress) {
-                this.speed = -1200;
-                background.tilePosition.x += 15/this.modifier;
-                this.game.progress -= 3;
-            } else {
-                this.resetStunned();
-            }
-        } else {
-            this.player.body.velocity.x = 0; 
-            this.speed = 0;
-        }
-
         // Modify movement while mid air
         if(this.pondBoost) {
             this.modifier = 0.4;
@@ -81,6 +67,21 @@ class Player {
             }
         }
 
+        //reset the players velocity (movement)
+        //if stunned then movement is automatic
+        if(this.stunned) {
+            if(!this.checkpointReached) {
+                this.speed = -1200;
+                background.tilePosition.x += 15/this.modifier;
+                this.game.progress -= 3;
+            } else {
+                this.resetStunned();
+            }
+        } else {
+            this.player.body.velocity.x = 0; 
+            this.speed = 0;
+        }
+
         //debug mode movement
         if(this.game.cursors.interact.q.isDown && this.game.debugMode) {
             this.modifier = 0.1;
@@ -93,6 +94,7 @@ class Player {
         if(this.player.damageBounce && !this.stunned) {
             this.damage();
             this.player.kill();
+            this.player.exists = true;
 
             this.stunned = true;
         } else if (cursors.left.isDown && !this.stunned) {
@@ -171,7 +173,8 @@ class Player {
                 }
 
                 if (d > 0.5) {
-                    this.safeLocation = this.player.position.x-this.player.width/2;
+                    //this.safeLocation = this.player.position.x-this.player.width/2;
+                    this.pondBoost = false;
                     result = true;        
                 }
             }    
@@ -216,6 +219,7 @@ class Player {
     resetStunned() {
         this.player.damageBounce = false;
         this.stunned = false;
+        this.checkpointReached = false;
         this.player.revive();
     }
 

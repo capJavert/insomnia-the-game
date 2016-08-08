@@ -198,6 +198,17 @@ class Main extends Phaser.State {
             new Spikes(this.game, 61300, 0, 1, this.obstaclesCollision), 
             new Spikes(this.game, 61690, 0, 1, this.obstaclesCollision), 
             new Spikes(this.game, 62080, 0, 1, this.obstaclesCollision), 
+            new Rock(this.game, 62470, 100, 1, this.obstaclesCollision),
+            new Rock(this.game, 62670, 220, 1, this.obstaclesCollision),
+
+            new Rock(this.game, 63000, 100, 1, this.obstaclesCollision),
+            new Rock(this.game, 63200, 220, 1, this.obstaclesCollision),  
+            new Rock(this.game, 63300, 160, 1, this.obstaclesCollision),
+            new Rock(this.game, 63400, 100, 1, this.obstaclesCollision),
+            new Spikes(this.game, 63700, 0, 1, this.obstaclesCollision), 
+            new Spikes(this.game, 63700+390, 0, 1, this.obstaclesCollision), 
+            new Spikes(this.game, 63700+390+390, 0, 1, this.obstaclesCollision), 
+            new Spikes(this.game, 63700+390+390+390, 0, 1, this.obstaclesCollision), 
         ];
 
         //apply generators
@@ -313,8 +324,6 @@ class Main extends Phaser.State {
         };
 
         this.game.camera.follow(this.player.sprite);
-
-        //console.log(this.game.lvlObjects.length);
     }
 
     update() {
@@ -384,9 +393,11 @@ class Main extends Phaser.State {
 
 
         //if player is stunned he does not collide with any object
-        //no interactions will be handled
-        if(player!=null && this.player.stunned || this.player.debug) {
-            return false;
+        //only checkpoint interactions will be handled
+        if(sprite.oType!='Checkpoint') {
+            if(player!=null && this.player.stunned || this.player.debug) {
+                return false;
+            }
         }
 
         switch(sprite.oType) {
@@ -452,16 +463,16 @@ class Main extends Phaser.State {
                 }
                 return false; 
             case 'Particle': 
-                console.log('collision');
 
                 return false;
                 break;
             case 'Checkpoint': 
                 //set checkpoint to current game progress
-                if(player!=null && this.game.checkpoint<this.game.progress) {
+                if(player!=null) {
                     this.game.checkpoint = this.game.progress;
-                    sprite.checkpointReached = true;
-                    this.clearObjectArray(sprite.position.x);
+                    if(this.player.stunned) {
+                        this.player.checkpointReached = true;
+                    }
                 }
 
                 return false;
@@ -528,7 +539,7 @@ class Main extends Phaser.State {
 
     clearObjectArray(checkpointPosition) {
         for (var i = 0; i < this.game.lvlObjects.length; i++) {
-            if(this.game.lvlObjects[i].isOut() || this.game.lvlObjects[i].sprite.checkpointReached) {
+            if(this.game.lvlObjects[i].isOut()) {
                 this.game.lvlObjects[i].destroy();
                 delete this;
                 this.game.lvlObjects.splice(i, 1);
