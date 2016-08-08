@@ -61,6 +61,10 @@ class FlyingFiend extends Fiend {
 	}
 
 	update(playerObject) {
+		if(this.isOut()) {
+			this.kill(true);
+		}
+
 		this.player = playerObject.player;
 
 		if(!this.attacking) {
@@ -130,6 +134,15 @@ class FlyingFiend extends Fiend {
 			return false;
 		}	
 	}
+
+	isOut() {
+		if(this.sprite.position.x+this.sprite.width/2<0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }
 
 export default FlyingFiend;
