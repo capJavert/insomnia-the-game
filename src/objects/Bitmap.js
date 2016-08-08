@@ -22,6 +22,7 @@ class Bitmap extends Sprite {
 		var sprite = this.game.add.bitmapData(this.width, this.height);
 
 		//	Fill it
+		loadMessageBitMap.ctx.rect(0, 0, this.width, this.height);
 	    sprite.ctx.fillStyle = '#2a2f33';
 	    sprite.ctx.fill();
 
