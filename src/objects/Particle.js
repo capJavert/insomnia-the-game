@@ -7,6 +7,7 @@ class Particle {
 		this.color = color;
 		this.speed = speed;
 		this.spawned = false;
+		this.isLifespanReached = false;
 		this.particle = null;
 
 		//create particle bitmap
@@ -20,23 +21,27 @@ class Particle {
 	}
 
 	update(playerObject) {
-		if(this.spawned) {
-			this.particle.body.velocity.x = playerObject.getSpeed();
+		this.particle.body.velocity.x = playerObject.getSpeed();
 
+		if(this.isLifespanReached) {
+			if(this.particle.position.y<this.game.height) {
+				this.particle.body.velocity.y = -this.speed;
+			} else {
+				this.isLifespanReached = false;
+				this.game.time.events.add(this.lifespan, this.kill, this);
+				this.velocity = this.game.rnd.between(0, this.speed)
+			}
+		} else {
 			this.particle.body.velocity.y = this.velocity;
-			this.particle.body.setZeroRotation();
 		}
+		this.particle.body.setZeroRotation();
 	}
 
 	spawn(x, y, lifespan) {
 		//spawn particle on position
 		//enable physics
-		//clear old sprite body
-		if(this.particle!=null) {
-	    	this.particle.body.clearShapes();
-	    	this.particle.kill();
-		}
-		this.particle =  this.game.add.sprite(0, 0, this.particleBitmap);
+		this.lifespan = lifespan;
+	 	this.particle =  this.game.add.sprite(0, 0, this.particleBitmap);
 		this.particle.position.x = x;
 		this.particle.position.y = y;
 		this.game.physics.p2.enable(this.particle, false);
@@ -46,7 +51,7 @@ class Particle {
 	    this.animate();
 	
 		//start lifespan timer
-	    this.game.time.events.add(lifespan, this.kill, this);
+	    this.game.time.events.add(this.lifespan, this.kill, this);
 	    this.spawned = true;
 	}
 
@@ -56,9 +61,9 @@ class Particle {
 
     //unset spawned flag
     kill() {
-    	this.velocity = 0;
-    	this.spawned = false;
-    	this.particle.visible = false;
+    	//this.velocity = 0;
+    	this.isLifespanReached = true;
+    	//this.particle.visible = false;
     }
 }
 
