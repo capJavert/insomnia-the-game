@@ -69,8 +69,9 @@ class Player {
 
         // Modify movement while mid air
         if(this.pondBoost) {
-            this.modifier = 0.1;
-            this.pondBoost = false;
+            this.modifier = 0.4;
+
+            this.game.time.events.add(Phaser.Timer.SECOND*4, this.endPondBoost, this);
         } else {
             if(!this.checkIfCanJump()) {
                 this.modifier = 1.1;
@@ -233,6 +234,10 @@ class Player {
         this.game.health--;
         this.player.alpha = this.game.health*0.25;
         //console.log("Health", this.game.health);
+    }
+
+    endPondBoost() {
+        this.pondBoost = false;
     }
 }
 

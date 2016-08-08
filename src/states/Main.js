@@ -164,6 +164,8 @@ class Main extends Phaser.State {
 
             new Checkpoint(this.game, 50860, 0, 1, this.interactionCollision),
             new FlyingFiend(this.game, 53600, 200, 0.5, this.fiendCollision),
+
+            new Checkpoint(this.game, 54760, 0, 1, this.interactionCollision),
             new Bitmap(this.game, 'Platform', 55000, 0, 40, 150, 0, this.obstaclesCollision, true),   
             new Bitmap(this.game, 'Platform', 55000+220, 150, 500, 40, 0, this.obstaclesCollision, true),
             new Bitmap(this.game, 'Platform', 55000+440, 0, 40, 150, 0, this.obstaclesCollision, true),     
@@ -174,7 +176,6 @@ class Main extends Phaser.State {
             new Bitmap(this.game, 'Platform', 55000+1540, 0, 40, 400, 0, this.obstaclesCollision, true),
             new Bitmap(this.game, 'Platform', 55000+1950, 400, 800, 40, 0, this.obstaclesCollision, true),
 
-            new Checkpoint(this.game, 56800, 0, 1, this.interactionCollision),
             new Bitmap(this.game, 'Platform', 57000+1320-740, 400, 500, 40, 0, this.obstaclesCollision, true),
             new Bitmap(this.game, 'Platform', 57000+1320-740, 230, 500, 40, 0, this.obstaclesCollision, true),
             new Bitmap(this.game, 'Platform', 57000+1100-740, 0, 40, 400, 0, this.obstaclesCollision, true),    
@@ -323,6 +324,10 @@ class Main extends Phaser.State {
         //update health display
         this.healthDisplay.text.setText("Health: "+this.game.health*25+"%");
 
+        while(!this.game.ready) {
+            return;
+        }
+
         //check if game is finished
         if(this.game.end) {
             this.game.ready = false;
@@ -334,6 +339,7 @@ class Main extends Phaser.State {
 
         //check if player is dead
         if(!this.game.health) {
+            this.game.ready = false;
             this.helpers.api({progress: this.game.progress, status: 'dead'});
             this.showLoadingMessage("... Reloading, please wait ...", this.gameOver);
 
@@ -346,10 +352,6 @@ class Main extends Phaser.State {
         //update every game object
         for (var i = 0; i < this.game.lvlObjects.length; i++) {
             this.game.lvlObjects[i].update(this.player);
-        }
-
-        while(!this.game.ready) {
-            return;
         }
 
         //update player position
@@ -526,7 +528,6 @@ class Main extends Phaser.State {
 
     clearObjectArray(checkpointPosition) {
         for (var i = 0; i < this.game.lvlObjects.length; i++) {
-            console.log(this.game.lvlObjects[i].sprite.position.x);
             if(this.game.lvlObjects[i].isOut() || this.game.lvlObjects[i].sprite.checkpointReached) {
                 this.game.lvlObjects[i].destroy();
                 delete this;
