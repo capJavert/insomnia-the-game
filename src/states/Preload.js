@@ -1,4 +1,24 @@
 class Preload extends Phaser.State {
+  	loadUpdate() {            
+        let loadMessageBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
+        loadMessageBitMap.ctx.rect(0, 0, this.game.width, this.game.height);
+        loadMessageBitMap.ctx.fillStyle = '#000000';
+        loadMessageBitMap.ctx.fill();
+        this.loader = this.game.add.sprite(0, 0, loadMessageBitMap);
+
+        //text
+        this.text = this.game.add.text(
+            this.game.width/2, this.game.height/2, 
+            "... Loading "+this.load.progress+"% ..."
+        );
+        this.text.anchor.setTo(0.5);
+        this.text.font = 'IM Fell DW Pica';
+        this.text.fontWeight = 'normal';
+        this.text.fontSize = 60;
+        this.text.fill = '#FFFFFF'
+        this.text.align = 'center';      
+	}
+
 	preload() {
 		//sounds
 		//this.game.load.image('myImage', 'assets/my-image.png');
