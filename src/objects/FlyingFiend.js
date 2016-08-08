@@ -88,6 +88,7 @@ class FlyingFiend extends Fiend {
 				this.sprite.body.moveRight(this.speed*2.5);
 			}
 			this.sprite.body.moveUp(this.speed*0.2);
+			this.kill(true);
 		} else if(playerObject.player.position.x<this.sprite.position.x && (this.sprite.position.x-playerObject.player.position.x<500)) {
 			if(!this.attacking) {
 				this.sprite.animations.play('left-atk');

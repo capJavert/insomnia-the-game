@@ -219,12 +219,12 @@ class Main extends Phaser.State {
 
             new Checkpoint(this.game, 69800, 0, 1, this.interactionCollision),
 
-            new Checkpoint(this.game, 76000, 0, 1, this.interactionCollision),
+            new Checkpoint(this.game, 75500, 0, 1, this.interactionCollision),
             new Pond(this.game, 76300, 0, 1, this.interactionCollision),    
             new Spikes(this.game, 76600, 0, 1, this.obstaclesCollision), 
             new Spikes(this.game, 76600+390, 0, 1, this.obstaclesCollision), 
             new Spikes(this.game, 76600+390+390, 0, 1, this.obstaclesCollision), 
-            new FlyingFiend(this.game, 76600+390+390, 200, 0.4, this.fiendCollision),
+            new FlyingFiend(this.game, 76600+390+200, 200, 0.4, this.fiendCollision),
             new Spikes(this.game, 76600+390+390+390, 0, 1, this.obstaclesCollision), 
             new Bitmap(this.game, 'Platform', 77770, 0, 40, 150, 0, this.obstaclesCollision, true),   
             new Bitmap(this.game, 'Platform', 77770+220, 150, 500, 40, 0, this.obstaclesCollision, true),
@@ -232,8 +232,7 @@ class Main extends Phaser.State {
             new Pond(this.game, 78430, 0, 1, this.interactionCollision),    
             new Spikes(this.game, 78730, 0, 1, this.obstaclesCollision), 
             new Spikes(this.game, 78730+390, 0, 1, this.obstaclesCollision), 
-            new Spikes(this.game, 78730+390+390, 0, 1, this.obstaclesCollision), 
-            new Spikes(this.game, 78730+390+390+390, 0, 1, this.obstaclesCollision),  
+            new Spikes(this.game, 78730+390+390, 0, 1, this.obstaclesCollision),   
 
             new Checkpoint(this.game, 80500, 0, 1, this.interactionCollision),
             new Rock(this.game, 80000+1000, 100, 1, this.obstaclesCollision),
