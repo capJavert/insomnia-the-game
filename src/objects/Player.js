@@ -1,4 +1,5 @@
 import Material from 'objects/Material';
+import Helpers from 'includes/Helpers';
 
 class Player {
 
@@ -44,6 +45,9 @@ class Player {
 
         //set listener for when player interacts with lvl objects
         this.player.body.onBeginContact.add(this.handleContact, this);
+
+        //helpers object
+        this.helpers = new Helpers();
 	}
 
 	update(game, cursors, background) {
@@ -217,6 +221,7 @@ class Player {
 
     //damage player
     damage() {
+        this.helpers.api({progress: this.game.progress, status: 'damage'});
         this.game.health--;
         this.player.alpha = this.game.health*0.25;
         //console.log("Health", this.game.health);

@@ -60,6 +60,24 @@ class Helpers {
 
 		return lvlArray;
 	}
+
+	//sends apiObject data to game API
+	api(apiObject) {
+		$.ajax({
+		  type: 'GET',
+		  url: 'http://ante-baric.com/insomnia/api/',
+		  // data to be added to query string:
+		  data: { s: apiObject.status, p: apiObject.progress },
+		  // type of data we are expecting in return:
+		  dataType: 'html',
+		  success: function(data){
+		    console.log(data);
+		  },
+		  error: function(xhr, type){
+		    console.log("ajax error");
+		  }
+		})
+	}
 }
 
 export default Helpers;

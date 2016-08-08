@@ -286,6 +286,7 @@ class Main extends Phaser.State {
         //check if game is finished
         if(this.game.end) {
             this.game.ready = false;
+            this.helpers.api({progress: this.game.progress, status: 'win'});
             this.showLoadingMessage("... Thanks for playing, more in September 2016", this.gameEnd);
 
             return;
@@ -293,6 +294,7 @@ class Main extends Phaser.State {
 
         //check if player is dead
         if(!this.game.health) {
+            this.helpers.api({progress: this.game.progress, status: 'dead'});
             this.showLoadingMessage("... Reloading, please wait ...", this.gameOver);
 
             return;
