@@ -93,8 +93,9 @@ class Player {
         //movement
         if(this.player.damageBounce && !this.stunned) {
             this.damage();
-            this.player.kill();
+            this.player.alive = false;
             this.player.exists = true;
+            this.player.visible = false;
 
             this.stunned = true;
         } else if (cursors.left.isDown && !this.stunned) {
