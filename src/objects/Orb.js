@@ -72,15 +72,19 @@ class Orb extends Sprite {
     }
 
 	moveUp() {
-		this.sprite.body.moveUp(this.levitationMove);
+		if(this.sprite.body!=null) {
+			this.sprite.body.moveUp(this.levitationMove);
 
-		this.game.time.events.add(Phaser.Timer.SECOND*0.5, this.moveDown, this);
+			this.game.time.events.add(Phaser.Timer.SECOND*0.5, this.moveDown, this);
+		}
 	}
 
 	moveDown() {
-		this.sprite.body.moveDown(this.levitationMove);
-		
-		this.game.time.events.add(Phaser.Timer.SECOND*0.5, this.moveUp, this);
+		if(this.sprite.body!=null) {
+			this.sprite.body.moveDown(this.levitationMove);
+			
+			this.game.time.events.add(Phaser.Timer.SECOND*0.5, this.moveUp, this);
+		}
 	}
 }
 

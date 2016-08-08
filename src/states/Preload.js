@@ -1,5 +1,5 @@
 class Preload extends Phaser.State {
-  	loadUpdate() {            
+  	/*loadUpdate() {            
         let loadMessageBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
         loadMessageBitMap.ctx.rect(0, 0, this.game.width, this.game.height);
         loadMessageBitMap.ctx.fillStyle = '#000000';
@@ -17,7 +17,7 @@ class Preload extends Phaser.State {
         this.text.fontSize = 60;
         this.text.fill = '#FFFFFF'
         this.text.align = 'center';      
-	}
+	}*/
 
 	preload() {
 		//sounds
@@ -68,9 +68,9 @@ class Preload extends Phaser.State {
 
 	create() {
 		//state to start after game assets are loaded
-		//this.game.state.start("Main");
+		this.game.state.start("Main");
 		//this.game.state.start("Test");
-		this.game.state.start("Menu");
+		//this.game.state.start("Menu");
 	}
 
 }

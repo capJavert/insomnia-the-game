@@ -69,7 +69,7 @@ class Player {
 
         // Modify movement while mid air
         if(this.pondBoost) {
-            this.modifier = 0.7;
+            this.modifier = 0.1;
             this.pondBoost = false;
         } else {
             if(!this.checkIfCanJump()) {
@@ -78,6 +78,14 @@ class Player {
                 this.modifier = 1;
                 this.player.jumping = false;
             }
+        }
+
+        //debug mode movement
+        if(this.game.cursors.interact.q.isDown && this.game.debugMode) {
+            this.modifier = 0.1;
+            this.debug = true;
+        } else {
+             this.debug = false;
         }
 
         //movement
@@ -91,7 +99,7 @@ class Player {
             if(this.player.position.x>200) {
                 this.player.body.moveLeft(400/this.modifier);
             } else {
-                if(this.game.progress>0) {
+                if(this.game.progress>this.game.checkpoint) {
                     this.speed = -400;
                     background.tilePosition.x += 5/this.modifier;
                     this.game.progress -= 1;

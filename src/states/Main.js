@@ -24,8 +24,8 @@ class Main extends Phaser.State {
         this.game.progress = 0;
         this.game.orbCount = 0;
         this.game.checkpoint = 0;
-        this.game.debugMode = false;
-        this.game.ready = false;
+        this.game.debugMode = true;
+        this.game.ready = true;
         this.game.end = false;
 
         //set up world and physics
@@ -160,18 +160,55 @@ class Main extends Phaser.State {
             new Checkpoint(this.game, 43700, 0, 1, this.interactionCollision),
             new Trap(this.game, 43700, 0, 1, this.interactionCollision),
             new Fiend(this.game, 45000, -30, 0.8, this.fiendCollision),    
-            new Fiend(this.game, 47000, -20, 0.7, this.fiendCollision),           
+            new Fiend(this.game, 47000, -20, 0.7, this.fiendCollision),     
+
+            new Checkpoint(this.game, 50860, 0, 1, this.interactionCollision),
+            new FlyingFiend(this.game, 53600, 200, 0.5, this.fiendCollision),
+            new Bitmap(this.game, 'Platform', 55000, 0, 40, 150, 0, this.obstaclesCollision, true),   
+            new Bitmap(this.game, 'Platform', 55000+220, 150, 500, 40, 0, this.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 55000+440, 0, 40, 150, 0, this.obstaclesCollision, true),     
+            new Bitmap(this.game, 'Platform', 55000+740, 280, 800, 40, -20, this.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 55000+1320, 400, 500, 40, 0, this.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 55000+1320, 230, 500, 40, 0, this.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 55000+1100, 0, 40, 400, 0, this.obstaclesCollision, true),    
+            new Bitmap(this.game, 'Platform', 55000+1540, 0, 40, 400, 0, this.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 55000+1950, 400, 800, 40, 0, this.obstaclesCollision, true),
+
+            new Checkpoint(this.game, 56800, 0, 1, this.interactionCollision),
+            new Bitmap(this.game, 'Platform', 57000+1320-740, 400, 500, 40, 0, this.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 57000+1320-740, 230, 500, 40, 0, this.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 57000+1100-740, 0, 40, 400, 0, this.obstaclesCollision, true),    
+            new Bitmap(this.game, 'Platform', 57000+1540-740, 0, 40, 400, 0, this.obstaclesCollision, true),
+            new Spikes(this.game, 57000+1020, 0, 1, this.obstaclesCollision), 
+            new Orb(this.game, 57000+1020, 700, 1, this.interactionCollision),
+            new Bitmap(this.game, 'Platform', 57880+1320-740, 400, 500, 40, 0, this.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 57880+1320-740, 230, 500, 40, 0, this.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 57880+1100-740, 0, 40, 400, 0, this.obstaclesCollision, true),    
+            new Bitmap(this.game, 'Platform', 57880+1540-740, 0, 40, 400, 0, this.obstaclesCollision, true),
+            new Spikes(this.game, 57880+1020, 0, 1, this.obstaclesCollision), 
+            new Orb(this.game, 57880+1020, 700, 1, this.interactionCollision),
+            new Bitmap(this.game, 'Platform', 58760+1320-740, 400, 500, 40, 0, this.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 58760+1320-740, 230, 500, 40, 0, this.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 58760+1100-740, 0, 40, 400, 0, this.obstaclesCollision, true),    
+            new Bitmap(this.game, 'Platform', 58760+1540-740, 0, 40, 400, 0, this.obstaclesCollision, true),
+
+            new Checkpoint(this.game, 60400, 0, 1, this.interactionCollision),
+            new Pond(this.game, 61000, 0, 1, this.interactionCollision), 
+            new Spikes(this.game, 61300, 0, 1, this.obstaclesCollision), 
+            new Spikes(this.game, 61690, 0, 1, this.obstaclesCollision), 
+            new Spikes(this.game, 62080, 0, 1, this.obstaclesCollision), 
         ];
 
         //apply generators
         this.helpers = new Helpers(this.game);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 960, 70, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 3, 3160, 70, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 6560, 70, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 6, 10300, 70, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 10, 21400, 70, 360);
-        this.game.lvlObjects = this.helpers.linearRockGenerator(this, this.game.lvlObjects, 8, 30000, 70, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 3, 48000, 70, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this.interactionCollision, this.game.lvlObjects, 4, 960, 70, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this.interactionCollision, this.game.lvlObjects, 3, 3160, 70, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this.interactionCollision, this.game.lvlObjects, 4, 6560, 70, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this.interactionCollision, this.game.lvlObjects, 6, 10300, 70, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this.interactionCollision, this.game.lvlObjects, 10, 21400, 70, 360);
+        this.game.lvlObjects = this.helpers.linearRockGenerator(this.interactionCollision, this.game.lvlObjects, 8, 30000, 70, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this.interactionCollision, this.game.lvlObjects, 6, 48000, 70, 360);
+        this.game.lvlObjects = this.helpers.bitmapPlatformGenerator(this.obstaclesCollision, this.game.lvlObjects, 51060, 0, false)
 
         //create player
         //this.player = new Dummy(this.game, 150, this.game.height-95);
@@ -199,7 +236,7 @@ class Main extends Phaser.State {
         }
 
         //add endgame listener on last object in lvl array
-        this.game.lvlObjects[this.game.lvlObjects.length-1].sprite.oType = 'EndGame';
+        //this.game.lvlObjects[this.game.lvlObjects.length-1].sprite.oType = 'EndGame';
 
         //init day night cycle
         this.dayCycle = new DayCycle(this.game, 5000);
@@ -244,7 +281,7 @@ class Main extends Phaser.State {
 
         //lvl start message
         //background
-        let mesageBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
+        /*let mesageBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
         mesageBitMap.ctx.rect(0, 0, this.game.width, this.game.height);
         mesageBitMap.ctx.fillStyle = '#000000';
         mesageBitMap.ctx.fill();
@@ -263,7 +300,7 @@ class Main extends Phaser.State {
         this.text.align = 'center';
 
         //time to hide message and start game
-        this.game.time.events.add(Phaser.Timer.SECOND*4, this.clearStartMessage, this);
+        this.game.time.events.add(Phaser.Timer.SECOND*4, this.clearStartMessage, this);*/
 
         //enable movement controls
         this.game.cursors = this.input.keyboard.createCursorKeys();
@@ -271,9 +308,12 @@ class Main extends Phaser.State {
         //interactions controls
         this.game.cursors.interact = {
                 a: this.input.keyboard.addKey(Phaser.Keyboard.A),
+                q: this.input.keyboard.addKey(Phaser.Keyboard.Q),
         };
 
         this.game.camera.follow(this.player.sprite);
+
+        //console.log(this.game.lvlObjects.length);
     }
 
     update() {
@@ -317,7 +357,7 @@ class Main extends Phaser.State {
     }
 
     handleContact(body1, body2) {
-        //if and of two bodies does not have oType skip that contact
+        //if any of two bodies does not have oType skip that contact
         if(body1.sprite == null || body2.sprite == null) {
             return false;
         }
@@ -343,7 +383,7 @@ class Main extends Phaser.State {
 
         //if player is stunned he does not collide with any object
         //no interactions will be handled
-        if(player!=null && this.player.stunned) {
+        if(player!=null && this.player.stunned || this.player.debug) {
             return false;
         }
 
@@ -410,13 +450,16 @@ class Main extends Phaser.State {
                 }
                 return false; 
             case 'Particle': 
+                console.log('collision');
 
                 return false;
                 break;
             case 'Checkpoint': 
                 //set checkpoint to current game progress
-                if(player!=null) {
+                if(player!=null && this.game.checkpoint<this.game.progress) {
                     this.game.checkpoint = this.game.progress;
+                    sprite.checkpointReached = true;
+                    this.clearObjectArray(sprite.position.x);
                 }
 
                 return false;
@@ -479,6 +522,17 @@ class Main extends Phaser.State {
     gameEnd() {
         this.game.state.clearCurrentState();
         this.game.state.start('Menu', true, false);
+    }
+
+    clearObjectArray(checkpointPosition) {
+        for (var i = 0; i < this.game.lvlObjects.length; i++) {
+            console.log(this.game.lvlObjects[i].sprite.position.x);
+            if(this.game.lvlObjects[i].isOut() || this.game.lvlObjects[i].sprite.checkpointReached) {
+                this.game.lvlObjects[i].destroy();
+                delete this;
+                this.game.lvlObjects.splice(i, 1);
+            }
+        }
     }
 }
 

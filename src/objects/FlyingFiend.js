@@ -134,15 +134,6 @@ class FlyingFiend extends Fiend {
 			return false;
 		}	
 	}
-
-	isOut() {
-		if(this.sprite.position.x+this.sprite.width/2<0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 }
 
 export default FlyingFiend;

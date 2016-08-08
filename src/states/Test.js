@@ -96,6 +96,7 @@ class Test extends Phaser.State {
             new Spikes(this.game, 1000, 0, 1, this.obstaclesCollision),   
             new Rock(this.game, 1400, -30, 1, this.obstaclesCollision)   */
         ];
+
         //apply generators
         this.helpers = new Helpers(this.game);
         this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 960, 70, 360);
@@ -104,7 +105,8 @@ class Test extends Phaser.State {
         this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 6, 10300, 70, 360);
         this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 10, 21400, 70, 360);
         this.game.lvlObjects = this.helpers.linearRockGenerator(this, this.game.lvlObjects, 8, 30000, 70, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 3, 48000, 70, 360);
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 6, 48000, 70, 360);
+        this.game.lvlObjects = this.helpers.bitmapPlatformGenerator(this, this.game.lvlObjects, 51060, 0, false)
 
         //create player
         //this.player = new Dummy(this.game, 150, this.game.height-95);
@@ -132,7 +134,7 @@ class Test extends Phaser.State {
         }
 
         //add endgame listener on last object in lvl array
-        this.game.lvlObjects[this.game.lvlObjects.length-1].sprite.oType = 'EndGame';
+        //this.game.lvlObjects[this.game.lvlObjects.length-1].sprite.oType = 'EndGame';
 
         //init day night cycle
         this.dayCycle = new DayCycle(this.game, 5000);
@@ -204,6 +206,7 @@ class Test extends Phaser.State {
         //interactions controls
         this.game.cursors.interact = {
                 a: this.input.keyboard.addKey(Phaser.Keyboard.A),
+                q: this.input.keyboard.addKey(Phaser.Keyboard.Q),
         };
 
         this.game.camera.follow(this.player.sprite);
@@ -250,7 +253,7 @@ class Test extends Phaser.State {
     }
 
     handleContact(body1, body2) {
-        //if and of two bodies does not have oType skip that contact
+        //if any of two bodies does not have oType skip that contact
         if(body1.sprite == null || body2.sprite == null) {
             return false;
         }
@@ -276,7 +279,7 @@ class Test extends Phaser.State {
 
         //if player is stunned he does not collide with any object
         //no interactions will be handled
-        if(player!=null && this.player.stunned) {
+        if(player!=null && this.player.stunned || this.player.debug) {
             return false;
         }
 

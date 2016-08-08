@@ -81,6 +81,20 @@ class Sprite {
 		}
 	}
 
+	isOut() {
+		if(this.sprite.position.x+this.sprite.width/2<0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	destroy() {
+        this.kill();
+        this.sprite.body.destroy();
+        this.sprite.destroy();
+	}
+
     //performance issues!
 	/*resizePolygon(originalPhysicsKey, newPhysicsKey, shapeKey, scale) {
 		var newData = [];

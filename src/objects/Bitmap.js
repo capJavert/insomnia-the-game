@@ -3,15 +3,15 @@ import Material from 'objects/Material';
 
 class Bitmap extends Sprite {
 
-	constructor(game, name, x, y, width, height, scale, collisionGroup, kinematic){
-		super(game, name, x, y, width, height, scale, collisionGroup, kinematic);
+	constructor(game, name, x, y, width, height, angle, collisionGroup, kinematic){
+		super(game, name, x, y, width, height, angle, collisionGroup, kinematic);
 		this.game = game;
 		this.oType = name;
 		this.x = x;
 		this.y = this.game.height-y;
 		this.width = width;
 		this.height = height;
-		this.scale = scale;
+		this.angle = angle;
 		this.visible = false;
 		this.kinematic = kinematic;
 		this.collisionGroup = collisionGroup;
@@ -27,8 +27,8 @@ class Bitmap extends Sprite {
 
 		this.sprite = this.game.add.sprite(this.x, this.y, sprite);
 		this.sprite.position.y -= (this.sprite.height/2);
-		this.setScale(this.scale);
 		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
+		this.setAngle(this.angle);
 		this.sprite.oType = this.oType; //for check inside collision callback
 		if(this.kinematic) this.sprite.body.kinematic = true;
 	    this.sprite.body.collideWorldBounds = true;
@@ -52,6 +52,11 @@ class Bitmap extends Sprite {
 				this.sprite.body.kinematic = true;
 			}
 		}
+	}
+
+	//set angle of bitmap, used for body rotation
+	setAngle(angle) {
+		this.sprite.body.angle = angle;
 	}
 }
 
