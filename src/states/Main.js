@@ -286,14 +286,14 @@ class Main extends Phaser.State {
         //check if game is finished
         if(this.game.end) {
             this.game.ready = false;
-            this.showLoadingMessage(this.gameEnd);
+            this.showLoadingMessage("... Thanks for playing, more in September 2016", this.gameEnd);
 
             return;
         }
 
         //check if player is dead
         if(!this.game.health) {
-            this.showLoadingMessage(this.gameOver);
+            this.showLoadingMessage("... Reloading, please wait ...", this.gameOver);
 
             return;
         }
@@ -435,7 +435,7 @@ class Main extends Phaser.State {
         this.startMessageTween.onComplete.add(this.startGame, this);
     }
 
-    showLoadingMessage(action) {
+    showLoadingMessage(message, action) {
         let endMessageBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
         endMessageBitMap.ctx.rect(0, 0, this.game.width, this.game.height);
         endMessageBitMap.ctx.fillStyle = '#000000';
@@ -446,7 +446,7 @@ class Main extends Phaser.State {
         //text
         this.text = this.game.add.text(
             this.game.width/2, this.game.height/2, 
-            "... Reloading, please wait ..."
+            message
         );
         this.text.anchor.setTo(0.5);
         this.text.font = 'IM Fell DW Pica';
