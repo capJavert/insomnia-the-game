@@ -12,6 +12,7 @@ class Orb extends Sprite {
 		this.scale = scale;
 		this.visible = false;
 		this.collisionGroup = collisionGroup;
+		this.sounds = new Object();
 	}
 
 	render() {
@@ -37,6 +38,9 @@ class Orb extends Sprite {
 		//start levitation
 		this.levitationMove = 10;
 		this.moveUp();
+
+		//sounds
+		this.sounds.collect = this.game.add.audio('orb-collect', 0.15, false);
 	}
 
 	update(playerObject) {
@@ -65,6 +69,7 @@ class Orb extends Sprite {
     //update current orb count in game
     //orbs restores health
     updateOrbs() {
+    	this.sounds.collect.play();
     	this.collected = true;
     	this.game.orbCount++;
     	this.player.heal();

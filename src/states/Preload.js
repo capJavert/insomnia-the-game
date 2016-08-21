@@ -21,10 +21,14 @@ class Preload extends Phaser.State {
 
 	preload() {
 		//sounds
-		//this.game.load.image('myImage', 'assets/my-image.png');
-		//this.game.load.audio('myAudio', 'assets/my-audio.wav');
-		//this.game.load.atlas('myAtlas', 'assets/my-atlas.png', 'assets/my-atlas.json');
-		//this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+		this.game.load.audio('background-rain', 'assets/sounds/background-rain.mp3');
+		this.game.load.audio('background-wind', 'assets/sounds/background-wind.mp3');
+		this.game.load.audio('fiend-hit', 'assets/sounds/fiend-hit.mp3');
+		this.game.load.audio('flying-shadow-idle', 'assets/sounds/flying-shadow-idle.mp3');
+		this.game.load.audio('girl-drop', 'assets/sounds/girl-drop.mp3');
+		this.game.load.audio('girl-move', 'assets/sounds/girl-move.mp3');
+		this.game.load.audio('girl-boost', 'assets/sounds/girl-boost.mp3');
+		this.game.load.audio('orb-collect', 'assets/sounds/orb-collect.mp3');
 
 		//google webfont
 		var WebFontConfig = {

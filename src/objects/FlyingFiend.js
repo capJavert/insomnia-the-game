@@ -12,6 +12,7 @@ class FlyingFiend extends Fiend {
 		this.scale = scale;
 		this.visible = false;
 		this.collisionGroup = collisionGroup;
+		this.sounds = new Object();
 	}
 
 	render() {
@@ -26,6 +27,7 @@ class FlyingFiend extends Fiend {
 		this.attackDirection = null;
 		this.speed = 570;
 		this.attacking = false;
+		this.sprite.playerHit = false;
 
         //define animation frames
         this.sprite.animations.add('idle', Phaser.Animation.generateFrameNames('flying-shadow-idle', 1, 3), 9, true);
@@ -55,6 +57,10 @@ class FlyingFiend extends Fiend {
 		//set listener for when player interacts with this fiend
 		this.sprite.body.onBeginContact.add(this.forceHit, this);
 
+		//sounds
+		this.sounds.idle = this.game.add.audio('flying-shadow-idle', 0.6, false);
+		this.sounds.hit = this.game.add.audio('fiend-hit', 0.3, false);
+
 		//start levitation
 		this.levitationMove = 50;
 		this.moveUp();
@@ -62,6 +68,7 @@ class FlyingFiend extends Fiend {
 
 	update(playerObject) {
 		if(this.isOut()) {
+			this.sounds.idle.stop();
 			this.kill(true);
 		}
 
@@ -81,7 +88,13 @@ class FlyingFiend extends Fiend {
 
 		//console.log(this.sprite.position.y);
 
+		if(this.sprite.playerHit) {
+			this.sprite.playerHit = false;
+			this.sounds.hit.play();
+		}
+
 		if(this.isFlyUp()) {
+			this.sounds.idle.stop();
 			if(this.attackDirection == 'left') {
 				this.sprite.body.moveLeft(this.speed*2.5);
 			} else {
@@ -91,6 +104,7 @@ class FlyingFiend extends Fiend {
 			this.kill(true);
 		} else if(playerObject.player.position.x<this.sprite.position.x && (this.sprite.position.x-playerObject.player.position.x<500)) {
 			if(!this.attacking) {
+				this.sounds.idle.stop();
 				this.sprite.animations.play('left-atk');
 				this.attackDirection = 'left';
 				this.attacking = true;
@@ -100,6 +114,7 @@ class FlyingFiend extends Fiend {
 			}
 		} else if(playerObject.player.position.x>this.sprite.position.x) {
 			if(!this.attacking) {
+				this.sounds.idle.stop();
 				this.sprite.animations.play('right-atk');
 				this.attackDirection = 'right';
 				this.attacking = true;
@@ -114,6 +129,9 @@ class FlyingFiend extends Fiend {
 
 	moveUp() {
 		if(!this.attacking) {
+			if(this.inView()) {
+				this.sounds.idle.play();
+			}
 			this.sprite.body.moveUp(this.levitationMove);
 		}
 
@@ -122,6 +140,9 @@ class FlyingFiend extends Fiend {
 
 	moveDown() {
 		if(!this.attacking) {
+			if(this.inView()) {
+				this.sounds.idle.play();
+			}
 			this.sprite.body.moveDown(this.levitationMove);
 		}
 		

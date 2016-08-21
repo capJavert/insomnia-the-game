@@ -7,6 +7,7 @@ class Player {
 	constructor(game, x, y){
 		this.game = game;
         this.oType = 'Player';
+        this.sounds = new Object();
 
         //load sprite
         this.player = this.game.add.sprite(x, y, 'girl');
@@ -49,6 +50,11 @@ class Player {
 
         //helpers object
         this.helpers = new Helpers();
+
+        //sounds
+        this.sounds.drop = this.game.add.audio('girl-drop', 0.7, false);
+        this.sounds.move = this.game.add.audio('girl-move', 0.1, true);
+        this.sounds.boost = this.game.add.audio('girl-boost', 0.6, false);
 	}
 
 	update(game, cursors, background) {
@@ -63,7 +69,10 @@ class Player {
                 this.modifier = 1.1;
             } else {
                 this.modifier = 0.9;
-                this.player.jumping = false;
+                if(this.player.jumping) {
+                    this.player.jumping = false;
+                    this.sounds.drop.play();
+                }
             }
         }
 

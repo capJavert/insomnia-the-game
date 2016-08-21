@@ -12,6 +12,7 @@ class Fiend extends Sprite {
 		this.scale = scale;
 		this.visible = false;
 		this.collisionGroup = collisionGroup;
+		this.sounds = new Object();
 	}
 
 	render() {
@@ -53,6 +54,9 @@ class Fiend extends Sprite {
 
 		//set listener for when player interacts with this fiend
 		this.sprite.body.onBeginContact.add(this.forceHit, this);
+
+		//sounds
+		this.sounds.hit = this.game.add.audio('fiend-hit', 0.3, false);
 	}
 
 	update(playerObject) {
@@ -90,6 +94,7 @@ class Fiend extends Sprite {
     //force fiend to hit when player collides with this.sprite
     forceHit() {
     	if(!this.isForceHit) {
+    		this.sounds.hit.play();
 	    	this.isForceHit = true;
 
 	    	if(this.player.jumping) {

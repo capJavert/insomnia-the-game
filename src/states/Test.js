@@ -24,9 +24,11 @@ class Test extends Phaser.State {
         this.game.progress = 0;
         this.game.orbCount = 0;
         this.game.checkpoint = 0;
-        this.game.debugMode = false;
+        this.game.debugMode = true;
         this.game.ready = true;
         this.game.end = false;
+        this.game.soundsDecoded = false;
+        this.game.sounds = new Object();
 
         //set up world and physics
         //left 1024 offset for objects swap
@@ -85,28 +87,13 @@ class Test extends Phaser.State {
         //new Pond(this.game, , , 1, this.interactionCollision), 
         //new Checkpoint(this.game, , , 1, this.interactionCollision), 
         this.game.lvlObjects = [
-            //new Trap(this.game, 500, 0, 1, this.interactionCollision),
-            //new Fiend(this.game, 1500, -30, 0.8, this.fiendCollision),
-            /*new Bitmap(this.game, 'Platform', 600, 150, 600, 40, 1, this.obstaclesCollision, false),
-            new Bitmap(this.game, 'Platform', 400, 0, 40, 150, 1, this.obstaclesCollision, false),
-            new Bitmap(this.game, 'Platform', 800, 0, 40, 150, 1, this.obstaclesCollision, false), */
-            new Pond(this.game, 1000, 0, 1, this.interactionCollision),
-
-            /*new Rock(this.game, 600, -20, 1, this.obstaclesCollision),  
-            new Spikes(this.game, 1000, 0, 1, this.obstaclesCollision),   
-            new Rock(this.game, 1400, -30, 1, this.obstaclesCollision)   */
+            //new Pond(this.game, 1000, 0, 1, this.interactionCollision),
+            new FlyingFiend(this.game, 2000, 300, 0.5, this.fiendCollision),
         ];
 
         //apply generators
         this.helpers = new Helpers(this.game);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 960, 70, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 3, 3160, 70, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 4, 6560, 70, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 6, 10300, 70, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 10, 21400, 70, 360);
-        this.game.lvlObjects = this.helpers.linearRockGenerator(this, this.game.lvlObjects, 8, 30000, 70, 360);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this, this.game.lvlObjects, 6, 48000, 70, 360);
-        this.game.lvlObjects = this.helpers.bitmapPlatformGenerator(this, this.game.lvlObjects, 51060, 0, false)
+        this.game.lvlObjects = this.helpers.linearOrbGenerator(this.interactionCollision, this.game.lvlObjects, 4, 960, 70, 360);
 
         //create player
         //this.player = new Dummy(this.game, 150, this.game.height-95);
@@ -152,6 +139,10 @@ class Test extends Phaser.State {
         this.weather = new Weather(this.game)
         this.weather.addRain();
         this.weather.addFog();
+
+        //background sounds
+        this.game.sounds.backgroundRain = this.game.add.audio('background-rain', 1, true);
+        this.game.sounds.backgroundWind = this.game.add.audio('background-wind', 0.1, true);
 
         //orb count display
         this.orbCountDisplay = new MenuButton(
@@ -210,6 +201,9 @@ class Test extends Phaser.State {
         };
 
         this.game.camera.follow(this.player.sprite);
+
+        //sounds decoded callback
+        this.game.sound.setDecodedCallback([this.game.sounds.backgroundRain, this.game.sounds.backgroundRain], this.playSounds, this);
     }
 
     update() {
@@ -218,23 +212,6 @@ class Test extends Phaser.State {
 
         //update health display
         this.healthDisplay.text.setText("Health: "+this.game.health*25+"%");
-
-        //check if game is finished
-        if(this.game.end) {
-            this.game.ready = false;
-            this.helpers.api({progress: this.game.progress, status: 'win'});
-            this.showLoadingMessage("... Thanks for playing, more in September 2016", this.gameEnd);
-
-            return;
-        }
-
-        //check if player is dead
-        if(!this.game.health) {
-            this.helpers.api({progress: this.game.progress, status: 'dead'});
-            this.showLoadingMessage("... Reloading, please wait ...", this.gameOver);
-
-            return;
-        }
 
         //paralax scroll ground fog
         this.backgroundBottom.tilePosition.x -= 3;
@@ -247,6 +224,25 @@ class Test extends Phaser.State {
         while(!this.game.ready) {
             return;
         }
+
+        //check if game is finished
+        if(this.game.end) {
+            this.game.ready = false;
+            this.helpers.api({progress: this.game.progress, status: 'win'});
+            this.showLoadingMessage("... Thanks for playing, more in September 2016", this.gameEnd);
+
+            return;
+        }
+
+        //check if player is dead
+        if(!this.game.health) {
+            this.game.ready = false;
+            this.helpers.api({progress: this.game.progress, status: 'dead'});
+            this.showLoadingMessage("... Reloading, please wait ...", this.gameOver);
+
+            return;
+        }
+
 
         //update player position
         this.player.update(this.game, this.game.cursors, this.backgroundMid);
@@ -278,9 +274,11 @@ class Test extends Phaser.State {
 
 
         //if player is stunned he does not collide with any object
-        //no interactions will be handled
-        if(player!=null && this.player.stunned || this.player.debug) {
-            return false;
+        //only checkpoint interactions will be handled
+        if(sprite.oType!='Checkpoint' && player!=null) {
+            if(this.player.stunned || this.player.debug) {
+                return false;
+            }
         }
 
         switch(sprite.oType) {
@@ -313,6 +311,7 @@ class Test extends Phaser.State {
             case 'FlyingFiend': 
                 if(player!=null) {
                     if(!player.damageBounce) {
+                        sprite.playerHit = true;
                         player.damageBounce = true;
                     }
                 }
@@ -343,6 +342,7 @@ class Test extends Phaser.State {
                     player.jumping = true;
                     player.body.moveUp(1300);
                     this.player.pondBoost = true;
+                    this.player.sounds.boost.play();
                 }
                 return false; 
             case 'Particle': 
@@ -352,7 +352,13 @@ class Test extends Phaser.State {
             case 'Checkpoint': 
                 //set checkpoint to current game progress
                 if(player!=null) {
+                    if(this.game.checkpoint<this.game.progress) {
+                        this.clearObjectArray();
+                    }
                     this.game.checkpoint = this.game.progress;
+                    if(this.player.stunned) {
+                        this.player.checkpointReached = true;
+                    }
                 }
 
                 return false;
@@ -415,6 +421,22 @@ class Test extends Phaser.State {
     gameEnd() {
         this.game.state.clearCurrentState();
         this.game.state.start('Menu', true, false);
+    }
+
+    playSounds() {
+        this.game.sounds.backgroundRain.play();
+        this.game.sounds.backgroundWind.play();
+        this.game.soundsDecoded = true;
+    }
+
+    clearObjectArray() {
+        for (var i = 0; i < this.game.lvlObjects.length; i++) {
+            if(this.game.lvlObjects[i].isOut()) {
+                this.game.lvlObjects[i].destroy();
+                delete this;
+                this.game.lvlObjects.splice(i, 1);
+            }
+        }
     }
 }
 

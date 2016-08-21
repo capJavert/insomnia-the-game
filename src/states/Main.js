@@ -27,6 +27,8 @@ class Main extends Phaser.State {
         this.game.debugMode = false;
         this.game.ready = false;
         this.game.end = false;
+        this.game.soundsDecoded = false;
+        this.game.sounds = new Object();
 
         //set up world and physics
         //left 1024 offset for objects swap
@@ -341,6 +343,11 @@ class Main extends Phaser.State {
         this.weather.addRain();
         this.weather.addFog();
 
+        //background sounds
+        this.game.sounds.backgroundRain = this.game.add.audio('background-rain', 1, true);
+        this.game.sounds.backgroundWind = this.game.add.audio('background-wind', 0.2, true);
+        this.game.sound.setDecodedCallback([this.game.sounds.backgroundRain, this.game.sounds.backgroundRain], this.playSounds, this);
+
         //orb count display
         this.orbCountDisplay = new MenuButton(
             this.game, this.game.width-200, 60, "Orbs collected: "+this.game.orbCount, null, 
@@ -505,6 +512,7 @@ class Main extends Phaser.State {
             case 'FlyingFiend': 
                 if(player!=null) {
                     if(!player.damageBounce) {
+                        sprite.playerHit = true;
                         player.damageBounce = true;
                     }
                 }
@@ -535,6 +543,7 @@ class Main extends Phaser.State {
                     player.jumping = true;
                     player.body.moveUp(1300);
                     this.player.pondBoost = true;
+                    this.player.sounds.boost.play();
                 }
                 return false; 
             case 'Particle': 
@@ -613,6 +622,12 @@ class Main extends Phaser.State {
     gameEnd() {
         this.game.state.clearCurrentState();
         this.game.state.start('Menu', true, false);
+    }
+
+    playSounds() {
+        this.game.sounds.backgroundRain.play();
+        this.game.sounds.backgroundWind.play();
+        this.game.soundsDecoded = true;
     }
 
     clearObjectArray() {
