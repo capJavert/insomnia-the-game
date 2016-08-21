@@ -56,7 +56,7 @@ class Checkpoint extends Sprite {
 	}
 
 	update(playerObject) {
-		if(this.sprite.showHint) {
+		if(this.sprite.showHint && this.hint) {
 			this.sprite.showHint = false;
 			this.hintDisplay.text.x = playerObject.player.x;
 			this.hintDisplay.text.visible = true;
