@@ -16,7 +16,7 @@ import Spikes from 'objects/Spikes';
 import Pond from 'objects/Pond';
 import Checkpoint from 'objects/Checkpoint';
 
-class Test extends Phaser.State {
+class Main extends Phaser.State {
 
     create() {
         //game progression variables
@@ -24,7 +24,7 @@ class Test extends Phaser.State {
         this.game.progress = 0;
         this.game.orbCount = 0;
         this.game.checkpoint = 0;
-        this.game.debugMode = true;
+        this.game.debugMode = false;
         this.game.ready = true;
         this.game.end = false;
         this.game.soundsDecoded = false;
@@ -36,7 +36,7 @@ class Test extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.p2.restitution = 0.0;
         this.game.physics.p2.setImpactEvents(true);
-        this.game.physics.p2.gravity.y = 1500;
+        this.game.physics.p2.gravity.y = 1800;
         this.game.physics.p2.setPostBroadphaseCallback(this.handleContact, this);
 
         //fullscreen if supported in browser and not in debug mode
@@ -87,13 +87,13 @@ class Test extends Phaser.State {
         //new Pond(this.game, , , 1, this.interactionCollision), 
         //new Checkpoint(this.game, , , 1, this.interactionCollision), 
         this.game.lvlObjects = [
-            //new Pond(this.game, 1000, 0, 1, this.interactionCollision),
-            new FlyingFiend(this.game, 2000, 300, 0.5, this.fiendCollision),
+            new Trap(this.game, 1000, 0, 1, this.interactionCollision),
+            new Checkpoint(this.game, 1000, 0, 1, this.interactionCollision, "Hold <A> and Move"), 
+            new Fiend(this.game, 1600, -30, 0.8, this.fiendCollision),
         ];
 
         //apply generators
         this.helpers = new Helpers(this.game);
-        this.game.lvlObjects = this.helpers.linearOrbGenerator(this.interactionCollision, this.game.lvlObjects, 4, 960, 70, 360);
 
         //create player
         //this.player = new Dummy(this.game, 150, this.game.height-95);
@@ -142,7 +142,8 @@ class Test extends Phaser.State {
 
         //background sounds
         this.game.sounds.backgroundRain = this.game.add.audio('background-rain', 1, true);
-        this.game.sounds.backgroundWind = this.game.add.audio('background-wind', 0.1, true);
+        this.game.sounds.backgroundWind = this.game.add.audio('background-wind', 0.2, true);
+        this.game.sound.setDecodedCallback([this.game.sounds.backgroundRain, this.game.sounds.backgroundRain], this.playSounds, this);
 
         //orb count display
         this.orbCountDisplay = new MenuButton(
@@ -158,7 +159,7 @@ class Test extends Phaser.State {
 
         //health display
         this.healthDisplay = new MenuButton(
-            this.game, 200, 60, "Health: "+this.game.health*25+"%", null, 
+            this.game, 200, 60, "Lives: "+this.game.health, null, 
             {
                 font: 'Arial',
                 fontWeight: 'normal',
@@ -201,9 +202,6 @@ class Test extends Phaser.State {
         };
 
         this.game.camera.follow(this.player.sprite);
-
-        //sounds decoded callback
-        this.game.sound.setDecodedCallback([this.game.sounds.backgroundRain, this.game.sounds.backgroundRain], this.playSounds, this);
     }
 
     update() {
@@ -211,7 +209,7 @@ class Test extends Phaser.State {
         this.orbCountDisplay.text.setText("Orbs collected: "+this.game.orbCount);
 
         //update health display
-        this.healthDisplay.text.setText("Health: "+this.game.health*25+"%");
+        this.healthDisplay.text.setText("Lives: "+this.game.health);
 
         //paralax scroll ground fog
         this.backgroundBottom.tilePosition.x -= 3;
@@ -340,7 +338,7 @@ class Test extends Phaser.State {
                 if(player!=null && player.position.y>this.game.height-300) {
                     player.animations.play('jump');
                     player.jumping = true;
-                    player.body.moveUp(1300);
+                    player.body.moveUp(1380);
                     this.player.pondBoost = true;
                     this.player.sounds.boost.play();
                 }
@@ -357,6 +355,7 @@ class Test extends Phaser.State {
                     }
                     this.game.checkpoint = this.game.progress;
                     if(this.player.stunned) {
+                        sprite.showHint = true;
                         this.player.checkpointReached = true;
                     }
                 }
@@ -440,4 +439,4 @@ class Test extends Phaser.State {
     }
 }
 
-export default Test;
+export default Main;

@@ -148,7 +148,7 @@ class Main extends Phaser.State {
             new Rock(this.game, 34800, 90, 1, this.interactionCollision),
             new FlyingFiend(this.game, 35200, 150, 0.7, this.fiendCollision),
 
-            new Checkpoint(this.game, 36700, 0, 1, this.interactionCollision),
+            new Checkpoint(this.game, 36700, 0, 1, this.interactionCollision, "Hold <A> and Move"),
             new Trap(this.game, 36700, 0, 1, this.interactionCollision),
             new Fiend(this.game, 39000, -30, 0.8, this.fiendCollision),
 
@@ -159,7 +159,7 @@ class Main extends Phaser.State {
             new Checkpoint(this.game, 42500, 0, 1, this.interactionCollision),
             new FlyingFiend(this.game, 43000, 100, 0.7, this.fiendCollision),
 
-            new Checkpoint(this.game, 43700, 0, 1, this.interactionCollision),
+            new Checkpoint(this.game, 43700, 0, 1, this.interactionCollision, "Hold <A> and Move"),
             new Trap(this.game, 43700, 0, 1, this.interactionCollision),
             new Fiend(this.game, 45000, -30, 0.8, this.fiendCollision),    
             new Fiend(this.game, 47000, -20, 0.7, this.fiendCollision),     
@@ -558,6 +558,7 @@ class Main extends Phaser.State {
                     }
                     this.game.checkpoint = this.game.progress;
                     if(this.player.stunned) {
+                        sprite.showHint = true;
                         this.player.checkpointReached = true;
                     }
                 }
