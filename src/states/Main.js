@@ -112,7 +112,7 @@ class Main extends Phaser.State {
 
             new Checkpoint(this.game, 15200, 0, 1, this.interactionCollision),
             new Rock(this.game, 15700, 100, 1, this.obstaclesCollision),
-            new Rock(this.game, 16000, 320, 1, this.obstaclesCollision),
+            new Rock(this.game, 16000, 400, 1, this.obstaclesCollision),
             new Rock(this.game, 16000, 100, 1, this.obstaclesCollision),
             new Fiend(this.game, 16500, -30, 0.8, this.fiendCollision),
 
@@ -150,7 +150,7 @@ class Main extends Phaser.State {
 
             new Checkpoint(this.game, 36700, 0, 1, this.interactionCollision, "Hold <A> and Move"),
             new Trap(this.game, 36700, 0, 1, this.interactionCollision),
-            new Fiend(this.game, 39000, -30, 0.8, this.fiendCollision),
+            new Fiend(this.game, 39000, -50, 0.8, this.fiendCollision),
 
             new Rock(this.game, 42000, 100, 1, this.obstaclesCollision),
             new Rock(this.game, 42200, 220, 1, this.obstaclesCollision),
