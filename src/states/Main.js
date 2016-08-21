@@ -362,7 +362,7 @@ class Main extends Phaser.State {
 
         //health display
         this.healthDisplay = new MenuButton(
-            this.game, 200, 60, "Health: "+this.game.health*25+"%", null, 
+            this.game, 200, 60, "Lives: "+this.game.health, null, 
             {
                 font: 'Arial',
                 fontWeight: 'normal',
@@ -412,7 +412,7 @@ class Main extends Phaser.State {
         this.orbCountDisplay.text.setText("Orbs collected: "+this.game.orbCount);
 
         //update health display
-        this.healthDisplay.text.setText("Health: "+this.game.health*25+"%");
+        this.healthDisplay.text.setText("Lives: "+this.game.health);
 
         //paralax scroll ground fog
         this.backgroundBottom.tilePosition.x -= 3;
