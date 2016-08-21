@@ -153,7 +153,7 @@ class Player {
 
             this.player.jumping = true;
 
-            this.player.body.moveUp(900);
+            this.player.body.moveUp(980);
         }
 
         if(!this.checkIfCanJump() && this.player.body.velocity.y>250) {

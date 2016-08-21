@@ -36,7 +36,7 @@ class Main extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.p2.restitution = 0.0;
         this.game.physics.p2.setImpactEvents(true);
-        this.game.physics.p2.gravity.y = 1500;
+        this.game.physics.p2.gravity.y = 1800;
         this.game.physics.p2.setPostBroadphaseCallback(this.handleContact, this);
 
         //fullscreen if supported in browser and not in debug mode
@@ -541,7 +541,7 @@ class Main extends Phaser.State {
                 if(player!=null && player.position.y>this.game.height-300) {
                     player.animations.play('jump');
                     player.jumping = true;
-                    player.body.moveUp(1300);
+                    player.body.moveUp(1380);
                     this.player.pondBoost = true;
                     this.player.sounds.boost.play();
                 }
