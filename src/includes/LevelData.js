@@ -111,143 +111,16 @@ class LevelData {
 
             new Rock(this.game, 29900, 20, 1, collisionGroups.interactionCollision),
 
-            new Checkpoint(this.game, 34000, 0, 1, collisionGroups.interactionCollision),
-            new Rock(this.game, 34500, 20, 1, collisionGroups.interactionCollision),
-            new Rock(this.game, 34800, 90, 1, collisionGroups.interactionCollision),
-            new FlyingFiend(this.game, 35200, 150, 0.7, collisionGroups.fiendCollision),
+            new Checkpoint(this.game, 34000-2000, 0, 1, collisionGroups.interactionCollision),
+            new Rock(this.game, 34500-2000, 20, 1, collisionGroups.interactionCollision),
+            new Rock(this.game, 34800-2000, 90, 1, collisionGroups.interactionCollision),
+            new FlyingFiend(this.game, 35200-2000, 150, 0.7, collisionGroups.fiendCollision),
 
-            new Checkpoint(this.game, 36700, 0, 1, collisionGroups.interactionCollision, "Hold <A> and Move"),
-            new Trap(this.game, 36700, 0, 1, collisionGroups.interactionCollision),
-            new Fiend(this.game, 39000, -50, 0.8, collisionGroups.fiendCollision),
+            new Checkpoint(this.game, 36700-2000, 0, 1, collisionGroups.interactionCollision, "Hold <A> and Move"),
+            new Trap(this.game, 36700-2000, 0, 1, collisionGroups.interactionCollision),
+            new Fiend(this.game, 39000-2000, -50, 0.8, collisionGroups.fiendCollision),
 
-            new Rock(this.game, 42000, 100, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 42200, 220, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 42800, 100, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 4300, 100, 1, collisionGroups.obstaclesCollision),
-            new Checkpoint(this.game, 42500, 0, 1, collisionGroups.interactionCollision),
-            new FlyingFiend(this.game, 43000, 100, 0.7, collisionGroups.fiendCollision),
-
-            new Checkpoint(this.game, 43700, 0, 1, collisionGroups.interactionCollision, "Hold <A> and Move"),
-            new Trap(this.game, 43700, 0, 1, collisionGroups.interactionCollision),
-            new Fiend(this.game, 45000, -30, 0.8, collisionGroups.fiendCollision),    
-            new Fiend(this.game, 47000, -20, 0.7, collisionGroups.fiendCollision),     
-
-            new Checkpoint(this.game, 50860, 0, 1, collisionGroups.interactionCollision),
-            new FlyingFiend(this.game, 53600, 200, 0.5, collisionGroups.fiendCollision),
-
-            new Checkpoint(this.game, 54760, 0, 1, collisionGroups.interactionCollision),
-            new Bitmap(this.game, 'Platform', 55000, 0, 40, 150, 0, collisionGroups.obstaclesCollision, true),   
-            new Bitmap(this.game, 'Platform', 55000+220, 150, 500, 40, 0, collisionGroups.obstaclesCollision, true),
-            new Bitmap(this.game, 'Platform', 55000+440, 0, 40, 150, 0, collisionGroups.obstaclesCollision, true),     
-            new Bitmap(this.game, 'Platform', 55000+740, 280, 800, 40, -20, collisionGroups.obstaclesCollision, true),
-            new Bitmap(this.game, 'Platform', 55000+1320, 400, 500, 40, 0, collisionGroups.obstaclesCollision, true),
-            new Bitmap(this.game, 'Platform', 55000+1320, 230, 500, 40, 0, collisionGroups.obstaclesCollision, true),
-            new Bitmap(this.game, 'Platform', 55000+1100, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),    
-            new Bitmap(this.game, 'Platform', 55000+1540, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),
-            new Bitmap(this.game, 'Platform', 55000+1950, 400, 800, 40, 0, collisionGroups.obstaclesCollision, true),
-
-            new Bitmap(this.game, 'Platform', 57000+1320-740, 400, 500, 40, 0, collisionGroups.obstaclesCollision, true),
-            new Bitmap(this.game, 'Platform', 57000+1320-740, 230, 500, 40, 0, collisionGroups.obstaclesCollision, true),
-            new Bitmap(this.game, 'Platform', 57000+1100-740, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),    
-            new Bitmap(this.game, 'Platform', 57000+1540-740, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),
-            new Spikes(this.game, 57000+1020, 0, 1, collisionGroups.obstaclesCollision), 
-            new Orb(this.game, 57000+1020, 700, 1, collisionGroups.interactionCollision),
-            new Bitmap(this.game, 'Platform', 57880+1320-740, 400, 500, 40, 0, collisionGroups.obstaclesCollision, true),
-            new Bitmap(this.game, 'Platform', 57880+1320-740, 230, 500, 40, 0, collisionGroups.obstaclesCollision, true),
-            new Bitmap(this.game, 'Platform', 57880+1100-740, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),    
-            new Bitmap(this.game, 'Platform', 57880+1540-740, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),
-            new Spikes(this.game, 57880+1020, 0, 1, collisionGroups.obstaclesCollision), 
-            new Orb(this.game, 57880+1020, 700, 1, collisionGroups.interactionCollision),
-            new Bitmap(this.game, 'Platform', 58760+1320-740, 400, 500, 40, 0, collisionGroups.obstaclesCollision, true),
-            new Bitmap(this.game, 'Platform', 58760+1320-740, 230, 500, 40, 0, collisionGroups.obstaclesCollision, true),
-            new Bitmap(this.game, 'Platform', 58760+1100-740, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),    
-            new Bitmap(this.game, 'Platform', 58760+1540-740, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),
-
-            new Checkpoint(this.game, 60400, 0, 1, collisionGroups.interactionCollision),
-            new Pond(this.game, 61000, 0, 1, collisionGroups.interactionCollision), 
-            new Spikes(this.game, 61300, 0, 1, collisionGroups.obstaclesCollision), 
-            new Spikes(this.game, 61690, 0, 1, collisionGroups.obstaclesCollision), 
-            new Spikes(this.game, 62080, 0, 1, collisionGroups.obstaclesCollision), 
-            new Rock(this.game, 62470, 100, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 62670, 220, 1, collisionGroups.obstaclesCollision),
-
-            new Rock(this.game, 63000, 100, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 63200, 220, 1, collisionGroups.obstaclesCollision),  
-            new Rock(this.game, 63300, 160, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 63400, 100, 1, collisionGroups.obstaclesCollision),
-            new Spikes(this.game, 63700, 0, 1, collisionGroups.obstaclesCollision), 
-            new Spikes(this.game, 63700+390, 0, 1, collisionGroups.obstaclesCollision), 
-            new Pond(this.game, 63700+500, 0, 1, collisionGroups.interactionCollision), 
-            new Spikes(this.game, 63700+390+390, 0, 1, collisionGroups.obstaclesCollision), 
-            new Spikes(this.game, 63700+390+390+390, 0, 1, collisionGroups.obstaclesCollision), 
-            new Spikes(this.game, 63700+390+390+390+390, 0, 1, collisionGroups.obstaclesCollision), 
-            new Spikes(this.game, 63700+390+390+390+390+390, 0, 1, collisionGroups.obstaclesCollision), 
-            new Rock(this.game, 65650+240, 100, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 65850+390, 160, 1, collisionGroups.obstaclesCollision),  
-            new Rock(this.game, 65950+390, 220, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 66050+390, 100, 1, collisionGroups.obstaclesCollision),
-
-            new Checkpoint(this.game, 69800, 0, 1, collisionGroups.interactionCollision),
-
-            new Checkpoint(this.game, 75500, 0, 1, collisionGroups.interactionCollision),
-            new Pond(this.game, 76300, 0, 1, collisionGroups.interactionCollision),    
-            new Spikes(this.game, 76600, 0, 1, collisionGroups.obstaclesCollision), 
-            new Spikes(this.game, 76600+390, 0, 1, collisionGroups.obstaclesCollision), 
-            new Spikes(this.game, 76600+390+390, 0, 1, collisionGroups.obstaclesCollision), 
-            new FlyingFiend(this.game, 76600+390+200, 200, 0.4, collisionGroups.fiendCollision),
-            new Spikes(this.game, 76600+390+390+390, 0, 1, collisionGroups.obstaclesCollision), 
-            new Bitmap(this.game, 'Platform', 77770, 0, 40, 150, 0, collisionGroups.obstaclesCollision, true),   
-            new Bitmap(this.game, 'Platform', 77770+220, 150, 500, 40, 0, collisionGroups.obstaclesCollision, true),
-            new Bitmap(this.game, 'Platform', 77770+440, 0, 40, 150, 0, collisionGroups.obstaclesCollision, true), 
-            new Pond(this.game, 78430, 0, 1, collisionGroups.interactionCollision),    
-            new Spikes(this.game, 78730, 0, 1, collisionGroups.obstaclesCollision), 
-            new Spikes(this.game, 78730+390, 0, 1, collisionGroups.obstaclesCollision), 
-            new Spikes(this.game, 78730+390+390, 0, 1, collisionGroups.obstaclesCollision),   
-
-            new Checkpoint(this.game, 80500, 0, 1, collisionGroups.interactionCollision),
-            new Rock(this.game, 80000+1000, 100, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 80200+1000, 220, 1, collisionGroups.obstaclesCollision), 
-            new Orb(this.game, 80200+1000, 520, 1, collisionGroups.interactionCollision), 
-            new Rock(this.game, 80300+1000, 160, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 80400+1000, 100, 1, collisionGroups.obstaclesCollision),     
-
-            new Checkpoint(this.game, 82000, 0, 1, collisionGroups.interactionCollision),
-            new Pond(this.game, 82400, 0, 1, collisionGroups.interactionCollision),
-            new Fiend(this.game, 82700, -30, 0.8, collisionGroups.fiendCollision),
-            new Fiend(this.game, 82700+250, -30, 0.8, collisionGroups.fiendCollision),
-            new Fiend(this.game, 82700+250+250, -30, 0.8, collisionGroups.fiendCollision),  
-
-            new Checkpoint(this.game, 83500+1000, 0, 1, collisionGroups.interactionCollision),
-            new Rock(this.game, 84000+1000, 100, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 84200+1000, 220, 1, collisionGroups.obstaclesCollision), 
-            new Orb(this.game, 84200+1000, 520, 1, collisionGroups.interactionCollision), 
-            new Rock(this.game, 84300+1000, 160, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 84400+1000, 100, 1, collisionGroups.obstaclesCollision),   
-            new Bitmap(this.game, 'Platform', 84700+1000, 270, 1000, 40, -10, collisionGroups.obstaclesCollision, true),
-
-            new Checkpoint(this.game, 88000, 0, 1, collisionGroups.interactionCollision),
-            new Pond(this.game, 88300, 0, 1, collisionGroups.interactionCollision),
-            new Bitmap(this.game, 'Platform', 88300+500, 0, 40, 500, 0, collisionGroups.obstaclesCollision, true),   
-            new Bitmap(this.game, 'Platform', 88300+500+220, 500, 500, 40, 0, collisionGroups.obstaclesCollision, true),
-            new Bitmap(this.game, 'Platform', 88300+500+440, 0, 40, 500, 0, collisionGroups.obstaclesCollision, true),  
-            new Trap(this.game, 88300+220+500, 700, 1, collisionGroups.interactionCollision),
-            new Fiend(this.game, 88300+220+500+1000, -40, 1, collisionGroups.fiendCollision), 
-            new FlyingFiend(this.game, 88300+220+500+1500, 300, 0.5, collisionGroups.fiendCollision),
-
-            new Checkpoint(this.game, 91000, 0, 1, collisionGroups.interactionCollision),
-            new Rock(this.game, 91500, 100, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 91700, 220, 1, collisionGroups.obstaclesCollision), 
-            new Orb(this.game, 91700, 520, 1, collisionGroups.interactionCollision), 
-            new Rock(this.game, 91800+1000, 160, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 91900+1000, 100, 1, collisionGroups.obstaclesCollision),   
-            new Bitmap(this.game, 'Platform', 92200, 300, 1000, 40, 10, collisionGroups.obstaclesCollision, true),
-            new Fiend(this.game, 92100, -50, 0.6, collisionGroups.fiendCollision), 
-            new Fiend(this.game, 92250, -50, 0.6, collisionGroups.fiendCollision), 
-            new Rock(this.game, 92700+1000, 100, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 92900+1000, 220, 1, collisionGroups.obstaclesCollision), 
-            new Orb(this.game, 92900+1000, 520, 1, collisionGroups.interactionCollision), 
-            new Rock(this.game, 93000+1000, 160, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 93100+1000, 100, 1, collisionGroups.obstaclesCollision),  
+            new Checkpoint(this.game, 40000-2000, 0, 1, collisionGroups.interactionCollision),
         ];
 
         //apply generators
@@ -256,14 +129,9 @@ class LevelData {
         lvlObjects = this.helpers.linearOrbGenerator(collisionGroups.interactionCollision, lvlObjects, 4, 6560, 70, 360);
         lvlObjects = this.helpers.linearOrbGenerator(collisionGroups.interactionCollision, lvlObjects, 6, 10300, 70, 360);
         lvlObjects = this.helpers.linearOrbGenerator(collisionGroups.interactionCollision, lvlObjects, 10, 21400, 70, 360);
-        lvlObjects = this.helpers.linearRockGenerator(collisionGroups.obstaclesCollision, lvlObjects, 8, 30000, 70, 360);
-        lvlObjects = this.helpers.linearOrbGenerator(collisionGroups.interactionCollision, lvlObjects, 6, 48000, 70, 360);
-        lvlObjects = this.helpers.bitmapPlatformGenerator(collisionGroups.obstaclesCollision, lvlObjects, 51060, 0, false);
-        lvlObjects = this.helpers.linearOrbGenerator(collisionGroups.interactionCollision, lvlObjects, 7, 66900, 70, 360);
-        lvlObjects = this.helpers.bitmapPlatformGenerator(collisionGroups.obstaclesCollision, lvlObjects, 70000, 0, false);
-        lvlObjects = this.helpers.bitmapPlatformGenerator(collisionGroups.obstaclesCollision, lvlObjects, 73000, 0, true);
-        lvlObjects = this.helpers.bitmapPlatformGenerator(collisionGroups.obstaclesCollision, lvlObjects, 84850+1000, 0, true);
-        lvlObjects = this.helpers.linearOrbGenerator(collisionGroups.interactionCollision, lvlObjects, 4, 94600, 70, 360);
+        lvlObjects = this.helpers.linearRockGenerator(collisionGroups.obstaclesCollision, lvlObjects, 4, 30000-2000, 70, 360);
+
+        lvlObjects.push(new Checkpoint(this.game, 40000-2000, 0, 1, collisionGroups.interactionCollision));
 
         return lvlObjects;
 	}
@@ -271,9 +139,93 @@ class LevelData {
 	lvl2Data(collisionGroups) {
 		this.game.lvlIntroText = "... Level 2 ...";
 
-		let lvlObjects = [
-			new Checkpoint(this.game, 1000, 0, 1, collisionGroups.interactionCollision),
+		let lvlObjects = [//42000
+            new Rock(this.game, 3200, 100, 1, collisionGroups.obstaclesCollision),
+		
+            new Checkpoint(this.game, 54760-47000, 0, 1, collisionGroups.interactionCollision),
+            new Bitmap(this.game, 'Platform', 55000-47000, 0, 40, 150, 0, collisionGroups.obstaclesCollision, true),   
+            new Bitmap(this.game, 'Platform', 55000+220-47000, 150, 500, 40, 0, collisionGroups.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 55000+440-47000, 0, 40, 150, 0, collisionGroups.obstaclesCollision, true),     
+            new Bitmap(this.game, 'Platform', 55000+740-47000, 280, 800, 40, -20, collisionGroups.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 55000+1320-47000, 400, 500, 40, 0, collisionGroups.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 55000+1320-47000, 230, 500, 40, 0, collisionGroups.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 55000+1100-47000, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),    
+            new Bitmap(this.game, 'Platform', 55000+1540-47000, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 55000+1950-47000, 400, 800, 40, 0, collisionGroups.obstaclesCollision, true),
+
+            new Bitmap(this.game, 'Platform', 57000+1320-740-47000, 400, 500, 40, 0, collisionGroups.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 57000+1320-740-47000, 230, 500, 40, 0, collisionGroups.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 57000+1100-740-47000, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),    
+            new Bitmap(this.game, 'Platform', 57000+1540-740-47000, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),
+            new Spikes(this.game, 57000+1020-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Orb(this.game, 57000+1020-47000, 700, 1, collisionGroups.interactionCollision),
+            new Bitmap(this.game, 'Platform', 57880+1320-740-47000, 400, 500, 40, 0, collisionGroups.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 57880+1320-740-47000, 230, 500, 40, 0, collisionGroups.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 57880+1100-740-47000, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),    
+            new Bitmap(this.game, 'Platform', 57880+1540-740-47000, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),
+            new Spikes(this.game, 57880+1020-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Orb(this.game, 57880+1020-47000, 700, 1, collisionGroups.interactionCollision),
+            new Bitmap(this.game, 'Platform', 58760+1320-740-47000, 400, 500, 40, 0, collisionGroups.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 58760+1320-740-47000, 230, 500, 40, 0, collisionGroups.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 58760+1100-740-47000, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),    
+            new Bitmap(this.game, 'Platform', 58760+1540-740-47000, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),
+	
+            new Checkpoint(this.game, 60400-47000, 0, 1, collisionGroups.interactionCollision),
+            new Pond(this.game, 61000-47000, 0, 1, collisionGroups.interactionCollision), 
+            new Spikes(this.game, 61300-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Spikes(this.game, 61690-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Spikes(this.game, 62080-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Rock(this.game, 62470-47000, 100, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 62670-47000, 220, 1, collisionGroups.obstaclesCollision),
+
+            new Rock(this.game, 63000-47000, 100, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 63200-47000, 220, 1, collisionGroups.obstaclesCollision),  
+            new Rock(this.game, 63300-47000, 160, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 63400-47000, 100, 1, collisionGroups.obstaclesCollision),
+            new Spikes(this.game, 63700-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Spikes(this.game, 63700+390-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Pond(this.game, 63700+500-47000, 0, 1, collisionGroups.interactionCollision), 
+            new Spikes(this.game, 63700+390+390-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Spikes(this.game, 63700+390+390+390-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Spikes(this.game, 63700+390+390+390+390-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Spikes(this.game, 63700+390+390+390+390+390-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Rock(this.game, 65650+240-47000, 100, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 65850+390-47000, 160, 1, collisionGroups.obstaclesCollision),  
+            new Rock(this.game, 65950+390-47000, 220, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 66050+390-47000, 100, 1, collisionGroups.obstaclesCollision),
+
+            new Checkpoint(this.game, 69800-47000, 0, 1, collisionGroups.interactionCollision),
+
+            new Checkpoint(this.game, 75500-47000, 0, 1, collisionGroups.interactionCollision),
+            new Pond(this.game, 76300-47000, 0, 1, collisionGroups.interactionCollision),    
+            new Spikes(this.game, 76600-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Spikes(this.game, 76600+390-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Spikes(this.game, 76600+390+390-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new FlyingFiend(this.game, 76600+390+200-47000, 200, 0.4, collisionGroups.fiendCollision),
+            new Spikes(this.game, 76600+390+390+390-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Bitmap(this.game, 'Platform', 77770-47000, 0, 40, 150, 0, collisionGroups.obstaclesCollision, true),   
+            new Bitmap(this.game, 'Platform', 77770+220-47000, 150, 500, 40, 0, collisionGroups.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 77770+440-47000, 0, 40, 150, 0, collisionGroups.obstaclesCollision, true), 
+            new Pond(this.game, 78430-47000, 0, 1, collisionGroups.interactionCollision),    
+            new Spikes(this.game, 78730-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Spikes(this.game, 78730+390-47000, 0, 1, collisionGroups.obstaclesCollision), 
+            new Spikes(this.game, 78730+390+390-47000, 0, 1, collisionGroups.obstaclesCollision),   
+
+            new Checkpoint(this.game, 80500-47000, 0, 1, collisionGroups.interactionCollision),
+            new Rock(this.game, 80000+1000-47000, 100, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 80200+1000-47000, 220, 1, collisionGroups.obstaclesCollision), 
+            new Orb(this.game, 80200+1000-47000, 520, 1, collisionGroups.interactionCollision), 
+            new Rock(this.game, 80300+1000-47000, 160, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 80400+1000-47000, 100, 1, collisionGroups.obstaclesCollision),     
 		];
+
+        lvlObjects = this.helpers.linearOrbGenerator(collisionGroups.interactionCollision, lvlObjects, 6, 48000-47000, 70, 360);
+        lvlObjects = this.helpers.bitmapPlatformGenerator(collisionGroups.obstaclesCollision, lvlObjects, 51060-47000, 0, false);
+        lvlObjects = this.helpers.linearOrbGenerator(collisionGroups.interactionCollision, lvlObjects, 7, 66900-47000, 70, 360);
+        lvlObjects = this.helpers.bitmapPlatformGenerator(collisionGroups.obstaclesCollision, lvlObjects, 70000-47000, 0, false);
+        lvlObjects = this.helpers.bitmapPlatformGenerator(collisionGroups.obstaclesCollision, lvlObjects, 73000-47000, 0, true);
+
+        lvlObjects.push(new Checkpoint(this.game, 80400+1000-46000, 0, 1, collisionGroups.interactionCollision));
 
 		return lvlObjects;
 	}
@@ -281,9 +233,53 @@ class LevelData {
 	lvl3Data(collisionGroups) {
 		this.game.lvlIntroText = "... Level 3 ...";
 
-		let lvlObjects = [
-			new Checkpoint(this.game, 1000, 0, 1, collisionGroups.interactionCollision),
+		let lvlObjects = [//82000
+            new Rock(this.game, 1000, 100, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 1200, 160, 1, collisionGroups.obstaclesCollision),  
+            new Rock(this.game, 1300, 220, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 1800, 100, 1, collisionGroups.obstaclesCollision),
+
+            new Pond(this.game, 82400-78000, 0, 1, collisionGroups.interactionCollision),
+            new Fiend(this.game, 82700-78000, -30, 0.8, collisionGroups.fiendCollision),
+            new Fiend(this.game, 82700+250-78000, -30, 0.8, collisionGroups.fiendCollision),
+            new Fiend(this.game, 82700+250+250-78000, -30, 0.8, collisionGroups.fiendCollision),  
+
+            new Checkpoint(this.game, 83500+1000-78000, 0, 1, collisionGroups.interactionCollision),
+            new Rock(this.game, 84000+1000-78000, 100, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 84200+1000-78000, 220, 1, collisionGroups.obstaclesCollision), 
+            new Orb(this.game, 84200+1000-78000, 520, 1, collisionGroups.interactionCollision), 
+            new Rock(this.game, 84300+1000-78000, 160, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 84400+1000-78000, 100, 1, collisionGroups.obstaclesCollision),   
+            new Bitmap(this.game, 'Platform', 84700+1000-78000, 270, 1000, 40, -10, collisionGroups.obstaclesCollision, true),
+
+            new Checkpoint(this.game, 88000-78000, 0, 1, collisionGroups.interactionCollision),
+            new Pond(this.game, 88300-78000, 0, 1, collisionGroups.interactionCollision),
+            new Bitmap(this.game, 'Platform', 88300+500-78000, 0, 40, 500, 0, collisionGroups.obstaclesCollision, true),   
+            new Bitmap(this.game, 'Platform', 88300+500+220-78000, 500, 500, 40, 0, collisionGroups.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 88300+500+440-78000, 0, 40, 500, 0, collisionGroups.obstaclesCollision, true),  
+            new Trap(this.game, 88300+220+500-78000, 700, 1, collisionGroups.interactionCollision),
+            new Fiend(this.game, 88300+220+500+1000-78000, -40, 1, collisionGroups.fiendCollision), 
+            new FlyingFiend(this.game, 88300+220+500+1500-78000, 300, 0.5, collisionGroups.fiendCollision),
+
+            new Checkpoint(this.game, 91000-78000, 0, 1, collisionGroups.interactionCollision),
+            new Rock(this.game, 91500-78000, 100, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 91700-78000, 220, 1, collisionGroups.obstaclesCollision), 
+            new Orb(this.game, 91700-78000, 520, 1, collisionGroups.interactionCollision), 
+            new Rock(this.game, 91800+1000-78000, 160, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 91900+1000-78000, 100, 1, collisionGroups.obstaclesCollision),   
+            new Bitmap(this.game, 'Platform', 92200-78000, 300, 1000, 40, 10, collisionGroups.obstaclesCollision, true),
+            new Fiend(this.game, 92100-78000, -50, 0.6, collisionGroups.fiendCollision), 
+            new Fiend(this.game, 92250-78000, -50, 0.6, collisionGroups.fiendCollision), 
+            new Rock(this.game, 92700+1000-78000, 100, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 92900+1000-78000, 220, 1, collisionGroups.obstaclesCollision), 
+            new Orb(this.game, 92900+1000-78000, 520, 1, collisionGroups.interactionCollision), 
+            new Rock(this.game, 93000+1000-78000, 160, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 93100+1000-78000, 100, 1, collisionGroups.obstaclesCollision), 
 		];
+
+        lvlObjects = this.helpers.bitmapPlatformGenerator(collisionGroups.obstaclesCollision, lvlObjects, 84850+1000-78000, 0, true);
+
+     	lvlObjects.push(new Checkpoint(this.game, 95000-78000, 0, 1, collisionGroups.interactionCollision));
 
 		return lvlObjects;
 	}

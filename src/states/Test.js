@@ -2,21 +2,12 @@
 import DayCycle from 'objects/DayCycle';
 import Weather from 'objects/Weather';
 import Player from 'objects/Player';
-import Rock from 'objects/Rock';
-import Orb from 'objects/Orb';
-import Fiend from 'objects/Fiend';
-import FlyingFiend from 'objects/FlyingFiend';
-import Trap from 'objects/Trap';
-import Bitmap from 'objects/Bitmap';
-import Material from 'objects/Material';
 import Dummy from 'objects/Dummy';
 import Helpers from 'includes/Helpers';
 import MenuButton from 'objects/MenuButton';
-import Spikes from 'objects/Spikes';
-import Pond from 'objects/Pond';
-import Checkpoint from 'objects/Checkpoint';
+import LevelData from 'includes/LevelData';
 
-class Main extends Phaser.State {
+class Test extends Phaser.State {
 
     create() {
         //game progression variables
@@ -24,11 +15,15 @@ class Main extends Phaser.State {
         this.game.progress = 0;
         this.game.orbCount = 0;
         this.game.checkpoint = 0;
-        this.game.debugMode = false;
+        this.game.debugMode = true;
+        this.game.lvlId = 3;
         this.game.ready = true;
         this.game.end = false;
         this.game.soundsDecoded = false;
         this.game.sounds = new Object();
+        this.helpers = new Helpers(this.game);
+        this.lvlProgress = localStorage.getItem(this.game.uniqueKey);
+        this.lvlScore = localStorage.getItem(this.game.uniqueKey+"L"+this.game.lvlId);
 
         //set up world and physics
         //left 1024 offset for objects swap
@@ -77,23 +72,15 @@ class Main extends Phaser.State {
             'background-mid'
         );
 
-        //lvl objects
-        //new Fiend(this.game, 0, 0, 0.4, this.fiendCollision),
-        //new FlyingFiend(this.game, 0, 0, 0.4, this.fiendCollision),
-        //new Orb(this.game, 0, 0, 1, this.interactionCollision),
-        //new Rock(this.game, , , 1, this.obstaclesCollision),
-        //new Trap(this.game, , , 1, this.interactionCollision),
-        //new Spikes(this.game, , , 1, this.obstaclesCollision), 
-        //new Pond(this.game, , , 1, this.interactionCollision), 
-        //new Checkpoint(this.game, , , 1, this.interactionCollision), 
-        this.game.lvlObjects = [
-            new Trap(this.game, 1000, 0, 1, this.interactionCollision),
-            new Checkpoint(this.game, 1000, 0, 1, this.interactionCollision, "Hold <A> and Move"), 
-            new Fiend(this.game, 1600, -30, 0.8, this.fiendCollision),
-        ];
-
-        //apply generators
-        this.helpers = new Helpers(this.game);
+        //fetch lvl data
+        this.lvlData = new LevelData(this.game);
+        this.game.lvlObjects = this.lvlData.fetch({
+            playerCollision: this.playerCollision,
+            obstaclesCollision: this.obstaclesCollision,
+            interactionCollision: this.interactionCollision,
+            fiendCollision: this.fiendCollision,
+            worldCollision: this.worldCollision
+        });
 
         //create player
         //this.player = new Dummy(this.game, 150, this.game.height-95);
@@ -121,7 +108,7 @@ class Main extends Phaser.State {
         }
 
         //add endgame listener on last object in lvl array
-        //this.game.lvlObjects[this.game.lvlObjects.length-1].sprite.oType = 'EndGame';
+        this.game.lvlObjects[this.game.lvlObjects.length-1].sprite.oType = 'EndGame';
 
         //init day night cycle
         this.dayCycle = new DayCycle(this.game, 5000);
@@ -180,7 +167,7 @@ class Main extends Phaser.State {
         //text
         this.text = this.game.add.text(
             this.game.width/2, this.game.height/2, 
-            "... Beware of the Shadows swallowed by fog ..."
+            this.game.lvlIntroText
         );
         this.text.anchor.setTo(0.5);
         this.text.font = 'IM Fell DW Pica';
@@ -199,12 +186,21 @@ class Main extends Phaser.State {
         this.game.cursors.interact = {
                 a: this.input.keyboard.addKey(Phaser.Keyboard.A),
                 q: this.input.keyboard.addKey(Phaser.Keyboard.Q),
+                esc: this.input.keyboard.addKey(Phaser.Keyboard.ESC)
         };
 
         this.game.camera.follow(this.player.sprite);
     }
 
     update() {
+        //back to mainmenu with ESC key
+        if(this.game.cursors.interact.esc.isDown) {
+            this.game.ready = false;
+            this.showLoadingMessage("... Loading, please wait ...", this.mainMenu);
+
+            return;
+        }
+
         //update orb count display
         this.orbCountDisplay.text.setText("Orbs collected: "+this.game.orbCount);
 
@@ -227,7 +223,8 @@ class Main extends Phaser.State {
         if(this.game.end) {
             this.game.ready = false;
             this.helpers.api({progress: this.game.progress, status: 'win'});
-            this.showLoadingMessage("... Thanks for playing, more in September 2016", this.gameEnd);
+
+            this.showLoadingMessage("... Loading, please wait ...", this.gameEnd);
 
             return;
         }
@@ -236,7 +233,7 @@ class Main extends Phaser.State {
         if(!this.game.health) {
             this.game.ready = false;
             this.helpers.api({progress: this.game.progress, status: 'dead'});
-            this.showLoadingMessage("... Reloading, please wait ...", this.gameOver);
+            this.showLoadingMessage("... Loading, please wait ...", this.gameOver);
 
             return;
         }
@@ -414,12 +411,47 @@ class Main extends Phaser.State {
 
     gameOver() {
         this.game.state.clearCurrentState();
+
+        //save score for current lvl
+        if(!this.lvlScore || this.lvlScore<this.game.progress) {
+            localStorage.setItem(this.game.uniqueKey+"L"+this.game.lvlId, this.game.progress);      
+        }    
+
         this.game.state.start('GameOver', true, false);
+    }
+
+    mainMenu() {
+        this.game.state.clearCurrentState();
+
+        //save score for current lvl
+        if(!this.lvlScore || this.lvlScore<this.game.progress) {
+            localStorage.setItem(this.game.uniqueKey+"L"+this.game.lvlId, this.game.progress);      
+        }    
+
+        this.game.state.start('Menu', true, false);
     }
 
     gameEnd() {
         this.game.state.clearCurrentState();
-        this.game.state.start('Menu', true, false);
+
+        //save score for current lvl
+        if(!this.lvlScore || this.lvlScore<this.game.progress) {
+            localStorage.setItem(this.game.uniqueKey+"L"+this.game.lvlId, this.game.progress);      
+        }    
+
+        //update lvl id
+        this.game.lvlId++;
+
+        //save player progress
+        if(!this.lvlProgress || this.lvlProgress<this.game.lvlId) {
+            localStorage.setItem(this.game.uniqueKey, this.game.lvlId);      
+        }
+
+        if(this.game.lvlId>this.game.lastLvlId) {
+            this.game.state.start('Credits', true, false);
+        } else {
+            this.game.state.start("Test");
+        }    
     }
 
     playSounds() {
@@ -439,4 +471,4 @@ class Main extends Phaser.State {
     }
 }
 
-export default Main;
+export default Test;
