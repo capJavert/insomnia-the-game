@@ -3,8 +3,11 @@ import MenuButton from 'objects/MenuButton';
 class GameTitle extends Phaser.State {
 
 	create() {
+		//pause all sounds
+		this.game.sound.pauseAll();
+
 		//logo
-		this.logo = this.game.add.image(this.game.width/2, 160, 'logo');
+		this.logo = this.game.add.image(this.game.width/2, 140, 'logo');
 		this.logo.scale.setTo(0.5, 0.5);
 		this.logo.anchor.setTo(0.5, 0); 
 

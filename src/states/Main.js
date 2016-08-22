@@ -185,12 +185,21 @@ class Main extends Phaser.State {
         this.game.cursors.interact = {
                 a: this.input.keyboard.addKey(Phaser.Keyboard.A),
                 q: this.input.keyboard.addKey(Phaser.Keyboard.Q),
+                esc: this.input.keyboard.addKey(Phaser.Keyboard.ESC)
         };
 
         this.game.camera.follow(this.player.sprite);
     }
 
     update() {
+        //back to mainmenu with ESC key
+        if(this.game.cursors.interact.esc.isDown) {
+            this.game.ready = false;
+            this.showLoadingMessage("... Loading, please wait ...", this.mainMenu);
+
+            return;
+        }
+
         //update orb count display
         this.orbCountDisplay.text.setText("Orbs collected: "+this.game.orbCount);
 
@@ -401,7 +410,24 @@ class Main extends Phaser.State {
 
     gameOver() {
         this.game.state.clearCurrentState();
+
+        //save score for current lvl
+        if(!this.lvlScore || this.lvlScore<this.game.progress) {
+            localStorage.setItem(this.game.uniqueKey+"L"+this.game.lvlId, this.game.progress);      
+        }    
+
         this.game.state.start('GameOver', true, false);
+    }
+
+    mainMenu() {
+        this.game.state.clearCurrentState();
+
+        //save score for current lvl
+        if(!this.lvlScore || this.lvlScore<this.game.progress) {
+            localStorage.setItem(this.game.uniqueKey+"L"+this.game.lvlId, this.game.progress);      
+        }    
+
+        this.game.state.start('Menu', true, false);
     }
 
     gameEnd() {
