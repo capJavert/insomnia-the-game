@@ -1,6 +1,7 @@
 import Boot from 'states/Boot';
 import Preload from 'states/Preload';
 import Menu from 'states/Menu';
+import LevelSelect from 'states/LevelSelect';
 import Controls from 'states/Controls';
 import Stats from 'states/Stats';
 import Credits from 'states/Credits';
@@ -18,6 +19,7 @@ class Game extends Phaser.Game {
 		this.state.add('Boot', Boot, false);
 		this.state.add('Preload', Preload, false);
 		this.state.add('Menu', Menu, false);
+		this.state.add('LevelSelect', LevelSelect, false);
 		this.state.add('Controls', Controls, false);
 		this.state.add('Stats', Stats, false);
 		this.state.add('Credits', Credits, false);

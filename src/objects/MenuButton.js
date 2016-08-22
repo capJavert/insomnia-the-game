@@ -42,6 +42,11 @@ class MenuButton {
 	mouseOut(text) {
 		text.fontWeight = 'normal';
 	}
+
+	disable() {
+		this.text.inputEnabled = false;
+		this.text.alpha = 0.4;
+	}
 }
 
 export default MenuButton;
