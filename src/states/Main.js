@@ -21,7 +21,8 @@ class Main extends Phaser.State {
         this.game.soundsDecoded = false;
         this.game.sounds = new Object();
         this.helpers = new Helpers(this.game);
-        this.localStorage = localStorage.getItem(this.game.uniqueKey);
+        this.lvlProgress = localStorage.getItem(this.game.uniqueKey);
+        this.lvlScore = localStorage.getItem(this.game.uniqueKey+"L"+this.game.lvlId);
 
         //set up world and physics
         //left 1024 offset for objects swap
@@ -406,12 +407,17 @@ class Main extends Phaser.State {
     gameEnd() {
         this.game.state.clearCurrentState();
 
+        //save score for current lvl
+        if(!this.lvlScore || this.lvlScore<this.game.progress) {
+            localStorage.setItem(this.game.uniqueKey+"L"+this.game.lvlId, this.game.progress);      
+        }    
+
         //update lvl id
         this.game.lvlId++;
 
         //save player progress
-        if(!this.localStorage || this.localStorage<this.game.lvlId) {
-            localStorage.setItem(this.game.uniqueKey, this.game.lvlId);
+        if(!this.lvlProgress || this.lvlProgress<this.game.lvlId) {
+            localStorage.setItem(this.game.uniqueKey, this.game.lvlId);      
         }
 
         if(this.game.lvlId>this.game.lastLvlId) {
