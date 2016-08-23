@@ -15,9 +15,10 @@ class Test extends Phaser.State {
         this.game.orbCount = 0;
         this.game.checkpoint = 0;
         this.game.debugMode = true;
-        this.game.lvlId = 3;
         this.game.ready = true;
+        this.game.lvlId = 4;
         this.game.end = false;
+        this.game.day = false;
         this.game.soundsDecoded = false;
         this.game.sounds = new Object();
         this.helpers = new Helpers(this.game);
@@ -53,25 +54,6 @@ class Test extends Phaser.State {
         //collision with world bounds
         this.game.physics.p2.updateBoundsCollisionGroup();
 
-        //create game world bitmap and color it
-        let bgBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
-        bgBitMap.ctx.rect(0, 0, this.game.width, this.game.height);
-        bgBitMap.ctx.fillStyle = '#354a55';
-        bgBitMap.ctx.fill();
-        this.backgroundSprite = this.game.add.sprite(0, 0, bgBitMap);
-
-        //create sun and moon 
-        this.sunSprite = this.game.add.sprite(50, -250, 'sun');
-        this.moonSprite = this.game.add.sprite(this.game.width - (this.game.width / 4), this.game.height + 500, 'moon');
-
-        //create game backgrounds
-        this.backgroundMid = this.game.add.tileSprite(0, 
-            this.game.height - this.game.cache.getImage('background-mid').height, 
-            this.game.width, 
-            this.game.cache.getImage('background-mid').height, 
-            'background-mid'
-        );
-
         //fetch lvl data
         this.lvlData = new LevelData(this.game);
         this.game.lvlObjects = this.lvlData.fetch({
@@ -82,6 +64,27 @@ class Test extends Phaser.State {
             worldCollision: this.worldCollision,
             puzzleCollision: this.puzzleCollision
         });
+
+        //create game world bitmap and color it
+        let bgBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
+        bgBitMap.ctx.rect(0, 0, this.game.width, this.game.height);
+        bgBitMap.ctx.fillStyle = this.game.lvlFillColor;
+        bgBitMap.ctx.fill();
+        this.backgroundSprite = this.game.add.sprite(0, 0, bgBitMap);
+
+        //create sun and moon 
+        this.sunSprite = this.game.add.sprite(this.game.width/2-276/2, 750, 'sun');
+        this.moonSprite = this.game.add.sprite(this.game.width - (this.game.width / 4), 150*this.game.lvlId, 'moon');
+        this.moonSprite.visible = false;
+        this.sunSprite.visible = false;
+
+        //create game backgrounds
+        this.backgroundMid = this.game.add.tileSprite(0, 
+            this.game.height - this.game.cache.getImage('background-mid-lvl'+this.game.lvlId).height, 
+            this.game.width, 
+            this.game.cache.getImage('background-mid-lvl'+this.game.lvlId).height, 
+            'background-mid-lvl'+this.game.lvlId
+        );
 
         //create player
         //this.player = new Dummy(this.game, 150, this.game.height-95);
@@ -115,8 +118,12 @@ class Test extends Phaser.State {
         this.game.lvlObjects[this.game.lvlObjects.length-1].sprite.oType = 'EndGame';
 
         //init day night cycle
-        this.dayCycle = new DayCycle(this.game, 5000);
-        this.dayCycle.initMoon(this.moonSprite);
+        this.dayCycle = new DayCycle(this.game, 0);
+        if(!this.game.day) {
+            this.dayCycle.initMoon(this.moonSprite);
+        } else {
+            this.dayCycle.initSun(this.sunSprite);
+        }
 
         //apply day night shading 
         this.dayCycle.initShading(backgroundSprites);
@@ -129,7 +136,9 @@ class Test extends Phaser.State {
         //weather effects
         this.weather = new Weather(this.game)
         this.weather.addRain();
-        this.weather.addFog();
+        if(this.game.fog) {
+            this.weather.addFog();
+        }
 
         //background sounds
         this.game.sounds.backgroundRain = this.game.add.audio('background-rain', 1, true);
@@ -228,7 +237,11 @@ class Test extends Phaser.State {
             this.game.ready = false;
             this.helpers.api({progress: this.game.progress, status: 'win'});
 
-            this.showLoadingMessage("... Loading, please wait ...", this.gameEnd);
+            if(this.game.lvlId==this.game.lastLvlId) {
+                this.showLoadingMessage("... Wake Up!! ...", this.gameEnd);
+            } else {
+                this.showLoadingMessage("... Loading, please wait ...", this.gameEnd);
+            }
 
             return;
         }
