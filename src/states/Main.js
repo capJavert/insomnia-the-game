@@ -52,25 +52,6 @@ class Main extends Phaser.State {
         //collision with world bounds
         this.game.physics.p2.updateBoundsCollisionGroup();
 
-        //create game world bitmap and color it
-        let bgBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
-        bgBitMap.ctx.rect(0, 0, this.game.width, this.game.height);
-        bgBitMap.ctx.fillStyle = '#354a55';
-        bgBitMap.ctx.fill();
-        this.backgroundSprite = this.game.add.sprite(0, 0, bgBitMap);
-
-        //create sun and moon 
-        this.sunSprite = this.game.add.sprite(50, -250, 'sun');
-        this.moonSprite = this.game.add.sprite(this.game.width - (this.game.width / 4), this.game.height + 500, 'moon');
-
-        //create game backgrounds
-        this.backgroundMid = this.game.add.tileSprite(0, 
-            this.game.height - this.game.cache.getImage('background-mid').height, 
-            this.game.width, 
-            this.game.cache.getImage('background-mid').height, 
-            'background-mid'
-        );
-
         //fetch lvl data
         this.lvlData = new LevelData(this.game);
         this.game.lvlObjects = this.lvlData.fetch({
@@ -81,6 +62,25 @@ class Main extends Phaser.State {
             worldCollision: this.worldCollision,
             puzzleCollision: this.puzzleCollision
         });
+
+        //create game world bitmap and color it
+        let bgBitMap = this.game.add.bitmapData(this.game.width, this.game.height);
+        bgBitMap.ctx.rect(0, 0, this.game.width, this.game.height);
+        bgBitMap.ctx.fillStyle = this.game.lvlFillColor;
+        bgBitMap.ctx.fill();
+        this.backgroundSprite = this.game.add.sprite(0, 0, bgBitMap);
+
+        //create sun and moon 
+        this.sunSprite = this.game.add.sprite(50, -250, 'sun');
+        this.moonSprite = this.game.add.sprite(this.game.width - (this.game.width / 4), this.game.height + 500, 'moon');
+
+        //create game backgrounds
+        this.backgroundMid = this.game.add.tileSprite(0, 
+            this.game.height - this.game.cache.getImage('background-mid-lvl'+this.game.lvlId).height, 
+            this.game.width, 
+            this.game.cache.getImage('background-mid-lvl'+this.game.lvlId).height, 
+            'background-mid-lvl'+this.game.lvlId
+        );
 
         //create player
         //this.player = new Dummy(this.game, 150, this.game.height-95);
@@ -128,8 +128,10 @@ class Main extends Phaser.State {
         //weather effects
         this.weather = new Weather(this.game)
         this.weather.addRain();
-        this.weather.addFog();
-
+        if(this.game.fog) {
+            this.weather.addFog();
+        }
+        
         //background sounds
         this.game.sounds.backgroundRain = this.game.add.audio('background-rain', 1, true);
         this.game.sounds.backgroundWind = this.game.add.audio('background-wind', 0.2, true);

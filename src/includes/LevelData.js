@@ -54,6 +54,8 @@ class LevelData {
 	}
 
 	lvl1Data(collisionGroups) {
+        this.game.fog = true;
+        this.game.lvlFillColor = '#354a55';
 		this.game.lvlIntroText = "... Beware of the Shadows swallowed by fog ...";
 
         let lvlObjects = [
@@ -139,6 +141,8 @@ class LevelData {
 	}
 
 	lvl2Data(collisionGroups) {
+        this.game.fog = true;
+        this.game.lvlFillColor = '#355455';
 		this.game.lvlIntroText = "... Level 2 ...";
 
 		let lvlObjects = [//42000
@@ -233,6 +237,8 @@ class LevelData {
 	}
 
 	lvl3Data(collisionGroups) {
+        this.game.fog = true;
+        this.game.lvlFillColor = '#0c85ca';
 		this.game.lvlIntroText = "... Level 3 ...";
 
 		let lvlObjects = [//78000
@@ -293,6 +299,8 @@ class LevelData {
 	}
 
 	lvl4Data(collisionGroups) {
+        this.game.fog = true;
+        this.game.lvlFillColor = '#366077';
 		this.game.lvlIntroText = "... Level 4 ...";
 
 		let lvlObjects = [
@@ -307,6 +315,8 @@ class LevelData {
 	}
 
 	lvl5Data(collisionGroups) {
+        this.game.fog = true;
+        this.game.lvlFillColor = '#6a95ad';
 		this.game.lvlIntroText = "... Level 5 ...";
 
 		let lvlObjects = [

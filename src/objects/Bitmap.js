@@ -23,7 +23,7 @@ class Bitmap extends Sprite {
 
 		//	Fill it
 		sprite.ctx.rect(0, 0, this.width, this.height);
-	    sprite.ctx.fillStyle = '#2a2f33';
+	    sprite.ctx.fillStyle = '#111111';
 	    sprite.ctx.fill();
 
 		this.sprite = this.game.add.sprite(this.x, this.y, sprite);

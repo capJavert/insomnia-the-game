@@ -49,9 +49,13 @@ class Preload extends Phaser.State {
 		this.game.load.spritesheet('hair-moving', 'assets/hair-moving.png', 218, 177);
 		this.game.load.spritesheet('hair-falling', 'assets/hair-falling.png', 101, 135);
 
-		//for beta lvl should be loaded based on current lvl
-    	this.game.load.image('background-mid', 'assets/lvl1/background-mid.png');
-    	this.game.load.image('background-bottom', 'assets/lvl1/background-bottom.png');
+		//backgrounds
+    	this.game.load.image('background-mid-lvl1', 'assets/backgrounds/background-mid-lvl1.png');
+    	this.game.load.image('background-mid-lvl2', 'assets/backgrounds/background-mid-lvl2.png');
+    	this.game.load.image('background-mid-lvl3', 'assets/backgrounds/background-mid-lvl3.png');
+    	this.game.load.image('background-mid-lvl4', 'assets/backgrounds/background-mid-lvl4.png');
+    	this.game.load.image('background-mid-lvl5', 'assets/backgrounds/background-mid-lvl5.png');
+    	this.game.load.image('background-bottom', 'assets/backgrounds/background-bottom.png');
 
     	//game objects
     	this.game.load.spritesheet('rock', 'assets/objects/rock.png', 456, 469);
