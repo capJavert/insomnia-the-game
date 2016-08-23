@@ -1,4 +1,3 @@
-//import ExampleObject from 'objects/ExampleObject';
 import DayCycle from 'objects/DayCycle';
 import Weather from 'objects/Weather';
 import Player from 'objects/Player';
@@ -47,6 +46,7 @@ class Main extends Phaser.State {
         this.obstaclesCollision = this.game.physics.p2.createCollisionGroup();
         this.interactionCollision = this.game.physics.p2.createCollisionGroup();
         this.fiendCollision = this.game.physics.p2.createCollisionGroup();
+        this.puzzleCollision = this.game.physics.p2.createCollisionGroup();
         this.worldCollision = this.game.physics.p2.createCollisionGroup();
 
         //collision with world bounds
@@ -78,7 +78,8 @@ class Main extends Phaser.State {
             obstaclesCollision: this.obstaclesCollision,
             interactionCollision: this.interactionCollision,
             fiendCollision: this.fiendCollision,
-            worldCollision: this.worldCollision
+            worldCollision: this.worldCollision,
+            puzzleCollision: this.puzzleCollision
         });
 
         //create player
@@ -87,7 +88,7 @@ class Main extends Phaser.State {
         this.player.setCollisionGroup(this.playerCollision);
 
         //set collision rules for player
-        this.player.collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision, this.fiendCollision], this.player.hitSprite);
+        this.player.collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision, this.fiendCollision, this.puzzleCollision], this.player.hitSprite);
     
         //create ground fog 
         this.backgroundBottom = this.game.add.tileSprite(0, 
@@ -103,6 +104,9 @@ class Main extends Phaser.State {
             this.game.lvlObjects[i].render();
             this.game.lvlObjects[i].collides([this.playerCollision], this.game.lvlObjects[i].hitPlayer, this.onHit, this);
             this.game.lvlObjects[i].collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision], this.game.lvlObjects[i].hitSprite);
+            if(this.game.lvlObjects[i].oType!='PuzzleObstacle') {
+                this.game.lvlObjects[i].collides([this.puzzleCollision], this.game.lvlObjects[i].hitSprite);
+            }
             this.game.lvlObjects[i].setContact(this.player.material);
         }
 
@@ -321,6 +325,24 @@ class Main extends Phaser.State {
 
                 return false; 
                 break;
+            case 'PuzzleObstacle': 
+                if(this.game.cursors.interact.a.isDown) {
+                    if(!this.player.drag) {
+                        sprite.isFollowingPlayer = true;
+                        this.player.drag = sprite;
+                    }
+                } else {
+                    this.player.drag = false;
+                    sprite.isFollowingPlayer = false;
+                }
+
+                if(this.player.touchingDown()) {
+                    return false;
+                } else {
+                    return true;
+                }
+                
+                break;
             case 'Spikes': 
                 if(player!=null) {
                     if(!player.damageBounce) {
@@ -347,6 +369,7 @@ class Main extends Phaser.State {
                 //set checkpoint to current game progress
                 if(player!=null) {
                     if(this.game.checkpoint<this.game.progress) {
+                        sprite.showHint = true;
                         this.clearObjectArray();
                     }
                     this.game.checkpoint = this.game.progress;

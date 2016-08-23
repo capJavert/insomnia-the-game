@@ -255,6 +255,14 @@ class Player {
     endPondBoost() {
         this.pondBoost = false;
     }
+
+    touchingDown() {
+        if(this.player.position.y>1000) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 export default Player;

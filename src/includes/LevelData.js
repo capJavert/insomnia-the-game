@@ -3,6 +3,7 @@ import Orb from 'objects/Orb';
 import Fiend from 'objects/Fiend';
 import FlyingFiend from 'objects/FlyingFiend';
 import Trap from 'objects/Trap';
+import PuzzleObstacle from 'objects/PuzzleObstacle';
 import Bitmap from 'objects/Bitmap';
 import Material from 'objects/Material';
 import Helpers from 'includes/Helpers';
@@ -18,6 +19,7 @@ class LevelData {
     //new Orb(this.game, 0, 0, 1, collisionGroups.interactionCollision),
     //new Rock(this.game, , , 1, collisionGroups.obstaclesCollision),
     //new Trap(this.game, , , 1, collisionGroups.interactionCollision),
+    //new PuzzleObstacle(this.game, , , 1, collisionGroups.interactionCollision),
     //new Spikes(this.game, , , 1, collisionGroups.obstaclesCollision), 
     //new Pond(this.game, , , 1, collisionGroups.interactionCollision), 
     //new Checkpoint(this.game, , , 1, collisionGroups.interactionCollision), 
@@ -233,16 +235,22 @@ class LevelData {
 	lvl3Data(collisionGroups) {
 		this.game.lvlIntroText = "... Level 3 ...";
 
-		let lvlObjects = [//82000
+		let lvlObjects = [//78000
             new Rock(this.game, 1000, 100, 1, collisionGroups.obstaclesCollision),
             new Rock(this.game, 1200, 160, 1, collisionGroups.obstaclesCollision),  
             new Rock(this.game, 1300, 220, 1, collisionGroups.obstaclesCollision),
             new Rock(this.game, 1800, 100, 1, collisionGroups.obstaclesCollision),
 
-            new Pond(this.game, 82400-78000, 0, 1, collisionGroups.interactionCollision),
-            new Fiend(this.game, 82700-78000, -30, 0.8, collisionGroups.fiendCollision),
-            new Fiend(this.game, 82700+250-78000, -30, 0.8, collisionGroups.fiendCollision),
-            new Fiend(this.game, 82700+250+250-78000, -30, 0.8, collisionGroups.fiendCollision),  
+            new Checkpoint(this.game, 2100, 0, 1, collisionGroups.interactionCollision, "Hold <A> to Move blocks"),
+            new PuzzleObstacle(this.game, 3000, -400, 1, collisionGroups.puzzleCollision),
+            new PuzzleObstacle(this.game, 3500, -200, 1, collisionGroups.puzzleCollision),
+            new PuzzleObstacle(this.game, 4000, -300, 1, collisionGroups.puzzleCollision),
+
+            new Rock(this.game, 5000, 500, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 5000, 250, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 5000, 100, 1, collisionGroups.obstaclesCollision),
+
+            new Fiend(this.game, 82400-76900, -30, 0.8, collisionGroups.fiendCollision),
 
             new Checkpoint(this.game, 83500+1000-78000, 0, 1, collisionGroups.interactionCollision),
             new Rock(this.game, 84000+1000-78000, 100, 1, collisionGroups.obstaclesCollision),
@@ -288,8 +296,12 @@ class LevelData {
 		this.game.lvlIntroText = "... Level 4 ...";
 
 		let lvlObjects = [
-			new Checkpoint(this.game, 1000, 0, 1, collisionGroups.interactionCollision),
-		];
+            new Checkpoint(this.game, 2500-1000, 0, 1, collisionGroups.interactionCollision),
+            new PuzzleObstacle(this.game, 2800-1000, 0, 1, collisionGroups.puzzleCollision),
+            new PuzzleObstacle(this.game, 3300-1000, 0, 1, collisionGroups.puzzleCollision),
+            new PuzzleObstacle(this.game, 3800-1000, 0, 1, collisionGroups.puzzleCollision),
+            new Checkpoint(this.game, 5000, 0, 1, collisionGroups.interactionCollision),
+        ];
 
 		return lvlObjects;
 	}

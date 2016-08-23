@@ -60,6 +60,7 @@ class Preload extends Phaser.State {
     	this.game.load.spritesheet('ground-trap', 'assets/objects/ground-trap.png', 222, 41);
     	this.game.load.spritesheet('spikes', 'assets/objects/spikes.png', 391, 244);
     	this.game.load.spritesheet('pond', 'assets/objects/pond.png', 250, 400);
+    	this.game.load.spritesheet('puzzle-obstacle', 'assets/objects/puzzle-obstacle.png', 250, 600);
 
     	//fiends
 		this.game.load.atlas('shadow-hand', 'assets/shadow-hand.png', 'assets/shadow-hand.json');
