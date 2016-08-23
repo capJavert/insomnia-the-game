@@ -17,6 +17,7 @@ class Main extends Phaser.State {
         this.game.debugMode = false;
         this.game.ready = false;
         this.game.end = false;
+        this.game.day = false;
         this.game.soundsDecoded = false;
         this.game.sounds = new Object();
         this.helpers = new Helpers(this.game);
@@ -71,8 +72,10 @@ class Main extends Phaser.State {
         this.backgroundSprite = this.game.add.sprite(0, 0, bgBitMap);
 
         //create sun and moon 
-        this.sunSprite = this.game.add.sprite(50, -250, 'sun');
-        this.moonSprite = this.game.add.sprite(this.game.width - (this.game.width / 4), this.game.height + 500, 'moon');
+        this.sunSprite = this.game.add.sprite(this.game.width/2-276/2, 750, 'sun');
+        this.moonSprite = this.game.add.sprite(this.game.width - (this.game.width / 4), 150*this.game.lvlId, 'moon');
+        this.moonSprite.visible = false;
+        this.sunSprite.visible = false;
 
         //create game backgrounds
         this.backgroundMid = this.game.add.tileSprite(0, 
@@ -114,8 +117,12 @@ class Main extends Phaser.State {
         this.game.lvlObjects[this.game.lvlObjects.length-1].sprite.oType = 'EndGame';
 
         //init day night cycle
-        this.dayCycle = new DayCycle(this.game, 5000);
-        this.dayCycle.initMoon(this.moonSprite);
+        this.dayCycle = new DayCycle(this.game, 0);
+        if(!this.game.day) {
+            this.dayCycle.initMoon(this.moonSprite);
+        } else {
+            this.dayCycle.initSun(this.sunSprite);
+        }
 
         //apply day night shading 
         this.dayCycle.initShading(backgroundSprites);
@@ -131,7 +138,7 @@ class Main extends Phaser.State {
         if(this.game.fog) {
             this.weather.addFog();
         }
-        
+
         //background sounds
         this.game.sounds.backgroundRain = this.game.add.audio('background-rain', 1, true);
         this.game.sounds.backgroundWind = this.game.add.audio('background-wind', 0.2, true);
@@ -229,7 +236,11 @@ class Main extends Phaser.State {
             this.game.ready = false;
             this.helpers.api({progress: this.game.progress, status: 'win'});
 
-            this.showLoadingMessage("... Loading, please wait ...", this.gameEnd);
+            if(this.game.lvlId==this.game.lastLvlId) {
+                this.showLoadingMessage("... Wake Up!! ...", this.gameEnd);
+            } else {
+                this.showLoadingMessage("... Loading, please wait ...", this.gameEnd);
+            }
 
             return;
         }

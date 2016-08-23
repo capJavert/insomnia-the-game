@@ -10,12 +10,14 @@ class DayCycle {
  
     initSun(sprite) {
         this.sunSprite = sprite;
-        this.sunset(sprite);
+        this.sunSprite.visible = true;
+        //this.sunset(sprite);
     }
  
     initMoon(sprite) {
         this.moonSprite = sprite;
-        this.moonrise(sprite);
+        this.moonSprite.visible = true;
+        //this.moonrise(sprite);
     }
  
     initShading(sprites){

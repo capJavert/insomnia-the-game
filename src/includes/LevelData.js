@@ -24,39 +24,39 @@ class LevelData {
     //new Pond(this.game, , , 1, collisionGroups.interactionCollision), 
     //new Checkpoint(this.game, , , 1, collisionGroups.interactionCollision), 
 
-	constructor(game){
-		this.game = game;
+    constructor(game){
+        this.game = game;
 
-		//init helpers
-		this.helpers = new Helpers(this.game);
-		this.lvlId = this.game.lvlId;
-	}
+        //init helpers
+        this.helpers = new Helpers(this.game);
+        this.lvlId = this.game.lvlId;
+    }
 
-	fetch(collisionGroups) {
-		let data = new Array();
+    fetch(collisionGroups) {
+        let data = new Array();
 
-		switch(this.lvlId) {
-			case 1: data = this.lvl1Data(collisionGroups);
-				break;
-			case 2: data = this.lvl2Data(collisionGroups);
-				break;
-			case 3: data = this.lvl3Data(collisionGroups);
-				break;
-			case 4: data = this.lvl4Data(collisionGroups);
-				break;
-			case 5: data = this.lvl5Data(collisionGroups);
-				break;
-			default: 
-				this.game.state.start("LevelSelect", true, false);
-		}
+        switch(this.lvlId) {
+            case 1: data = this.lvl1Data(collisionGroups);
+                break;
+            case 2: data = this.lvl2Data(collisionGroups);
+                break;
+            case 3: data = this.lvl3Data(collisionGroups);
+                break;
+            case 4: data = this.lvl4Data(collisionGroups);
+                break;
+            case 5: data = this.lvl5Data(collisionGroups);
+                break;
+            default: 
+                this.game.state.start("LevelSelect", true, false);
+        }
 
-		return data;
-	}
+        return data;
+    }
 
-	lvl1Data(collisionGroups) {
+    lvl1Data(collisionGroups) {
         this.game.fog = true;
         this.game.lvlFillColor = '#354a55';
-		this.game.lvlIntroText = "... Beware of the Shadows swallowed by fog ...";
+        this.game.lvlIntroText = "... Beware of the Shadows swallowed by Fog ...";
 
         let lvlObjects = [
             new Rock(this.game, 2500, -50, 1, collisionGroups.obstaclesCollision),
@@ -138,16 +138,16 @@ class LevelData {
         lvlObjects.push(new Checkpoint(this.game, 40000-2000, 0, 1, collisionGroups.interactionCollision));
 
         return lvlObjects;
-	}
+    }
 
-	lvl2Data(collisionGroups) {
+    lvl2Data(collisionGroups) {
         this.game.fog = true;
         this.game.lvlFillColor = '#355455';
-		this.game.lvlIntroText = "... Level 2 ...";
+        this.game.lvlIntroText = "... A danger that lurks below ...";
 
-		let lvlObjects = [//42000
+        let lvlObjects = [//42000
             new Rock(this.game, 3200, 100, 1, collisionGroups.obstaclesCollision),
-		
+        
             new Checkpoint(this.game, 54760-47000, 0, 1, collisionGroups.interactionCollision),
             new Bitmap(this.game, 'Platform', 55000-47000, 0, 40, 150, 0, collisionGroups.obstaclesCollision, true),   
             new Bitmap(this.game, 'Platform', 55000+220-47000, 150, 500, 40, 0, collisionGroups.obstaclesCollision, true),
@@ -175,7 +175,7 @@ class LevelData {
             new Bitmap(this.game, 'Platform', 58760+1320-740-47000, 230, 500, 40, 0, collisionGroups.obstaclesCollision, true),
             new Bitmap(this.game, 'Platform', 58760+1100-740-47000, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),    
             new Bitmap(this.game, 'Platform', 58760+1540-740-47000, 0, 40, 400, 0, collisionGroups.obstaclesCollision, true),
-	
+    
             new Checkpoint(this.game, 60400-47000, 0, 1, collisionGroups.interactionCollision),
             new Pond(this.game, 61000-47000, 0, 1, collisionGroups.interactionCollision), 
             new Spikes(this.game, 61300-47000, 0, 1, collisionGroups.obstaclesCollision), 
@@ -223,7 +223,7 @@ class LevelData {
             new Orb(this.game, 80200+1000-47000, 520, 1, collisionGroups.interactionCollision), 
             new Rock(this.game, 80300+1000-47000, 160, 1, collisionGroups.obstaclesCollision),
             new Rock(this.game, 80400+1000-47000, 100, 1, collisionGroups.obstaclesCollision),     
-		];
+        ];
 
         lvlObjects = this.helpers.linearOrbGenerator(collisionGroups.interactionCollision, lvlObjects, 6, 48000-47000, 70, 360);
         lvlObjects = this.helpers.bitmapPlatformGenerator(collisionGroups.obstaclesCollision, lvlObjects, 51060-47000, 0, false);
@@ -233,15 +233,15 @@ class LevelData {
 
         lvlObjects.push(new Checkpoint(this.game, 80400+1000-46000, 0, 1, collisionGroups.interactionCollision));
 
-		return lvlObjects;
-	}
+        return lvlObjects;
+    }
 
-	lvl3Data(collisionGroups) {
+    lvl3Data(collisionGroups) {
         this.game.fog = true;
-        this.game.lvlFillColor = '#0c85ca';
-		this.game.lvlIntroText = "... Level 3 ...";
+        this.game.lvlFillColor = '#366077';
+        this.game.lvlIntroText = "... Darkness grasps The Middle of the Night ...";
 
-		let lvlObjects = [//78000
+        let lvlObjects = [//78000
             new Rock(this.game, 1000, 100, 1, collisionGroups.obstaclesCollision),
             new Rock(this.game, 1200, 160, 1, collisionGroups.obstaclesCollision),  
             new Rock(this.game, 1300, 220, 1, collisionGroups.obstaclesCollision),
@@ -289,21 +289,21 @@ class LevelData {
             new Orb(this.game, 92900+1000-78000, 520, 1, collisionGroups.interactionCollision), 
             new Rock(this.game, 93000+1000-78000, 160, 1, collisionGroups.obstaclesCollision),
             new Rock(this.game, 93100+1000-78000, 100, 1, collisionGroups.obstaclesCollision), 
-		];
+        ];
 
         lvlObjects = this.helpers.bitmapPlatformGenerator(collisionGroups.obstaclesCollision, lvlObjects, 84850+1000-78000, 0, true);
 
-     	lvlObjects.push(new Checkpoint(this.game, 95000-78000, 0, 1, collisionGroups.interactionCollision));
+        lvlObjects.push(new Checkpoint(this.game, 95000-78000, 0, 1, collisionGroups.interactionCollision));
 
-		return lvlObjects;
-	}
+        return lvlObjects;
+    }
 
-	lvl4Data(collisionGroups) {
+    lvl4Data(collisionGroups) {
         this.game.fog = true;
         this.game.lvlFillColor = '#366077';
-		this.game.lvlIntroText = "... Level 4 ...";
+        this.game.lvlIntroText = "... Fog still holds her Strings ...";
 
-		let lvlObjects = [
+        let lvlObjects = [
             new Checkpoint(this.game, 2500-1000, 0, 1, collisionGroups.interactionCollision),
             new PuzzleObstacle(this.game, 2800-1000, 0, 1, collisionGroups.puzzleCollision),
             new PuzzleObstacle(this.game, 3300-1000, 0, 1, collisionGroups.puzzleCollision),
@@ -311,20 +311,21 @@ class LevelData {
             new Checkpoint(this.game, 5000, 0, 1, collisionGroups.interactionCollision),
         ];
 
-		return lvlObjects;
-	}
+        return lvlObjects;
+    }
 
-	lvl5Data(collisionGroups) {
+    lvl5Data(collisionGroups) {
+        this.game.day = true;
         this.game.fog = true;
         this.game.lvlFillColor = '#6a95ad';
-		this.game.lvlIntroText = "... Level 5 ...";
+        this.game.lvlIntroText = "... New Dawn ...";
 
-		let lvlObjects = [
-			new Checkpoint(this.game, 1000, 0, 1, collisionGroups.interactionCollision),
-		];
+        let lvlObjects = [
+            new Checkpoint(this.game, 4000, 0, 1, collisionGroups.interactionCollision),
+        ];
 
-		return lvlObjects;
-	}
+        return lvlObjects;
+    }
 }
 
 export default LevelData;
