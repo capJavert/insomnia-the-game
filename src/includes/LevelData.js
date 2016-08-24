@@ -282,8 +282,8 @@ class LevelData {
             new Rock(this.game, 91800+1000-78000, 160, 1, collisionGroups.obstaclesCollision),
             new Rock(this.game, 91900+1000-78000, 100, 1, collisionGroups.obstaclesCollision),   
             new Bitmap(this.game, 'Platform', 92200-78000, 300, 1000, 40, 10, collisionGroups.obstaclesCollision, true),
-            new Fiend(this.game, 92100-78000, -50, 0.6, collisionGroups.fiendCollision), 
-            new Fiend(this.game, 92250-78000, -50, 0.6, collisionGroups.fiendCollision), 
+            new Fiend(this.game, 92100-78000, -70, 0.6, collisionGroups.fiendCollision), 
+            new Fiend(this.game, 92300-78000, -70, 0.6, collisionGroups.fiendCollision), 
             new Rock(this.game, 92700+1000-78000, 100, 1, collisionGroups.obstaclesCollision),
             new Rock(this.game, 92900+1000-78000, 220, 1, collisionGroups.obstaclesCollision), 
             new Orb(this.game, 92900+1000-78000, 520, 1, collisionGroups.interactionCollision), 
@@ -292,6 +292,8 @@ class LevelData {
         ];
 
         lvlObjects = this.helpers.bitmapPlatformGenerator(collisionGroups.obstaclesCollision, lvlObjects, 84850+1000-78000, 0, true);
+
+        lvlObjects.push(new Checkpoint(this.game, 93100+1000-78000+1000, 0, 1, collisionGroups.interactionCollision));
 
         return lvlObjects;
     }
@@ -353,8 +355,41 @@ class LevelData {
         this.game.lvlIntroText = "... New Dawn ...";
 
         let lvlObjects = [
-            new Checkpoint(this.game, 4000, 0, 1, collisionGroups.interactionCollision),
+            new Checkpoint(this.game, 4800, 0, 1, collisionGroups.interactionCollision),
+            new FlyingFiend(this.game, 5000, 300, 0.6, collisionGroups.fiendCollision),
+
+            new Checkpoint(this.game, 10200, 0, 1, collisionGroups.interactionCollision),
+            new Pond(this.game, 10700, 0, 1, collisionGroups.interactionCollision),
+            new Fiend(this.game, 11100, -50, 0.7, collisionGroups.fiendCollision), 
+            new Fiend(this.game, 11100+300, -50, 0.7, collisionGroups.fiendCollision), 
+            new Fiend(this.game, 11100+600, -50, 0.7, collisionGroups.fiendCollision), 
+            new Spikes(this.game, 12200-100, 0, 1, collisionGroups.obstaclesCollision), 
+            new Pond(this.game, 12200+50-100, 0, 1, collisionGroups.interactionCollision),
+            new Spikes(this.game, 12200+100-100, 0, 1, collisionGroups.obstaclesCollision),
+
+            new Fiend(this.game, 12700-100, -50, 0.7, collisionGroups.fiendCollision), 
+            new Fiend(this.game, 12700+300-100, -50, 0.7, collisionGroups.fiendCollision), 
+            new Fiend(this.game, 12700+600-100, -50, 0.7, collisionGroups.fiendCollision), 
+            new Spikes(this.game, 13800-200, 0, 1, collisionGroups.obstaclesCollision), 
+            new Pond(this.game, 13800+50-200, 0, 1, collisionGroups.interactionCollision),
+            new Spikes(this.game, 13800+100-200, 0, 1, collisionGroups.obstaclesCollision),
+
+            new Fiend(this.game, 14200-200, -50, 0.7, collisionGroups.fiendCollision), 
+            new Fiend(this.game, 14200+300-200, -50, 0.7, collisionGroups.fiendCollision), 
+            new Fiend(this.game, 14200+600-200, -50, 0.7, collisionGroups.fiendCollision), 
+            new Spikes(this.game, 15300-350, 0, 1, collisionGroups.obstaclesCollision), 
+            new Pond(this.game, 15300+50-400, 0, 1, collisionGroups.interactionCollision),
+
+            new Checkpoint(this.game, 16000, 0, 1, collisionGroups.interactionCollision),
         ];
+
+        lvlObjects = this.helpers.linearOrbGenerator(collisionGroups.interactionCollision, lvlObjects, 10, 500, 90, 360);
+        lvlObjects = this.helpers.linearOrbGenerator(collisionGroups.interactionCollision, lvlObjects, 3, 5300, 90, 360);
+        lvlObjects = this.helpers.bitmapPlatformGenerator(collisionGroups.obstaclesCollision, lvlObjects, 6200, 0, false);
+        lvlObjects = this.helpers.linearOrbGenerator(collisionGroups.interactionCollision, lvlObjects, 5, 8700, 90, 360);
+        lvlObjects = this.helpers.linearOrbGenerator(collisionGroups.interactionCollision, lvlObjects, 5, 16000, 90, 360);
+
+        lvlObjects.push(new Checkpoint(this.game, 17777, 0, 1, collisionGroups.interactionCollision));
 
         return lvlObjects;
     }
