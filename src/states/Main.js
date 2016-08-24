@@ -486,7 +486,7 @@ class Main extends Phaser.State {
         if(this.game.lvlId>this.game.lastLvlId) {
             this.game.state.start('Credits', true, false);
         } else {
-            this.game.state.start("Main");
+            this.game.state.start("Main", true, false);
         }    
     }
 
