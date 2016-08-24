@@ -98,7 +98,7 @@ class LevelData {
             new Rock(this.game, 20700, 220, 1, collisionGroups.obstaclesCollision),
             new FlyingFiend(this.game, 21300, 100, 0.4, collisionGroups.fiendCollision),
 
-            new Checkpoint(this.game, 24500, 0, 1, collisionGroups.interactionCollision),
+            new Checkpoint(this.game, 23500, 0, 1, collisionGroups.interactionCollision),
             new FlyingFiend(this.game, 25000, 100, 0.4, collisionGroups.fiendCollision),
             new FlyingFiend(this.game, 26000, 200, 0.4, collisionGroups.fiendCollision),
 

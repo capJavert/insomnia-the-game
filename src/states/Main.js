@@ -322,7 +322,8 @@ class Main extends Phaser.State {
                 break;
             case 'FlyingFiend': 
                 if(player!=null) {
-                    if(!player.damageBounce) {
+                    if(!player.damageBounce && !sprite.wasted) {
+                        sprite.wasted = true;
                         sprite.playerHit = true;
                         player.damageBounce = true;
                     }

@@ -22,7 +22,7 @@ class FlyingFiend extends Fiend {
 
 		//set defeault fiend states
 		this.isForceHit = false;
-		this.sprite.playerHit = false;
+		this.sprite.wasted = false;
 		this.tween = null;
 		this.attackDirection = null;
 		this.speed = 570;
@@ -89,19 +89,19 @@ class FlyingFiend extends Fiend {
 		//console.log(this.sprite.position.y);
 
 		if(this.sprite.playerHit) {
-			this.sprite.playerHit = false;
 			this.sounds.hit.play();
+			this.sprite.playerHit = false;
+			this.kill(true);
 		}
 
 		if(this.isFlyUp()) {
+			this.sprite.body.velocity.y = 0;
 			this.sounds.idle.stop();
 			if(this.attackDirection == 'left') {
 				this.sprite.body.moveLeft(this.speed*2.5);
 			} else {
 				this.sprite.body.moveRight(this.speed*2.5);
 			}
-			this.sprite.body.moveUp(this.speed*0.2);
-			this.kill(true);
 		} else if(playerObject.player.position.x<this.sprite.position.x && (this.sprite.position.x-playerObject.player.position.x<500)) {
 			if(!this.attacking) {
 				this.sounds.idle.stop();
