@@ -296,6 +296,7 @@ class Test extends Phaser.State {
         switch(sprite.oType) {
             case 'EndGame': 
                 if(player!=null) {
+                    this.player.player.animations.play('idle');
                     this.game.end = true;
                 }
 
