@@ -84,9 +84,9 @@ class LevelData {
 
             new Checkpoint(this.game, 15200, 0, 1, collisionGroups.interactionCollision),
             new Rock(this.game, 15700, 100, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 16000, 400, 1, collisionGroups.obstaclesCollision),
-            new Rock(this.game, 16000, 100, 1, collisionGroups.obstaclesCollision),
-            new Fiend(this.game, 16500, -30, 0.8, collisionGroups.fiendCollision),
+            new Rock(this.game, 16000, 450, 1, collisionGroups.obstaclesCollision),
+            new Rock(this.game, 16000, 150, 1, collisionGroups.obstaclesCollision),
+            new Fiend(this.game, 16500, -40, 0.8, collisionGroups.fiendCollision),
 
             new Rock(this.game, 18000, -100, 1, collisionGroups.obstaclesCollision),
             new Rock(this.game, 18400, -50, 1, collisionGroups.obstaclesCollision),
@@ -321,16 +321,16 @@ class LevelData {
             new Checkpoint(this.game, 8000, 0, 1, collisionGroups.interactionCollision, "Hold <A> to Move blocks"),
             new PuzzleObstacle(this.game, 9000, -200, 1, collisionGroups.puzzleCollision),
             new PuzzleObstacle(this.game, 8600, -300, 1, collisionGroups.puzzleCollision),
-            new Bitmap(this.game, 'Platform', 9400, 0, 40, 500, 0, collisionGroups.obstaclesCollision, true),   
-            new Bitmap(this.game, 'Platform', 9400+220, 500, 500, 40, 0, collisionGroups.obstaclesCollision, true),
-            new Bitmap(this.game, 'Platform', 9400+440, 0, 40, 500, 0, collisionGroups.obstaclesCollision, true),  
-            new Orb(this.game, 9400+440-210, 620, 1, collisionGroups.interactionCollision), 
+            new Bitmap(this.game, 'Platform', 9400+200, 0, 40, 500, 0, collisionGroups.obstaclesCollision, true),   
+            new Bitmap(this.game, 'Platform', 9400+220+200, 500, 500, 40, 0, collisionGroups.obstaclesCollision, true),
+            new Bitmap(this.game, 'Platform', 9400+440+200, 0, 40, 500, 0, collisionGroups.obstaclesCollision, true),  
+            new Orb(this.game, 9400+430, 620, 1, collisionGroups.interactionCollision), 
 
             new Checkpoint(this.game, 10200, 0, 1, collisionGroups.interactionCollision),
             new FlyingFiend(this.game, 11200, 200, 0.4, collisionGroups.fiendCollision),
 
             new Checkpoint(this.game, 12000, 0, 1, collisionGroups.interactionCollision, "Hold <A> to Move blocks"),
-            new PuzzleObstacle(this.game, 12600, -400, 1, collisionGroups.puzzleCollision), 
+            new PuzzleObstacle(this.game, 12700, -400, 1, collisionGroups.puzzleCollision), 
             new PuzzleObstacle(this.game, 12300, -200, 1, collisionGroups.puzzleCollision),
 
             new Spikes(this.game, 13500+500, 0, 1, collisionGroups.obstaclesCollision), 
