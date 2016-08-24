@@ -13,6 +13,7 @@ class LevelSelect extends Phaser.State {
 		this.lvlProgress = localStorage.getItem(this.game.uniqueKey);
 		if(!this.lvlProgress) {
 			this.lvlProgress = 1;
+			localStorage.setItem(this.game.uniqueKey, 1); 
 		}
 
 		//buttons

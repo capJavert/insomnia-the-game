@@ -355,7 +355,7 @@ class LevelData {
         this.game.lvlIntroText = "... New Dawn ...";
 
         let lvlObjects = [
-            new Checkpoint(this.game, 4800, 0, 1, collisionGroups.interactionCollision),
+            new Checkpoint(this.game, 4000, 0, 1, collisionGroups.interactionCollision),
             new FlyingFiend(this.game, 5000, 300, 0.6, collisionGroups.fiendCollision),
 
             new Checkpoint(this.game, 10200, 0, 1, collisionGroups.interactionCollision),
