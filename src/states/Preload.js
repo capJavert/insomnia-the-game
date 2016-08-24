@@ -30,14 +30,6 @@ class Preload extends Phaser.State {
 		this.game.load.audio('girl-boost', 'assets/sounds/girl-boost.mp3');
 		this.game.load.audio('orb-collect', 'assets/sounds/orb-collect.mp3');
 
-		//google webfont
-		var WebFontConfig = {
-		    google: {
-		      families: ['IM Fell DW Pica']
-		    }
-		};
-		this.game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
-
 		//menu images
 		this.game.load.image('logo', 'assets/menu/logo.png');
 
