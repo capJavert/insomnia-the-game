@@ -164,6 +164,8 @@ function serve() {
 
 }
 
+function test() {
+}
 
 gulp.task('cleanBuild', cleanBuild);
 gulp.task('copyStatic', ['cleanBuild'], copyStatic);
@@ -172,6 +174,7 @@ gulp.task('copyZepto', ['copyStatic'], copyZepto);
 gulp.task('build', ['copyPhaser', 'copyZepto'], build);
 gulp.task('fastBuild', build);
 gulp.task('serve', ['build'], serve);
+gulp.task('test', test);
 gulp.task('watch-js', ['fastBuild'], browserSync.reload); // Rebuilds and reloads the project when executed.
 gulp.task('watch-static', ['copyPhaser'], browserSync.reload);
 

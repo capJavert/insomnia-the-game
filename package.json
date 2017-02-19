@@ -1,11 +1,13 @@
 {
   "name": "insomnia-the-game",
   "version": "1.0.0",
-  "description": "Insomnia game, thesis project @foivz http://ante-baric.com/insomnia",
+  "description": "Insomnia game, thesis project @foivz https://capjavert.github.io/insomnia/",
   "main": "src/index.js",
   "scripts": {
     "start": "gulp",
-    "production": "gulp --production"
+    "production": "gulp --production",
+    "build": "gulp build",
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
