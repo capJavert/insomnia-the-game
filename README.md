@@ -20,3 +20,8 @@ $ npm run production (build and run production version with minified scripts)
 $ npm run build (clean build)
 
 $ npm test (run tests)
+
+### Research paper
+If interested there is a written paper made during the development of the game. It's in Croatian but also can be easly understood with help of some Google translate ;) 
+
+- https://drive.google.com/file/d/1eNDPlIuJOTF8kT32prBLt5NjABo5MIlr/view?usp=sharing
