@@ -6,12 +6,25 @@
         {
             "src": "build/**/*",
             "use": "@now/static"
+        },
+        {
+            "src": "website/**/*",
+            "use": "@now/static"
         }
     ],
     "routes": [
         {
-            "src": "/(.*)",
+            "src": "/play",
+            "status": 301,
+            "headers": { "Location": "/play/" }
+        },
+        {
+            "src": "/play/(.*)",
             "dest": "/build/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/website/$1"
         }
     ]
 }
