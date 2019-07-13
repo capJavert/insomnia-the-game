@@ -1,6 +1,6 @@
 {
   "name": "insomnia-the-game",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Insomnia game, thesis project @foivz https://capjavert.github.io/insomnia/",
   "main": "src/index.js",
   "scripts": {
