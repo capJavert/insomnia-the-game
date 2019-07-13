@@ -6,6 +6,7 @@ class Boot extends Phaser.State {
 
 	create() {
 		this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+		this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 		this.game.state.start("Preload");
 		this.game.uniqueKey = 'E8jpNY2r8Rr27BaLmnLg';
 		this.game.lastLvlId = 5;
