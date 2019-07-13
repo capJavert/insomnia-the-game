@@ -6,8 +6,9 @@
   "scripts": {
     "start": "gulp",
     "production": "gulp --production",
-    "build": "gulp build",
-    "test": "gulp test"
+    "build": "gulp build --production",
+    "test": "gulp test",
+    "deploy": "npm run build && now --target production"
   },
   "repository": {
     "type": "git",
