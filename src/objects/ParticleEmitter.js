@@ -30,28 +30,28 @@ class ParticleEmitter {
 			}
 			this.yMargin = this.y;
 			this.moveMargin = {
-				min: this.y+10, 
+				min: this.y+10,
 				max: this.y+this.height
 			}
 		}
 
-        this.particles = new Array(this.particleQuantity);     
+        this.particles = new Array(this.particleQuantity);
 	}
 
 	createParticles(particleObject) {
-		if(typeof particleObject != 'undefined') { 
+		if(typeof particleObject != 'undefined') {
 			this.particle = particleObject;
 		}
 
 		for (var i = 0; i < this.particleQuantity; i++) {
 			this.particles[i] = new Particle(
-				this.game, 
-				this.particle.width, 
-				this.particle.height, 
+				this.game,
+				this.particle.width,
+				this.particle.height,
 				this.particle.color,
 				this.particle.speed*this.direction
 			);
-		};   
+		};
 	}
 
 	update(playerObject, spritePosition) {

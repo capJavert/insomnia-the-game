@@ -37,7 +37,7 @@ function isProduction() {
  * Logs the current build mode on the console.
  */
 function logBuildMode() {
-    
+
     if (isProduction()) {
         gutil.log(gutil.colors.green('Running production build...'));
     } else {
@@ -76,15 +76,15 @@ function copyStatic() {
 function copyPhaser() {
 
     var srcList = ['phaser.min.js'];
-    
+
     if (!isProduction()) {
         srcList.push('phaser.map', 'phaser.js');
     }
-    
+
     srcList = srcList.map(function(file) {
         return PHASER_PATH + file;
     });
-        
+
     return gulp.src(srcList)
         .pipe(gulp.dest(SCRIPTS_PATH));
 
@@ -97,11 +97,11 @@ function copyPhaser() {
 function copyZepto() {
 
     var srcList = ['zepto.min.js'];
-    
+
     srcList = srcList.map(function(file) {
         return ZEPTO_PATH + file;
     });
-        
+
     return gulp.src(srcList)
         .pipe(gulp.dest(SCRIPTS_PATH));
 
@@ -110,7 +110,7 @@ function copyZepto() {
 /**
  * Transforms ES2015 code into ES5 code.
  * Optionally: Creates a sourcemap file 'game.js.map' for debugging.
- * 
+ *
  * In order to avoid copying Phaser and Static files on each build,
  * I've abstracted the build logic into a separate function. This way
  * two different tasks (build and fastBuild) can use the same logic
@@ -144,19 +144,19 @@ function build() {
  * Watches for file changes in the 'src' folder.
  */
 function serve() {
-    
+
     var options = {
         server: {
             baseDir: BUILD_PATH
         },
         open: false // Change it to true if you wish to allow Browsersync to open a browser window.
     };
-    
+
     browserSync(options);
-    
+
     // Watches for changes in files inside the './src' folder.
     gulp.watch(SOURCE_PATH + '/**/*.js', ['watch-js']);
-    
+
     // Watches for changes in files inside the './static' folder. Also sets 'keepFiles' to true (see cleanBuild()).
     gulp.watch(STATIC_PATH + '/**/*', ['watch-static']).on('change', function() {
         keepFiles = true;
@@ -181,8 +181,8 @@ gulp.task('watch-static', ['copyPhaser'], browserSync.reload);
 /**
  * The tasks are executed in the following order:
  * 'cleanBuild' -> 'copyStatic' -> 'copyPhaser' -> 'build' -> 'serve'
- * 
- * Read more about task dependencies in Gulp: 
+ *
+ * Read more about task dependencies in Gulp:
  * https://medium.com/@dave_lunny/task-dependencies-in-gulp-b885c1ab48f0
  */
 gulp.task('default', ['serve']);

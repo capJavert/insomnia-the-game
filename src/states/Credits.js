@@ -4,7 +4,7 @@ class Credits extends Phaser.State {
 
 	create() {
 		//buttons
-	    this.credits = new MenuButton(this.game, this.game.width/2, this.game.height, 
+	    this.credits = new MenuButton(this.game, this.game.width/2, this.game.height,
 	    	"\n\nCREDITS\n\n"+
 	    	"Game designed and developed by Ante Barić\n"+
 	    	"Powered by Phaser Engine\n"+

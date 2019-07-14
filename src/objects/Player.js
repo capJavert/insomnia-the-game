@@ -40,8 +40,8 @@ class Player {
 
         //set material
         this.material = new Material(this.game, 'player', this.player.body);
-        this.material.properties.relaxation = 10000; 
-        this.material.properties.friction = 1000;    
+        this.material.properties.relaxation = 10000;
+        this.material.properties.friction = 1000;
         this.material.properties.restitution = 0;
         this.material.properties.stiffness = 10000; 
 
@@ -87,7 +87,7 @@ class Player {
                 this.resetStunned();
             }
         } else {
-            this.player.body.velocity.x = 0; 
+            this.player.body.velocity.x = 0;
             this.speed = 0;
         }
 
@@ -124,7 +124,7 @@ class Player {
                     this.player.animations.play('left');
                 } else {
                     this.player.animations.play('idle');
-                } 
+                }
             }
         } else if (cursors.right.isDown && !this.stunned) {
             //  Move to the right
@@ -168,29 +168,29 @@ class Player {
             }
             this.player.body.offset.y = 10;
         }
-	} 
+	}
 
     //check if player is jumping
-    checkIfCanJump() {    
-        var yAxis = p2.vec2.fromValues(0, 1);    
-        var result = false;    
+    checkIfCanJump() {
+        var yAxis = p2.vec2.fromValues(0, 1);
+        var result = false;
 
-        for (var i = 0; i < this.game.physics.p2.world.narrowphase.contactEquations.length; i++) {        
-            var c = this.game.physics.p2.world.narrowphase.contactEquations[i];     
+        for (var i = 0; i < this.game.physics.p2.world.narrowphase.contactEquations.length; i++) {
+            var c = this.game.physics.p2.world.narrowphase.contactEquations[i];
 
-            if (c.bodyA === this.player.body.data || c.bodyB === this.player.body.data) {            
-                var d = p2.vec2.dot(c.normalA, yAxis); // Normal dot Y-axis            
+            if (c.bodyA === this.player.body.data || c.bodyB === this.player.body.data) {
+                var d = p2.vec2.dot(c.normalA, yAxis); // Normal dot Y-axis
                 if (c.bodyA === this.player.body.data) {
-                    d *= -1;     
+                    d *= -1;
                 }
 
                 if (d > 0.5) {
                     //this.safeLocation = this.player.position.x-this.player.width/2;
                     this.pondBoost = false;
-                    result = true;        
+                    result = true;
                 }
-            }    
-        }        
+            }
+        }
 
         return result;
     }

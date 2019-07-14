@@ -53,7 +53,7 @@ class Orb extends Sprite {
 		if(this.sprite.collect && !this.collected) {
 			this.sprite.body.clearShapes();
 			this.kill();
-	    	this.updateOrbs();	
+	    	this.updateOrbs();
 		}
 	}
 
@@ -87,7 +87,7 @@ class Orb extends Sprite {
 	moveDown() {
 		if(this.sprite.body!=null) {
 			this.sprite.body.moveDown(this.levitationMove);
-			
+
 			this.game.time.events.add(Phaser.Timer.SECOND*0.5, this.moveUp, this);
 		}
 	}

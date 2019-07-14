@@ -21,42 +21,42 @@ class Material {
 
 		switch(this.name) {
 			case 'rock':
-	    		this.contactMaterial.friction = 1000;    
-	    		this.contactMaterial.restitution = 0;  
-	    		this.contactMaterial.stiffness = 10000;    
-	    		this.contactMaterial.relaxation = 10000;     
-	    		this.contactMaterial.frictionStiffness = 1e7;    
-	    		this.contactMaterial.frictionRelaxation = 3;     
-	    		this.contactMaterial.surfaceVelocity = 0;        
+	    		this.contactMaterial.friction = 1000;
+	    		this.contactMaterial.restitution = 0;
+	    		this.contactMaterial.stiffness = 10000;
+	    		this.contactMaterial.relaxation = 10000;
+	    		this.contactMaterial.frictionStiffness = 1e7;
+	    		this.contactMaterial.frictionRelaxation = 3;
+	    		this.contactMaterial.surfaceVelocity = 0;
 				break;
 			case 'ground-trap':
-	    		this.contactMaterial.friction = 1000;    
-	    		this.contactMaterial.restitution = 0;  
-	    		this.contactMaterial.stiffness = 10000;    
-	    		this.contactMaterial.relaxation = 10000;     
-	    		this.contactMaterial.frictionStiffness = 1e7;    
-	    		this.contactMaterial.frictionRelaxation = 3;     
-	    		this.contactMaterial.surfaceVelocity = -1;        
+	    		this.contactMaterial.friction = 1000;
+	    		this.contactMaterial.restitution = 0;
+	    		this.contactMaterial.stiffness = 10000;
+	    		this.contactMaterial.relaxation = 10000;
+	    		this.contactMaterial.frictionStiffness = 1e7;
+	    		this.contactMaterial.frictionRelaxation = 3;
+	    		this.contactMaterial.surfaceVelocity = -1;
 				break;
 			case 'puzzle-obstacle':
-	    		this.contactMaterial.friction = 0;    
-	    		this.contactMaterial.restitution = 0;  
-	    		this.contactMaterial.stiffness = 10000;    
-	    		this.contactMaterial.relaxation = 10000;     
-	    		this.contactMaterial.frictionStiffness = 0;    
-	    		this.contactMaterial.frictionRelaxation = 3;     
-	    		this.contactMaterial.surfaceVelocity = -1;        
+	    		this.contactMaterial.friction = 0;
+	    		this.contactMaterial.restitution = 0;
+	    		this.contactMaterial.stiffness = 10000;
+	    		this.contactMaterial.relaxation = 10000;
+	    		this.contactMaterial.frictionStiffness = 0;
+	    		this.contactMaterial.frictionRelaxation = 3;
+	    		this.contactMaterial.surfaceVelocity = -1;
 				break;
 			case 'spikes':
-	    		this.contactMaterial.friction = 1000;    
-	    		this.contactMaterial.restitution = 0;  
-	    		this.contactMaterial.stiffness = 10000;    
-	    		this.contactMaterial.relaxation = 10000;     
-	    		this.contactMaterial.frictionStiffness = 1e7;    
-	    		this.contactMaterial.frictionRelaxation = 3;     
-	    		this.contactMaterial.surfaceVelocity = 0;        
+	    		this.contactMaterial.friction = 1000;
+	    		this.contactMaterial.restitution = 0;
+	    		this.contactMaterial.stiffness = 10000;
+	    		this.contactMaterial.relaxation = 10000;
+	    		this.contactMaterial.frictionStiffness = 1e7;
+	    		this.contactMaterial.frictionRelaxation = 3;
+	    		this.contactMaterial.surfaceVelocity = 0;
 				break;
-		}   
+		}
 	}
 }
 

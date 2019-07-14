@@ -47,10 +47,10 @@ class Fiend extends Sprite {
 
         //set material
         this.material = new Material(this.game, 'fiend', this.sprite.body);
-        this.material.properties.relaxation = 10000; 
-        this.material.properties.friction = 1000;    
+        this.material.properties.relaxation = 10000;
+        this.material.properties.friction = 1000;
         this.material.properties.restitution = 0;
-        this.material.properties.stiffness = 10000; 
+        this.material.properties.stiffness = 10000;
 
 		//set listener for when player interacts with this fiend
 		this.sprite.body.onBeginContact.add(this.forceHit, this);

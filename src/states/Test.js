@@ -72,17 +72,17 @@ class Test extends Phaser.State {
         bgBitMap.ctx.fill();
         this.backgroundSprite = this.game.add.sprite(0, 0, bgBitMap);
 
-        //create sun and moon 
+        //create sun and moon
         this.sunSprite = this.game.add.sprite(this.game.width/2-276/2, 750, 'sun');
         this.moonSprite = this.game.add.sprite(this.game.width - (this.game.width / 4), 150*this.game.lvlId, 'moon');
         this.moonSprite.visible = false;
         this.sunSprite.visible = false;
 
         //create game backgrounds
-        this.backgroundMid = this.game.add.tileSprite(0, 
-            this.game.height - this.game.cache.getImage('background-mid-lvl'+this.game.lvlId).height, 
-            this.game.width, 
-            this.game.cache.getImage('background-mid-lvl'+this.game.lvlId).height, 
+        this.backgroundMid = this.game.add.tileSprite(0,
+            this.game.height - this.game.cache.getImage('background-mid-lvl'+this.game.lvlId).height,
+            this.game.width,
+            this.game.cache.getImage('background-mid-lvl'+this.game.lvlId).height,
             'background-mid-lvl'+this.game.lvlId
         );
 
@@ -93,12 +93,12 @@ class Test extends Phaser.State {
 
         //set collision rules for player
         this.player.collides([this.obstaclesCollision, this.worldCollision, this.interactionCollision, this.fiendCollision, this.puzzleCollision], this.player.hitSprite);
-    
-        //create ground fog 
-        this.backgroundBottom = this.game.add.tileSprite(0, 
-            this.game.height - this.game.cache.getImage('background-bottom').height, 
-            this.game.width, 
-            this.game.cache.getImage('background-bottom').height, 
+
+        //create ground fog
+        this.backgroundBottom = this.game.add.tileSprite(0,
+            this.game.height - this.game.cache.getImage('background-bottom').height,
+            this.game.width,
+            this.game.cache.getImage('background-bottom').height,
             'background-bottom'
         );
 
@@ -125,7 +125,7 @@ class Test extends Phaser.State {
             this.dayCycle.initSun(this.sunSprite);
         }
 
-        //apply day night shading 
+        //apply day night shading
         this.dayCycle.initShading(backgroundSprites);
         let backgroundSprites = [
             {sprite: this.backgroundSprite, from: 0x1f2a27, to: 0xB2DDC8},
@@ -147,7 +147,7 @@ class Test extends Phaser.State {
 
         //orb count display
         this.orbCountDisplay = new MenuButton(
-            this.game, this.game.width-200, 60, "Orbs collected: "+this.game.orbCount, null, 
+            this.game, this.game.width-200, 60, "Orbs collected: "+this.game.orbCount, null,
             {
                 font: 'Arial',
                 fontWeight: 'normal',
@@ -159,7 +159,7 @@ class Test extends Phaser.State {
 
         //health display
         this.healthDisplay = new MenuButton(
-            this.game, 200, 60, "Lives: "+this.game.health, null, 
+            this.game, 200, 60, "Lives: "+this.game.health, null,
             {
                 font: 'Arial',
                 fontWeight: 'normal',
@@ -179,7 +179,7 @@ class Test extends Phaser.State {
 
         //text
         this.text = this.game.add.text(
-            this.game.width/2, this.game.height/2, 
+            this.game.width/2, this.game.height/2,
             this.game.lvlIntroText
         );
         this.text.anchor.setTo(0.5);
@@ -294,22 +294,22 @@ class Test extends Phaser.State {
         }
 
         switch(sprite.oType) {
-            case 'EndGame': 
+            case 'EndGame':
                 if(player!=null) {
                     this.player.player.animations.play('idle');
                     this.game.end = true;
                 }
 
-                return true; 
+                return true;
                 break;
-            case 'Orb': 
+            case 'Orb':
                 if(player!=null) {
                     sprite.collect = true;
                 }
 
-                return false; 
+                return false;
                 break;
-            case 'Fiend': 
+            case 'Fiend':
                 if(player!=null) {
                     if(!player.damageBounce) {
                         player.damageBounce = true;
@@ -319,9 +319,9 @@ class Test extends Phaser.State {
                     sprite.trapHit = true;
                 }
 
-                return false; 
+                return false;
                 break;
-            case 'FlyingFiend': 
+            case 'FlyingFiend':
                 if(player!=null) {
                     if(!player.damageBounce) {
                         sprite.playerHit = true;
@@ -329,18 +329,18 @@ class Test extends Phaser.State {
                     }
                 }
 
-                return false; 
+                return false;
                 break;
-            case 'Trap': 
+            case 'Trap':
                 if(this.game.cursors.interact.a.isDown) {
                     sprite.isFollowingPlayer = true;
                 } else {
                     sprite.isFollowingPlayer = false;
                 }
 
-                return false; 
+                return false;
                 break;
-            case 'PuzzleObstacle': 
+            case 'PuzzleObstacle':
                 if(this.game.cursors.interact.a.isDown) {
                     if(!this.player.drag) {
                         sprite.isFollowingPlayer = true;
@@ -356,18 +356,18 @@ class Test extends Phaser.State {
                 } else {
                     return true;
                 }
-                
+
                 break;
-            case 'Spikes': 
+            case 'Spikes':
                 if(player!=null) {
                     if(!player.damageBounce) {
                         player.damageBounce = true;
                     }
                 }
 
-                return false; 
+                return false;
                 break;
-            case 'Pond': 
+            case 'Pond':
                 if(player!=null && player.position.y>this.game.height-300) {
                     player.animations.play('jump');
                     player.jumping = true;
@@ -375,12 +375,12 @@ class Test extends Phaser.State {
                     this.player.pondBoost = true;
                     this.player.sounds.boost.play();
                 }
-                return false; 
-            case 'Particle': 
+                return false;
+            case 'Particle':
 
                 return false;
                 break;
-            case 'Checkpoint': 
+            case 'Checkpoint':
                 //set checkpoint to current game progress
                 if(player!=null) {
                     if(this.game.checkpoint<this.game.progress) {
@@ -408,7 +408,7 @@ class Test extends Phaser.State {
         .to( { alpha: 0 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false);
         this.startMessageTween = this.game.add.tween(this.messageBackground)
         .to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
-    
+
         this.startMessageTween.onComplete.add(this.startGame, this);
     }
 
@@ -422,7 +422,7 @@ class Test extends Phaser.State {
 
         //text
         this.text = this.game.add.text(
-            this.game.width/2, this.game.height/2, 
+            this.game.width/2, this.game.height/2,
             message
         );
         this.text.anchor.setTo(0.5);
@@ -451,8 +451,8 @@ class Test extends Phaser.State {
 
         //save score for current lvl
         if(!this.lvlScore || this.lvlScore<this.game.progress) {
-            localStorage.setItem(this.game.uniqueKey+"L"+this.game.lvlId, this.game.progress);      
-        }    
+            localStorage.setItem(this.game.uniqueKey+"L"+this.game.lvlId, this.game.progress);
+        }
 
         this.game.state.start('GameOver', true, false);
     }
@@ -462,8 +462,8 @@ class Test extends Phaser.State {
 
         //save score for current lvl
         if(!this.lvlScore || this.lvlScore<this.game.progress) {
-            localStorage.setItem(this.game.uniqueKey+"L"+this.game.lvlId, this.game.progress);      
-        }    
+            localStorage.setItem(this.game.uniqueKey+"L"+this.game.lvlId, this.game.progress);
+        }
 
         this.game.state.start('Menu', true, false);
     }
@@ -473,22 +473,22 @@ class Test extends Phaser.State {
 
         //save score for current lvl
         if(!this.lvlScore || this.lvlScore<this.game.progress) {
-            localStorage.setItem(this.game.uniqueKey+"L"+this.game.lvlId, this.game.progress);      
-        }    
+            localStorage.setItem(this.game.uniqueKey+"L"+this.game.lvlId, this.game.progress);
+        }
 
         //update lvl id
         this.game.lvlId++;
 
         //save player progress
         if(!this.lvlProgress || this.lvlProgress<this.game.lvlId) {
-            localStorage.setItem(this.game.uniqueKey, this.game.lvlId);      
+            localStorage.setItem(this.game.uniqueKey, this.game.lvlId);
         }
 
         if(this.game.lvlId>this.game.lastLvlId) {
             this.game.state.start('Credits', true, false);
         } else {
             this.game.state.start("Test");
-        }    
+        }
     }
 
     playSounds() {

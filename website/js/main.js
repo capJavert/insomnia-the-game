@@ -1,6 +1,6 @@
 $('#beta-signup-form').on('submit', function(e) {
 		e.preventDefault();
-	
+
 		$.ajax({
 			url: "beta-signup.php",
 			method: "GET",
@@ -13,8 +13,8 @@ $('#beta-signup-form').on('submit', function(e) {
 					$('#email').addClass('error');
 				}
 			},
-			 error: function(jqXHR, textStatus, errorThrown) { 
+			 error: function(jqXHR, textStatus, errorThrown) {
 	        	console.log(textStatus, errorThrown);
-	    	}	
+	    	}
 		});
 });

@@ -1,7 +1,7 @@
 class MenuButton {
 
 	constructor(game, x, y, text, action, styles){
-		if(typeof styles == 'undefined') { 
+		if(typeof styles == 'undefined') {
 			styles = {
             	font: 'IM Fell DW Pica',
             	fontWeight: 'normal',
@@ -13,7 +13,7 @@ class MenuButton {
 
 		this.game = game;
         this.text = this.game.add.text(
-            x, y, 
+            x, y,
             text,
             styles
         );

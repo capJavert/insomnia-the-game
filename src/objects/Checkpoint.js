@@ -14,8 +14,8 @@ class Checkpoint extends Sprite {
 		this.visible = false;
 		this.collisionGroup = collisionGroup;
 
-		if(typeof hint == 'undefined') { 
-			this.hint = false; 
+		if(typeof hint == 'undefined') {
+			this.hint = false;
 		} else {
 			this.hint = hint;
 		}
@@ -38,7 +38,7 @@ class Checkpoint extends Sprite {
 		this.sprite.showHint = false;
 		if(this.hint) {
 	        this.hintDisplay = new MenuButton(
-	            this.game, 0, this.y-300, this.hint, null, 
+	            this.game, 0, this.y-300, this.hint, null,
 	            {
 	                font: 'Arial',
 	                fontWeight: 'normal',

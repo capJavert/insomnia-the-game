@@ -13,7 +13,7 @@ class Dummy {
 	}
 
 	update(game, cursors, background) {
-		
+
 	}
 
     setCollisionGroup(group) {

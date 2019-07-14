@@ -13,7 +13,7 @@ class Particle {
 		//create particle bitmap
 		//used for particle sprite
         this.particleBitmap = this.game.add.bitmapData(this.width, this.height);
-     
+
      	//fill it
         this.particleBitmap.ctx.rect(0, 0, this.width, this.height);
         this.particleBitmap.ctx.fillStyle = this.color;
@@ -49,7 +49,7 @@ class Particle {
 		this.particle.oType = 'Particle';
 	    this.particle.body.collideWorldBounds = true;
 	    this.animate();
-	
+
 		//start lifespan timer
 	    this.game.time.events.add(this.lifespan, this.kill, this);
 	    this.spawned = true;

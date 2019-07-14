@@ -7,7 +7,7 @@ class LevelSelect extends Phaser.State {
 		//logo
 		this.logo = this.game.add.image(this.game.width/2, 140, 'logo');
 		this.logo.scale.setTo(0.5, 0.5);
-		this.logo.anchor.setTo(0.5, 0); 
+		this.logo.anchor.setTo(0.5, 0);
 
 		//get lvl progress data from local storage
 		this.lvlProgress = localStorage.getItem(this.game.uniqueKey);

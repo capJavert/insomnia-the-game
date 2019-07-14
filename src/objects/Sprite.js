@@ -43,14 +43,14 @@ class Sprite {
         this.sprite.body.collides(groups, callback);
     }
 
-    //destroy sprite 
+    //destroy sprite
     //if fade is set to true, fade sprite and call kill again without fade
     kill(fade) {
     	if(typeof fade == 'undefined') { fade = false; }
 
     	if(fade) {
             this.tween = this.game.add.tween(this.sprite)
-            .to( { alpha: 0 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false);	
+            .to( { alpha: 0 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false);
             this.tween.onComplete.add(this.kill, this);
     	} else {
 	    	this.sprite.body.clearShapes();
@@ -105,7 +105,7 @@ class Sprite {
 
 			for (var j = 0; j < data[i].shape.length; j += 2) {
 				vertices[j] = data[i].shape[j] * scale;
-				vertices[j+1] = data[i].shape[j+1] * scale; 
+				vertices[j+1] = data[i].shape[j+1] * scale;
 			}
 
 			newData.push({shape : vertices});
