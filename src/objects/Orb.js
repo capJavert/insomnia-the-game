@@ -40,7 +40,7 @@ class Orb extends Sprite {
 		this.moveUp();
 
 		//sounds
-		this.sounds.collect = this.game.add.audio('orb-collect', 0.15, false);
+		this.sounds.collect = this.game.add.audio('orb-collect', 0.08, false);
 	}
 
 	update(playerObject) {

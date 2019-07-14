@@ -45,7 +45,7 @@ class Weather {
         this.emitter.maxParticleScale = 0.3;
 
         this.emitter.setYSpeed(600, 1000);
-        this.emitter.setXSpeed(-5, 5);
+        this.emitter.setXSpeed(-400, -200);
 
         this.emitter.minRotation = 0;
         this.emitter.maxRotation = 0;

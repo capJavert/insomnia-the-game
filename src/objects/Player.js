@@ -43,7 +43,7 @@ class Player {
         this.material.properties.relaxation = 10000;
         this.material.properties.friction = 1000;
         this.material.properties.restitution = 0;
-        this.material.properties.stiffness = 10000; 
+        this.material.properties.stiffness = 10000;
 
         //set listener for when player interacts with lvl objects
         this.player.body.onBeginContact.add(this.handleContact, this);
@@ -52,7 +52,7 @@ class Player {
         this.helpers = new Helpers();
 
         //sounds
-        this.sounds.drop = this.game.add.audio('girl-drop', 0.7, false);
+        this.sounds.drop = this.game.add.audio('girl-drop', 0.1, false);
         this.sounds.move = this.game.add.audio('girl-move', 0.1, true);
         this.sounds.boost = this.game.add.audio('girl-boost', 0.6, false);
 	}
@@ -114,7 +114,7 @@ class Player {
             } else {
                 if(this.game.progress>this.game.checkpoint) {
                     this.speed = -400;
-                    background.tilePosition.x += 5/this.modifier;
+                    background.tilePosition.x += 4/this.modifier;
                     this.game.progress -= 1;
                 }
             }
@@ -132,7 +132,7 @@ class Player {
                 this.player.body.moveRight(400/this.modifier);
             } else {
                 this.speed = 400;
-                background.tilePosition.x -= 5/this.modifier;
+                background.tilePosition.x -= 4/this.modifier;
                 this.game.progress += 1;
             }
 
