@@ -27,18 +27,6 @@ $(function() {
     });
 });
 
-// jQuery for displaying the navbar logo only after the main logo is scrolled out of the viewport
-var $el = $('#logo');
-var bottom = $el.position().top + $el.offset().top + $el.outerHeight(true);
-$(window).scroll(function() {
-  var currentscroll = $(document).scrollTop();
-  if (currentscroll < bottom) {
-    document.getElementById("logo-small").style.visibility = "hidden";
-  } else {
-    document.getElementById("logo-small").style.visibility = "visible";
-  }
-});
-
 // Closes the Responsive Menu on Menu Item Click
 $('.navbar-collapse ul li a').click(function() {
   if ($(this).attr('class') != 'dropdown-toggle active' && $(this).attr('class') != 'dropdown-toggle') {
