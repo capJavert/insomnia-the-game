@@ -57,18 +57,45 @@ class Player {
 		this.sounds.boost = this.game.add.audio('girl-boost', 0.6, false);
 	}
 
-	isMoveLeftDown() {
-		const halfScreen = this.game.width / 2
-		const { isDown: pointerIsDown, position } = this.game.input.activePointer
+	isCursorLeftDown() {
+		const limitStart = 0
+		const limitEnd = 250
 
-		return this.game.cursors.left.isDown || (this.helpers.isTouchDevice && pointerIsDown && position.x < halfScreen)
+		return this.game.cursors.left.isDown || (this.helpers.isTouchDevice && this.game.input.pointers.some(pointer => {
+			const { isDown: pointerIsDown, position } = pointer
+
+			return pointerIsDown && position.x >= limitStart && position.x < limitEnd
+		}))
 	}
 
-	isMoveRightDown() {
-		const halfScreen = this.game.width / 2
-		const { isDown: pointerIsDown, position } = this.game.input.activePointer
+	isCursorRightDown() {
+		const limitStart = this.game.width - 250
+		const limitEnd = this.game.width
 
-		return this.game.cursors.right.isDown || (this.helpers.isTouchDevice && pointerIsDown && position.x >= halfScreen)
+		return this.game.cursors.right.isDown || (this.helpers.isTouchDevice && this.game.input.pointers.some(pointer => {
+			const { isDown: pointerIsDown, position } = pointer
+
+			return pointerIsDown && position.x >= limitStart && position.x < limitEnd
+		}))
+	}
+
+	isCursorUpDown() {
+		const limitsX = [
+			{
+				start: 250,
+				end:  500
+			},
+			{
+				start: this.game.width - 500,
+				end:  this.game.width - 250
+			}
+		]
+
+		return this.game.cursors.up.isDown || (this.helpers.isTouchDevice && this.game.input.pointers.some(pointer => {
+			const { isDown: pointerIsDown, position } = pointer
+
+			return pointerIsDown && limitsX.some(({ start, end }) => position.x >= start && position.x < end)
+		}))
 	}
 
 	update(game, cursors, background) {
@@ -121,7 +148,7 @@ class Player {
 			this.player.visible = false;
 
 			this.stunned = true;
-		} else if (this.isMoveLeftDown() && !this.stunned) {
+		} else if (this.isCursorLeftDown() && !this.stunned) {
 			//  Move to the left
 			if(this.player.position.x>200) {
 				this.player.body.moveLeft(400/this.modifier);
@@ -140,7 +167,7 @@ class Player {
 					this.player.animations.play('idle');
 				}
 			}
-		} else if (this.isMoveRightDown() && !this.stunned) {
+		} else if (this.isCursorRightDown() && !this.stunned) {
 			//  Move to the right
 			if(this.game.width/3>this.player.position.x+98) {
 				this.player.body.moveRight(400/this.modifier);
@@ -161,7 +188,7 @@ class Player {
 		}
 
 		//  Allow to jump if they are touching the ground.
-		if (cursors.up.isDown && this.checkIfCanJump() && !this.stunned)
+		if (this.isCursorUpDown() && this.checkIfCanJump() && !this.stunned)
 		{
 			this.player.animations.play('jump');
 
