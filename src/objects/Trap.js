@@ -46,15 +46,15 @@ class Trap extends Sprite {
 		}
 
 		if(this.sprite.isFollowingPlayer) {
-			this.followPlayer();
+			this.followPlayer(playerObject);
 		}
 	}
 
-	followPlayer() {
+	followPlayer(playerObject) {
 		if(this.game.cursors.interact.a.isDown) {
-			if (this.game.cursors.left.isDown && this.sprite.position.x>200) {
+			if (playerObject.isMoveLeftDown() && this.sprite.position.x>200) {
 				this.sprite.body.moveLeft(400);
-			} else if (this.game.cursors.right.isDown && this.game.width/3>this.sprite.position.x-this.sprite.width/2) {
+			} else if (playerObject.isMoveRightDown() && this.game.width/3>this.sprite.position.x-this.sprite.width/2) {
 				this.sprite.body.moveRight(400);
 			}
 		} else {

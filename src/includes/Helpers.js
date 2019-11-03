@@ -8,6 +8,7 @@ class Helpers {
 
 	constructor(game){
 		this.game = game;
+		this.isTouchDevice = ("ontouchstart" in window || window.DocumentTouch && document instanceof DocumentTouch)
 	}
 
 	//generates Orb in linear interval

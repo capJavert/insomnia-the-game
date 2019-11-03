@@ -10,6 +10,7 @@ module.exports = {
 		"$": "readonly",
 		"Phaser": "readonly",
 		"p2": "readonly",
+		"DocumentTouch": "readonly"
 	},
 	"parserOptions": {
 		"ecmaVersion": 2018,

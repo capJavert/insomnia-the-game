@@ -57,6 +57,20 @@ class Player {
 		this.sounds.boost = this.game.add.audio('girl-boost', 0.6, false);
 	}
 
+	isMoveLeftDown() {
+		const halfScreen = this.game.width / 2
+		const { isDown: pointerIsDown, position } = this.game.input.activePointer
+
+		return this.game.cursors.left.isDown || (this.helpers.isTouchDevice && pointerIsDown && position.x < halfScreen)
+	}
+
+	isMoveRightDown() {
+		const halfScreen = this.game.width / 2
+		const { isDown: pointerIsDown, position } = this.game.input.activePointer
+
+		return this.game.cursors.right.isDown || (this.helpers.isTouchDevice && pointerIsDown && position.x >= halfScreen)
+	}
+
 	update(game, cursors, background) {
 		//console.log(this.player.frame);
 		// Modify movement while mid air
@@ -107,7 +121,7 @@ class Player {
 			this.player.visible = false;
 
 			this.stunned = true;
-		} else if (cursors.left.isDown && !this.stunned) {
+		} else if (this.isMoveLeftDown() && !this.stunned) {
 			//  Move to the left
 			if(this.player.position.x>200) {
 				this.player.body.moveLeft(400/this.modifier);
@@ -126,7 +140,7 @@ class Player {
 					this.player.animations.play('idle');
 				}
 			}
-		} else if (cursors.right.isDown && !this.stunned) {
+		} else if (this.isMoveRightDown() && !this.stunned) {
 			//  Move to the right
 			if(this.game.width/3>this.player.position.x+98) {
 				this.player.body.moveRight(400/this.modifier);
