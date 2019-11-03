@@ -46,7 +46,6 @@ class PuzzleObstacle extends Sprite {
 
 	followPlayer(playerObject) {
 		if(this.game.cursors.interact.a.isDown) {
-			console.log(playerObject.isMoveLeftDown())
 			if (playerObject.isMoveLeftDown() && this.sprite.position.x>200) {
 				this.sprite.body.moveLeft(400);
 			} else if (playerObject.isMoveRightDown() && this.game.width/3>this.sprite.position.x-this.sprite.width/2) {
