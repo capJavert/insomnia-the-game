@@ -22,29 +22,29 @@ class Pond extends Bitmap {
 		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
 		this.sprite.body.kinematic = true;
 		this.sprite.oType = this.oType; //for check inside collision callback
-	    this.sprite.body.collideWorldBounds = true;
-        this.sprite.body.setCollisionGroup(this.collisionGroup);
+		this.sprite.body.collideWorldBounds = true;
+		this.sprite.body.setCollisionGroup(this.collisionGroup);
 
 		this.visible = true;
 
 		//set material params
 		this.material = new Material(this.game, 'pond', this.sprite.body);
 
-     	//set emitter
-        this.emitter = new ParticleEmitter(this.game, this, 200, 400, 500, 200, 10, -1, 'y');
-        this.emitter.particle.color = '#9cc9de';
-        this.emitter.particle.width = 5;
-        this.emitter.particle.height = 10;
-        this.emitter.particle.speed = 2000;
-        this.emitter.createParticles();
+		// set emitter
+		this.emitter = new ParticleEmitter(this.game, this, 200, 400, 500, 200, 10, -1, 'y');
+		this.emitter.particle.color = '#9cc9de';
+		this.emitter.particle.width = 5;
+		this.emitter.particle.height = 10;
+		this.emitter.particle.speed = 2000;
+		this.emitter.createParticles();
 
-     	//start emitter
-        this.emitter.start();
+		// start emitter
+		this.emitter.start();
 
-        //add glowing effect
-        this.sprite.alpha = 1;
-        this.tween = this.game.add.tween(this.sprite)
-        .to( { alpha: 0.8 }, 500, Phaser.Easing.Linear.None, true, 0, -1, true);
+		//add glowing effect
+		this.sprite.alpha = 1;
+		this.tween = this.game.add.tween(this.sprite)
+		.to( { alpha: 0.8 }, 500, Phaser.Easing.Linear.None, true, 0, -1, true);
 	}
 
 	update(playerObject) {

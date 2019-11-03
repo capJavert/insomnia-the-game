@@ -31,24 +31,24 @@ class Checkpoint extends Sprite {
 		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
 		this.sprite.oType = this.oType; //for check inside collision callback
 		this.sprite.body.kinematic = true;
-	    this.sprite.body.collideWorldBounds = true;
-        this.sprite.body.setCollisionGroup(this.collisionGroup);
+		this.sprite.body.collideWorldBounds = true;
+		this.sprite.body.setCollisionGroup(this.collisionGroup);
 
 		//set defeault checkpoint states
 		this.sprite.showHint = false;
 		if(this.hint) {
-	        this.hintDisplay = new MenuButton(
-	            this.game, 0, this.y-300, this.hint, null,
-	            {
-	                font: 'Arial',
-	                fontWeight: 'normal',
-	                fontSize: 28,
-	                fill: '#FFFFFF',
-	                align: 'center',
-	            }
-	        );
-	        this.hintDisplay.text.anchor.set(0.5);
-	        this.hintDisplay.text.visible = false;
+			this.hintDisplay = new MenuButton(
+				this.game, 0, this.y-300, this.hint, null,
+				{
+					font: 'Arial',
+					fontWeight: 'normal',
+					fontSize: 28,
+					fill: '#FFFFFF',
+					align: 'center',
+				}
+			);
+			this.hintDisplay.text.anchor.set(0.5);
+			this.hintDisplay.text.visible = false;
 		}
 
 		//set material params
@@ -61,7 +61,7 @@ class Checkpoint extends Sprite {
 			this.hintDisplay.text.x = playerObject.player.x;
 			this.hintDisplay.text.visible = true;
 
-	        this.game.time.events.add(Phaser.Timer.SECOND*5, this.removeHint, this);
+			this.game.time.events.add(Phaser.Timer.SECOND*5, this.removeHint, this);
 		}
 
 		this.sprite.body.velocity.x = 0;

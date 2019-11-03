@@ -35,7 +35,7 @@ class ParticleEmitter {
 			}
 		}
 
-        this.particles = new Array(this.particleQuantity);
+		this.particles = new Array(this.particleQuantity);
 	}
 
 	createParticles(particleObject) {
@@ -51,7 +51,7 @@ class ParticleEmitter {
 				this.particle.color,
 				this.particle.speed*this.direction
 			);
-		};
+		}
 	}
 
 	update(playerObject, spritePosition) {

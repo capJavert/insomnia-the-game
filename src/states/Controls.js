@@ -9,7 +9,7 @@ class Controls extends Phaser.State {
 		this.logo.anchor.setTo(0.5, 0);
 
 		//buttons
-	    this.back = new MenuButton(this.game, this.game.width/2, this.logo.position.y+this.logo.height+100, "Back", this.mainMenu);
+		this.back = new MenuButton(this.game, this.game.width/2, this.logo.position.y+this.logo.height+100, "Back", this.mainMenu);
 		this.move = new MenuButton(this.game, this.game.width/2, this.back.position.y+this.back.height+40, "Movement: Cursors <Left>, <Right>", null);
 		this.jump = new MenuButton(this.game, this.game.width/2, this.move.position.y+this.move.height+20, "Jump: Cursor <Up>", null);
 		this.interact = new MenuButton(this.game, this.game.width/2, this.jump.position.y+this.jump.height+20, "Interact with objects: Hold <A>", null);

@@ -23,8 +23,8 @@ class Bitmap extends Sprite {
 
 		//	Fill it
 		sprite.ctx.rect(0, 0, this.width, this.height);
-	    sprite.ctx.fillStyle = '#111111';
-	    sprite.ctx.fill();
+		sprite.ctx.fillStyle = '#111111';
+		sprite.ctx.fill();
 
 		this.sprite = this.game.add.sprite(this.x, this.y, sprite);
 		this.sprite.position.y -= (this.sprite.height/2);
@@ -32,8 +32,8 @@ class Bitmap extends Sprite {
 		this.setAngle(this.angle);
 		this.sprite.oType = this.oType; //for check inside collision callback
 		if(this.kinematic) this.sprite.body.kinematic = true;
-	    this.sprite.body.collideWorldBounds = true;
-        this.sprite.body.setCollisionGroup(this.collisionGroup);
+		this.sprite.body.collideWorldBounds = true;
+		this.sprite.body.setCollisionGroup(this.collisionGroup);
 
 		this.visible = true;
 

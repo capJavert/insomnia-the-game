@@ -3,26 +3,26 @@ class Dummy {
 	constructor(game, x, y){
 		this.game = game;
 
-        //load sprite
-        this.player = this.game.add.sprite(x, y, 'girl-dummy-sprite');
+		//load sprite
+		this.player = this.game.add.sprite(x, y, 'girl-dummy-sprite');
 
-        //enable physics on player
-        this.game.physics.p2.enable(this.player, debugMode);
-        this.player.body.collideWorldBounds = true;
+		//enable physics on player
+		this.game.physics.p2.enable(this.player, debugMode); // eslint-disable-line
+		this.player.body.collideWorldBounds = true;
 		this.spawned = false;
 	}
 
-	update(game, cursors, background) {
+	update(game, cursors, background) { // eslint-disable-line
 
 	}
 
-    setCollisionGroup(group) {
-        this.player.body.setCollisionGroup(group);
-    }
+	setCollisionGroup(group) {
+		this.player.body.setCollisionGroup(group);
+	}
 
-    collides(groups) {
-        this.player.body.collides(groups);
-    }
+	collides(groups) {
+		this.player.body.collides(groups);
+	}
 }
 
 export default Dummy;

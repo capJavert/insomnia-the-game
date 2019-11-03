@@ -16,41 +16,41 @@ class Fiend extends Sprite {
 	}
 
 	render() {
-      	//load fiend
-        this.sprite = this.game.add.sprite(this.x, this.y, 'shadow-hand');
-        this.sprite.position.y -= (this.sprite.height/2);
-        this.setScale(this.scale);
+		// load fiend
+		this.sprite = this.game.add.sprite(this.x, this.y, 'shadow-hand');
+		this.sprite.position.y -= (this.sprite.height/2);
+		this.setScale(this.scale);
 
 		//set defeault fiend states
 		this.isForceHit = false;
 		this.sprite.playerHit = false;
 		this.sprite.trapHit = false;
 
-        //define animation frames
-        this.sprite.animations.add('idle', Phaser.Animation.generateFrameNames('shadow-hand-idle', 1, 9), 6, true);
-        this.sprite.animations.add('high-lurk', Phaser.Animation.generateFrameNames('shadow-hand-high-atk', 1, 1), 1, true);
-        this.sprite.animations.add('high-atk', Phaser.Animation.generateFrameNames('shadow-hand-high-atk', 1, 3), 10, true);
-        this.sprite.animations.add('low-lurk', Phaser.Animation.generateFrameNames('shadow-hand-low-atk', 1, 1), 1, true);
-        this.sprite.animations.add('low-atk', Phaser.Animation.generateFrameNames('shadow-hand-low-atk', 1, 2), 10, true);
+		//define animation frames
+		this.sprite.animations.add('idle', Phaser.Animation.generateFrameNames('shadow-hand-idle', 1, 9), 6, true);
+		this.sprite.animations.add('high-lurk', Phaser.Animation.generateFrameNames('shadow-hand-high-atk', 1, 1), 1, true);
+		this.sprite.animations.add('high-atk', Phaser.Animation.generateFrameNames('shadow-hand-high-atk', 1, 3), 10, true);
+		this.sprite.animations.add('low-lurk', Phaser.Animation.generateFrameNames('shadow-hand-low-atk', 1, 1), 1, true);
+		this.sprite.animations.add('low-atk', Phaser.Animation.generateFrameNames('shadow-hand-low-atk', 1, 2), 10, true);
 
-        //enable physics on fiend
-        this.game.physics.p2.enable(this.sprite, this.game.debugMode);
-        this.sprite.oType = this.oType; //for check inside collision callback
+		//enable physics on fiend
+		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
+		this.sprite.oType = this.oType; //for check inside collision callback
 		this.sprite.body.clearShapes();
 		this.sprite.body.setCircle(160*this.scale);
-	    this.sprite.body.kinematic = true;
-        this.sprite.body.collideWorldBounds = true;
-        this.sprite.body.setCollisionGroup(this.collisionGroup);
-        this.sprite.position.y = 0;
+		this.sprite.body.kinematic = true;
+		this.sprite.body.collideWorldBounds = true;
+		this.sprite.body.setCollisionGroup(this.collisionGroup);
+		this.sprite.position.y = 0;
 
 		this.visible = true;
 
-        //set material
-        this.material = new Material(this.game, 'fiend', this.sprite.body);
-        this.material.properties.relaxation = 10000;
-        this.material.properties.friction = 1000;
-        this.material.properties.restitution = 0;
-        this.material.properties.stiffness = 10000;
+		//set material
+		this.material = new Material(this.game, 'fiend', this.sprite.body);
+		this.material.properties.relaxation = 10000;
+		this.material.properties.friction = 1000;
+		this.material.properties.restitution = 0;
+		this.material.properties.stiffness = 10000;
 
 		//set listener for when player interacts with this fiend
 		this.sprite.body.onBeginContact.add(this.forceHit, this);
@@ -87,34 +87,34 @@ class Fiend extends Sprite {
 	}
 
 	//function is called on player collision
-    hitPlayer(body1, body2) {
-    	return true;
-    }
+	hitPlayer(body1, body2) { // eslint-disable-line
+		return true;
+	}
 
-    //force fiend to hit when player collides with this.sprite
-    forceHit() {
-    	if(!this.isForceHit) {
-    		this.sounds.hit.play();
-	    	this.isForceHit = true;
+	//force fiend to hit when player collides with this.sprite
+	forceHit() {
+		if(!this.isForceHit) {
+			this.sounds.hit.play();
+			this.isForceHit = true;
 
-	    	if(this.player.jumping) {
-	    		this.sprite.animations.play('high-atk');
-	    		this.sprite.animations.stop();
-	    		this.sprite.animations.frameName = 'shadow-hand-high-atk3';
-	    	} else {
-	    		this.sprite.animations.play('low-atk');
-	    		this.sprite.animations.stop();
-	    		this.sprite.animations.frameName = 'shadow-hand-low-atk2';
-	    	}
+			if(this.player.jumping) {
+				this.sprite.animations.play('high-atk');
+				this.sprite.animations.stop();
+				this.sprite.animations.frameName = 'shadow-hand-high-atk3';
+			} else {
+				this.sprite.animations.play('low-atk');
+				this.sprite.animations.stop();
+				this.sprite.animations.frameName = 'shadow-hand-low-atk2';
+			}
 
-	    	this.game.time.events.add(Phaser.Timer.SECOND, this.resetForceHit, this);
-    	}
-    }
+			this.game.time.events.add(Phaser.Timer.SECOND, this.resetForceHit, this);
+		}
+	}
 
-    resetForceHit() {
-    	this.sprite.playerHit = false;
-    	this.isForceHit = false;
-    }
+	resetForceHit() {
+		this.sprite.playerHit = false;
+		this.isForceHit = false;
+	}
 }
 
 export default Fiend;

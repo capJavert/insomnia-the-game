@@ -4,16 +4,16 @@ class Credits extends Phaser.State {
 
 	create() {
 		//buttons
-	    this.credits = new MenuButton(this.game, this.game.width/2, this.game.height,
-	    	"\n\nCREDITS\n\n"+
-	    	"Game designed and developed by Ante Barić\n"+
-	    	"Powered by Phaser Engine\n"+
-	    	"\nSPECIAL THANKS\n\n"+
-	    	"Fabijan Barić, head of testing\n"+
-	    	"Mladen Konecki, mentor\n"+
-	    	"Linda Rae (Brush set)\n"+
-	    	"Leshy Labs LLC (SpriteSheet Tool)\n"+
-	    	"\nBETA testers\n\n"+
+		this.credits = new MenuButton(this.game, this.game.width/2, this.game.height,
+			"\n\nCREDITS\n\n"+
+			"Game designed and developed by Ante Barić\n"+
+			"Powered by Phaser Engine\n"+
+			"\nSPECIAL THANKS\n\n"+
+			"Fabijan Barić, head of testing\n"+
+			"Mladen Konecki, mentor\n"+
+			"Linda Rae (Brush set)\n"+
+			"Leshy Labs LLC (SpriteSheet Tool)\n"+
+			"\nBETA testers\n\n"+
 			"agadmator\n"+
 			"andreaperkovic001\n"+
 			"anja.995\n"+
@@ -53,26 +53,26 @@ class Credits extends Phaser.State {
 			"sttevann\n"+
 			"teo.kantoci\n"+
 			"valthefierce\n"+
-	    	"\n\n dedicated to V.K."
-	    	,
-    	null);
+			"\n\n dedicated to V.K."
+			,
+		null);
 
 		//add credit roll animation
 		this.credits.text.anchor.set(0.5, 0);
-        this.tween = this.game.add.tween(this.credits.text)
-        .to( { y: -this.credits.height }, 20000, Phaser.Easing.Linear.None, true, 0, 0, false);
-        this.tween.onComplete.add(this.mainMenu, this);
+		this.tween = this.game.add.tween(this.credits.text)
+		.to( { y: -this.credits.height }, 20000, Phaser.Easing.Linear.None, true, 0, 0, false);
+		this.tween.onComplete.add(this.mainMenu, this);
 
 		var blackBg = this.game.add.bitmapData(this.game.width, 200);
 
 		//	Fill it
 		blackBg.ctx.rect(0, 0, this.game.width, 200);
-	    blackBg.ctx.fillStyle = '#000000';
-	    blackBg.ctx.fill();
+		blackBg.ctx.fillStyle = '#000000';
+		blackBg.ctx.fill();
 
 		this.blackBg = this.game.add.sprite(0, 0, blackBg);
 
-	    this.back = new MenuButton(this.game, this.game.width/2, 100, "Back", this.mainMenu);
+		this.back = new MenuButton(this.game, this.game.width/2, 100, "Back", this.mainMenu);
 	}
 
 	mainMenu() {

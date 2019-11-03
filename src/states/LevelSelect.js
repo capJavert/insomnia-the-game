@@ -1,5 +1,4 @@
 import MenuButton from 'objects/MenuButton';
-import LevelData from 'includes/LevelData';
 
 class LevelSelect extends Phaser.State {
 
@@ -13,12 +12,12 @@ class LevelSelect extends Phaser.State {
 		this.lvlProgress = localStorage.getItem(this.game.uniqueKey);
 		if(!this.lvlProgress) {
 			this.lvlProgress = 1;
-			localStorage.setItem(this.game.uniqueKey, 1); 
+			localStorage.setItem(this.game.uniqueKey, 1);
 		}
 
 		//buttons
 		this.lvlButtons = new Array();
-	    this.back = new MenuButton(this.game, this.game.width/2, this.logo.position.y+this.logo.height+100, "Back", this.mainMenu);
+		this.back = new MenuButton(this.game, this.game.width/2, this.logo.position.y+this.logo.height+100, "Back", this.mainMenu);
 		this.lvlButtons[1] = new MenuButton(this.game, this.game.width/2-110, this.back.position.y+this.back.height+40, "Level 1", this.startLvl1);
 		this.lvlButtons[2] = new MenuButton(this.game, this.game.width/2+110, this.back.position.y+this.back.height+40, "Level 2", this.startLvl2);
 		this.lvlButtons[3] = new MenuButton(this.game, this.game.width/2-110, this.lvlButtons[1].position.y+this.lvlButtons[1].height+20, "Level 3", this.startLvl3);
@@ -40,7 +39,7 @@ class LevelSelect extends Phaser.State {
 	startLvl1() {
 		this.game.lvlId = 1;
 
-        //start game
+		//start game
 		this.game.state.start("Main");
 	}
 
@@ -53,21 +52,21 @@ class LevelSelect extends Phaser.State {
 	startLvl3() {
 		this.game.lvlId = 3;
 
-        //start game
+		//start game
 		this.game.state.start("Main");
 	}
 
 	startLvl4() {
 		this.game.lvlId = 4;
 
-        //start game
+		//start game
 		this.game.state.start("Main");
 	}
 
 	startLvl5() {
 		this.game.lvlId = 5;
 
-        //start game
+		//start game
 		this.game.state.start("Main");
 	}
 }

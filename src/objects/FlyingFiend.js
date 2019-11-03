@@ -16,9 +16,9 @@ class FlyingFiend extends Fiend {
 	}
 
 	render() {
-      	//load fiend
-        this.sprite = this.game.add.sprite(this.x, this.y, 'flying-shadow');
-        this.setScale(this.scale);
+		// load fiend
+		this.sprite = this.game.add.sprite(this.x, this.y, 'flying-shadow');
+		this.setScale(this.scale);
 
 		//set defeault fiend states
 		this.isForceHit = false;
@@ -29,30 +29,30 @@ class FlyingFiend extends Fiend {
 		this.attacking = false;
 		this.sprite.playerHit = false;
 
-        //define animation frames
-        this.sprite.animations.add('idle', Phaser.Animation.generateFrameNames('flying-shadow-idle', 1, 3), 9, true);
-        this.sprite.animations.add('left-atk', Phaser.Animation.generateFrameNames('flying-shadow-left-atk', 1, 1), 11, true);
-        this.sprite.animations.add('right-atk', Phaser.Animation.generateFrameNames('flying-shadow-right-atk', 1, 1), 11, true);
+		//define animation frames
+		this.sprite.animations.add('idle', Phaser.Animation.generateFrameNames('flying-shadow-idle', 1, 3), 9, true);
+		this.sprite.animations.add('left-atk', Phaser.Animation.generateFrameNames('flying-shadow-left-atk', 1, 1), 11, true);
+		this.sprite.animations.add('right-atk', Phaser.Animation.generateFrameNames('flying-shadow-right-atk', 1, 1), 11, true);
 
-        //enable physics on fiend
-        this.game.physics.p2.enable(this.sprite, this.game.debugMode);
-        this.sprite.oType = this.oType; //for check inside collision callback
+		//enable physics on fiend
+		this.game.physics.p2.enable(this.sprite, this.game.debugMode);
+		this.sprite.oType = this.oType; //for check inside collision callback
 		this.sprite.body.clearShapes();
 		this.sprite.body.setCircle(100*this.scale);
-	    this.sprite.body.kinematic = true;
-        this.sprite.body.collideWorldBounds = true;
-        this.sprite.body.setCollisionGroup(this.collisionGroup);
-        this.sprite.position.y = 0;
+		this.sprite.body.kinematic = true;
+		this.sprite.body.collideWorldBounds = true;
+		this.sprite.body.setCollisionGroup(this.collisionGroup);
+		this.sprite.position.y = 0;
 
 		this.sprite.position.y -= (this.sprite.height/2);
 		this.visible = true;
 
-        //set material
-        this.material = new Material(this.game, 'flying-fiend', this.sprite.body);
-        this.material.properties.relaxation = 10000;
-        this.material.properties.friction = 1000;
-        this.material.properties.restitution = 0;
-        this.material.properties.stiffness = 10000;
+		//set material
+		this.material = new Material(this.game, 'flying-fiend', this.sprite.body);
+		this.material.properties.relaxation = 10000;
+		this.material.properties.friction = 1000;
+		this.material.properties.restitution = 0;
+		this.material.properties.stiffness = 10000;
 
 		//set listener for when player interacts with this fiend
 		this.sprite.body.onBeginContact.add(this.forceHit, this);

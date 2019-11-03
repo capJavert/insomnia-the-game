@@ -25,10 +25,10 @@ class Orb extends Sprite {
 		this.collected = false;
 		this.sprite.body.clearShapes();
 		this.sprite.body.setCircle(20);
-	    this.sprite.body.kinematic = true;
-        this.sprite.body.collideWorldBounds = true;
-        //this.sprite.body.gravityScale = 0;
-        this.sprite.body.setCollisionGroup(this.collisionGroup);
+		this.sprite.body.kinematic = true;
+		this.sprite.body.collideWorldBounds = true;
+		//this.sprite.body.gravityScale = 0;
+		this.sprite.body.setCollisionGroup(this.collisionGroup);
 
 		this.visible = true;
 
@@ -53,28 +53,28 @@ class Orb extends Sprite {
 		if(this.sprite.collect && !this.collected) {
 			this.sprite.body.clearShapes();
 			this.kill();
-	    	this.updateOrbs();
+			this.updateOrbs();
 		}
 	}
 
-    //check if object is out of camera view
-    isOut() {
-    	if(this.sprite.position.x+this.sprite.width/2<=0 || this.collected) {
-    		return true;
-    	} else {
-    		return false;
-    	}
-    }
+	//check if object is out of camera view
+	isOut() {
+		if(this.sprite.position.x+this.sprite.width/2<=0 || this.collected) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-    //update current orb count in game
-    //orbs restores health
-    updateOrbs() {
-    	this.sounds.collect.play();
-    	this.collected = true;
-    	this.game.orbCount++;
-    	this.player.heal();
-    	//console.log("Orbs", this.game.orbCount);
-    }
+	//update current orb count in game
+	//orbs restores health
+	updateOrbs() {
+		this.sounds.collect.play();
+		this.collected = true;
+		this.game.orbCount++;
+		this.player.heal();
+		//console.log("Orbs", this.game.orbCount);
+	}
 
 	moveUp() {
 		if(this.sprite.body!=null) {

@@ -1,6 +1,6 @@
 class ExampleObject {
 
-	constructor(game){
+	constructor(game) { // eslint-disable-line
 		//Do something
 	}
 

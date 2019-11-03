@@ -22,10 +22,10 @@ class Spikes extends Sprite {
 		this.sprite.oType = this.oType; //for check inside collision callback
 		this.sprite.body.clearShapes();
 		this.sprite.body.addRectangle(this.sprite.width, this.sprite.height*0.8);
-	    this.sprite.body.kinematic = true;
-        this.sprite.body.collideWorldBounds = true;
-        //this.sprite.body.gravityScale = 0;
-        this.sprite.body.setCollisionGroup(this.collisionGroup);
+		this.sprite.body.kinematic = true;
+		this.sprite.body.collideWorldBounds = true;
+		//this.sprite.body.gravityScale = 0;
+		this.sprite.body.setCollisionGroup(this.collisionGroup);
 
 		this.visible = true;
 

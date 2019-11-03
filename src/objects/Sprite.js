@@ -32,46 +32,46 @@ class Sprite {
 		this.material.setProperties(material.properties);
 	}
 
-    //set collision group for sprite
-    setCollisionGroup(group) {
-        this.sprite.body.setCollisionGroup(group);
-    }
+	//set collision group for sprite
+	setCollisionGroup(group) {
+		this.sprite.body.setCollisionGroup(group);
+	}
 
-    //set collision rules for sprite and callback function
-    collides(groups, callback) {
-    	this.groups = groups;
-        this.sprite.body.collides(groups, callback);
-    }
+	//set collision rules for sprite and callback function
+	collides(groups, callback) {
+		this.groups = groups;
+		this.sprite.body.collides(groups, callback);
+	}
 
-    //destroy sprite
-    //if fade is set to true, fade sprite and call kill again without fade
-    kill(fade) {
-    	if(typeof fade == 'undefined') { fade = false; }
+	//destroy sprite
+	//if fade is set to true, fade sprite and call kill again without fade
+	kill(fade) {
+		if(typeof fade == 'undefined') { fade = false; }
 
-    	if(fade) {
-            this.tween = this.game.add.tween(this.sprite)
-            .to( { alpha: 0 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false);
-            this.tween.onComplete.add(this.kill, this);
-    	} else {
-	    	this.sprite.body.clearShapes();
-	    	this.sprite.kill();
-    	}
-    }
+		if(fade) {
+			this.tween = this.game.add.tween(this.sprite)
+			.to( { alpha: 0 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false);
+			this.tween.onComplete.add(this.kill, this);
+		} else {
+			this.sprite.body.clearShapes();
+			this.sprite.kill();
+		}
+	}
 
-    //function is called on player collision
-    hitPlayer(body1, body2) {
-        //console.log("hit player");
-    }
+	//function is called on player collision
+	hitPlayer(body1, body2) { // eslint-disable-line
+		//console.log("hit player");
+	}
 
-    //function is called on sprite collision
-    hitSprite(body1, body2) {
-        //console.log("hit sprite");
-    }
+	//function is called on sprite collision
+	hitSprite(body1, body2) { // eslint-disable-line
+		//console.log("hit sprite");
+	}
 
-    //function called after collision callback
-    onHit() {
+	//function called after collision callback
+	onHit() {
 
-    }
+	}
 
 	inView() {
 		if(this.sprite.position.x+this.sprite.width/2>0 && this.sprite.position.x+this.sprite.width/2<=this.game.width) {
@@ -90,12 +90,12 @@ class Sprite {
 	}
 
 	destroy() {
-        this.kill();
-        this.sprite.body.destroy();
-        this.sprite.destroy();
+		this.kill();
+		this.sprite.body.destroy();
+		this.sprite.destroy();
 	}
 
-    //performance issues!
+	//performance issues!
 	/*resizePolygon(originalPhysicsKey, newPhysicsKey, shapeKey, scale) {
 		var newData = [];
 		var data = this.game.cache.getPhysicsData(originalPhysicsKey, shapeKey);

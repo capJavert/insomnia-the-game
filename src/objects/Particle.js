@@ -12,12 +12,12 @@ class Particle {
 
 		//create particle bitmap
 		//used for particle sprite
-        this.particleBitmap = this.game.add.bitmapData(this.width, this.height);
+		this.particleBitmap = this.game.add.bitmapData(this.width, this.height);
 
-     	//fill it
-        this.particleBitmap.ctx.rect(0, 0, this.width, this.height);
-        this.particleBitmap.ctx.fillStyle = this.color;
-        this.particleBitmap.ctx.fill();
+		// fill it
+		this.particleBitmap.ctx.rect(0, 0, this.width, this.height);
+		this.particleBitmap.ctx.fillStyle = this.color;
+		this.particleBitmap.ctx.fill();
 	}
 
 	update(playerObject) {
@@ -41,30 +41,30 @@ class Particle {
 		//spawn particle on position
 		//enable physics
 		this.lifespan = lifespan;
-	 	this.particle =  this.game.add.sprite(0, 0, this.particleBitmap);
+		this.particle =  this.game.add.sprite(0, 0, this.particleBitmap);
 		this.particle.position.x = x;
 		this.particle.position.y = y;
 		this.game.physics.p2.enable(this.particle, false);
 		this.particle.body.kinematic = true;
 		this.particle.oType = 'Particle';
-	    this.particle.body.collideWorldBounds = true;
-	    this.animate();
+		this.particle.body.collideWorldBounds = true;
+		this.animate();
 
 		//start lifespan timer
-	    this.game.time.events.add(this.lifespan, this.kill, this);
-	    this.spawned = true;
+		this.game.time.events.add(this.lifespan, this.kill, this);
+		this.spawned = true;
 	}
 
 	animate() {
 		this.velocity = this.game.rnd.between(0, this.speed)
 	}
 
-    //unset spawned flag
-    kill() {
-    	//this.velocity = 0;
-    	this.isLifespanReached = true;
-    	//this.particle.visible = false;
-    }
+	//unset spawned flag
+	kill() {
+		//this.velocity = 0;
+		this.isLifespanReached = true;
+		//this.particle.visible = false;
+	}
 }
 
 export default Particle;
