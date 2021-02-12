@@ -1,0 +1,21 @@
+{
+	"name": "insomnia",
+	"alias": ["insomnia.kickass.website"],
+    "redirects": [
+		{
+			"source": "/play",
+			"permanent": true,
+			"destination": "/play/"
+		}
+    ],
+	"rewrites": [
+		{
+			"source": "/play/(.*)",
+			"destination": "/build/$1"
+		},
+		{
+			"source": "/(.*)",
+			"destination": "/website/$1"
+		}
+	]
+}
