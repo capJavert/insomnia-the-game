@@ -12,6 +12,14 @@ import GameOver from 'states/GameOver';
 class Game extends Phaser.Game {
 
 	constructor() {
+        // eslint-disable-next-line no-undef
+        if (window.WebFont) {
+            window.WebFont.load({
+                google: {
+                    families: ['IM Fell DW Pica']
+                }
+            });
+        }
 
 		//super(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS);
 		super(1920, 1080, Phaser.CANVAS);
