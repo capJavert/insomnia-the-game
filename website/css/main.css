@@ -45,5 +45,7 @@ body {
 
 .wallpapers li img {
 	width: 320px;
+    height: 180px;
+    object-fit: cover;
 	border: 1px solid #ffffff;
 }
